@@ -1,0 +1,22 @@
+{
+  "name": "delet3",
+  "version": "3.0.0",
+  "description": "delet³ for Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suvanl/delet3.git"
+  },
+  "author": "suvanl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/suvanl/delet3/issues"
+  },
+  "homepage": "https://github.com/suvanl/delet3#readme",
+  "dependencies": {
+    "discord.js": "github:discordjs/discord.js"
+  }
+}
