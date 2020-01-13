@@ -18,18 +18,24 @@ else console.log(`Node.js version check ${green("passed")} ✅\nmin: ${red(minVe
 require("dotenv").config();
 
 // Bot initialisation
-const { Client } = require("discord.js");
+const { Client, Collection } = require("discord.js");
 const { TOKEN, PREFIX } = process.env;
 const { version } = require("./package.json");
+const { readdirSync } = require("fs");
 
 const client = new Client({
     disabledEvents: ["TYPING_START"],
     disableEveryone: true
 });
 
-client.once("ready", () => {
-    console.log(`Logged in to Discord as ${magenta(client.user.tag)} - ${cyan(`v${version}`)}`);
-});
+// Handle commands
+client.commands = new Collection();
+const commandFiles = readdirSync("./commands").filter(file => file.endsWith(".js"));
+
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
+}
 
 client.on("message", message => {
     if (!message.content.startsWith(PREFIX) || message.author.bot) return;
@@ -37,7 +43,12 @@ client.on("message", message => {
     const args = message.content.slice(PREFIX.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if (command === "ping") message.channel.send("pong 🏓");
+    if (command === "ping") client.commands.get("ping").exec(message, args);
+});
+
+// Ready event
+client.once("ready", () => {
+    console.log(`Logged in to Discord as ${magenta(client.user.tag)} - ${cyan(`v${version}`)}`);
 });
 
 client.login(TOKEN);
