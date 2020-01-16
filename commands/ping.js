@@ -1,11 +1,11 @@
 module.exports = {
     name: "ping",
     description: "pong",
+    cooldown: 5,
     category: "Information",
-    usage: "ping",
     aliases: [],
 
-    exec(message, /*args*/) {
+    exec(message) {
         message.channel.send("pong 🏓");
     }
 };

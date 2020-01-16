@@ -41,9 +41,46 @@ client.on("message", message => {
     if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
     const args = message.content.slice(PREFIX.length).split(/ +/);
-    const command = args.shift().toLowerCase();
+    const commandName = args.shift().toLowerCase();
+    
+    if (!client.commands.has(commandName)) return;
 
-    if (command === "ping") client.commands.get("ping").exec(message, args);
+    const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+    if (!command) return;
+
+    if (command.guildOnly && message.channel.type !== "text") return message.channel.send("this command can't be used in DMs");
+
+    if (command.args && !args.length) {
+        let reply = "oops, you didn't provide any arguments!";
+        if (command.usage) reply += `\nthe proper usage would be: \`${PREFIX}${command.name} ${command.usage}\``;
+        return message.channel.send(reply);
+    }
+
+    const cooldowns = new Collection();
+    if (!cooldowns.has(command.name)) cooldowns.set(command.name, new Collection());
+
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    const cooldownAmount = (command.cooldown || 3) * 1000;
+
+    if (timestamps.has(message.author.id)) {
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before using the \`${command.name}\` command again`);
+        }
+    }
+
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+    try {
+        command.exec(message, args);
+    } catch (error) {
+        console.error(red(error));
+        message.channel.send("an error ocurred whilst running that command ❌");
+    }
 });
 
 // Ready event
