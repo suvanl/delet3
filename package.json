@@ -17,12 +17,14 @@
   },
   "homepage": "https://github.com/suvanl/delet3#readme",
   "dependencies": {
-    "@keyv/mongo": "^1.1.0",
     "chalk": "^3.0.0",
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
-    "keyv": "^4.0.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "mongoose": "^5.8.11",
+    "mongoose-timestamp": "^0.6.0",
+    "restify": "^8.5.1",
+    "restify-errors": "^8.0.2"
   },
   "devDependencies": {
     "eslint": "^6.8.0"
