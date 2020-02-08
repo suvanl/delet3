@@ -6,7 +6,7 @@
 
 // Configure enviroment variables
 require("dotenv").config();
-const { MONGO_STRING, PORT, TOKEN } = process.env;
+const { JWT_SECRET, MONGO_STRING, PORT, TOKEN } = process.env;
 
 // Node.js version check
 const { blue, cyan, green, red, bold, underline } = require("chalk");
@@ -24,6 +24,7 @@ const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 const restify = require("restify");
 const mongoose = require("mongoose");
+const rjwt = require("restify-jwt-community");
 
 const client = new Client({
     disabledEvents: ["TYPING_START"],
@@ -39,6 +40,7 @@ require("./core/functions/loadCommand.js")(client);
 // Set up REST API server
 const server = restify.createServer();
 server.use(restify.plugins.bodyParser());
+server.use(rjwt({ secret: JWT_SECRET }).unless({ path: ["/auth"] }));
 server.listen(PORT, () => {
     mongoose.connect(MONGO_STRING, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 });
@@ -48,6 +50,7 @@ db.on("error", err => console.log(err));
 db.once("open", () => {
     require("./api/routes/users")(server);
     require("./api/routes/guilds")(server);
+    require("./api/routes/dbusers")(server);
     client.logger.log(`REST API server started on port ${green(PORT)}`, "rdy");
 });
 
