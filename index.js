@@ -22,7 +22,6 @@ else console.log(`Node.js version check ${green("passed")} ✔\nmin: ${red(minVe
 const { Client } = require("discord.js");
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
-const Keyv = require("keyv");
 
 const client = new Client({
     disabledEvents: ["TYPING_START"],
@@ -33,11 +32,11 @@ client.logger = require("./core/modules/Logger");
 
 require("./core/functions/loadCommand.js")(client);
 
-client.commands = new Keyv();
-client.aliases = new Keyv();
+// todo: obviously these shouldn't be null; handle db stuff here
+client.commands = null;
+client.aliases = null;
 
-client.settings = new Keyv(MONGO_STRING, { namespace: "settings" })
-    .on("error", err => client.logger.err("keyv connection error", err));
+client.settings = null;
 
 const init = async () => {
     console.log(`Initialising ${bold("delet³")}...\n`);
