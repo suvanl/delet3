@@ -1,16 +1,27 @@
 module.exports = async (client, message) => {
+    // Return if guild is unavailable (due to server outage)
+    if (!message.guild.available) return;
+
+    // Ignore messages from other bot accounts
     if (message.author.bot) return;
 
-    // todo: get settings from mongodb
+    // Return if bot has insufficient perms to send messages
+    if (message.channel.type === "text" && !message.guild.me.hasPermission("SEND_MESSAGES")) return;
 
+    // Fetch guild/default settings from REST API
+    const settings = message.settings = client.getSettings(mesage.guild);
+
+    // Respond with prefix if mentioned
+    // todo: use localisation rather than direct string input
     const mention = new RegExp(`^<@!?${client.user.id}> `);
+    if (message.content.match(mention)) return message.channel.send(`My prefix on this server is: \`${settings.prefix}\`.`);
 
-    // todo: (1) use localisation rather than direct string input; (2) replace with more user-friendly message; (3) get prefix from settings
-    if (message.content.match(mention)) return message.channel.send("Prefix on this server: `3!`");
+    // Ignore messages that don't start with the bot's prefix
+    if (message.content.indexOf(settings.prefix) !== 0) return;
 
-    // todo: ignore messages that don't start with (guild/default) prefix
-
-    // todo: separate command name from args; sort args into array (Array.prototype.shift)
+    // Separate command name from args; sort args into array
+    const args = message.content.slice(settings.prefix.length).trim().split(/ +g/);
+    const command = args.shift().toLowerCase();
 
     // Fetch guild member if invisible/uncached
     if (message.guild && !message.member) await message.guild.fetchMember(message.author);
@@ -27,5 +38,5 @@ module.exports = async (client, message) => {
 
     // todo: change author's permLevel from being on `member` to `level`
 
-    // todo: run & log use of command
+    // todo: run (& log use of) command
 };
