@@ -58,8 +58,6 @@ db.once("open", () => {
 client.commands = null;
 client.aliases = null;
 
-client.settings = null;
-
 const init = async () => {
     console.log(`Initialising ${bold("delet³")}...\n`);
 
