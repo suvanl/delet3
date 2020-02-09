@@ -19,7 +19,7 @@ if (nodeVer < 12) throw new Error(red(`Node.js ${minVer} or higher is required -
 else console.log(`Node.js version check ${green("passed")} ✔\nmin: ${red(minVer)} | recommended: ${green(recVer)} | current: ${underline.green(nodeVer)}\n`);
 
 // Bot initialisation
-const { Client } = require("discord.js");
+const { Client, Collection } = require("discord.js");
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 const restify = require("restify");
@@ -36,6 +36,7 @@ client.logger = require("./core/modules/Logger");
 
 // Require custom core functions
 require("./core/functions/loadCommand.js")(client);
+require("./core/functions/getSettings.js")(client);
 
 // Set up REST API server
 const server = restify.createServer();
@@ -54,9 +55,9 @@ db.once("open", () => {
     client.logger.log(`REST API server started on port ${green(PORT)}`, "rdy");
 });
 
-// todo: obviously these shouldn't be null; handle db stuff here
-client.commands = null;
-client.aliases = null;
+// Save commands and aliases to collections
+client.commands = new Collection();
+client.aliases = new Collection();
 
 const init = async () => {
     console.log(`Initialising ${bold("delet³")}...\n`);
