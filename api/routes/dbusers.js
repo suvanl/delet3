@@ -22,7 +22,7 @@ module.exports = server => {
 
                 // Save user
                 try {
-                    const newDBUser = await dbuser.save();
+                    await dbuser.save();
                     res.send(201);
                     next();
                 } catch (err) {

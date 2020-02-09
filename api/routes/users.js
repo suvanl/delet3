@@ -38,7 +38,7 @@ module.exports = server => {
         });
 
         try {
-            const newUser = await user.save();
+            await user.save();
             res.send(201);
             next();
         } catch (err) {
@@ -52,7 +52,7 @@ module.exports = server => {
         if (!req.is("application/json")) return next(new errors.InvalidContentError("Expects 'application/json'"));
 
         try {
-            const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body);
+            await User.findOneAndUpdate({ _id: req.params.id }, req.body);
             res.send(200);
             next();
         } catch (err) {
@@ -63,7 +63,7 @@ module.exports = server => {
     // Delete user
     server.del("/users/:id", async (req, res, next) => {
         try {
-            const user = await User.findOneAndRemove({ _id: req.params.id });
+            await User.findOneAndRemove({ _id: req.params.id });
             res.send(204);
             next();
         } catch (err) {
