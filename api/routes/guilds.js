@@ -13,10 +13,21 @@ module.exports = server => {
         }
     });
 
-    // Get single guild
+    // // Get single guild by object ID
+    // server.get("/guilds/:id", async (req, res, next) => {
+    //     try {
+    //         const guild = await Guild.findById(req.params.id);
+    //         res.send(guild);
+    //         next();
+    //     } catch (err) {
+    //         return next(new errors.ResourceNotFoundError(`No such guild with ID ${req.params.id}`));
+    //     }
+    // });
+
+    // Get single guild by guild ID
     server.get("/guilds/:id", async (req, res, next) => {
         try {
-            const guild = await Guild.findById(req.params.id);
+            const guild = await Guild.find({ "guildID": req.params.id });
             res.send(guild);
             next();
         } catch (err) {
