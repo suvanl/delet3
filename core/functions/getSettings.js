@@ -28,7 +28,7 @@ module.exports = client => {
             const secret = await genSecret();
             const res = await fetch(url, {
                 method: "get",
-                headers: { "Authorization": `jwt ${secret.token}`, "Accept": "application/json" }
+                headers: { "Authorization": `jwt ${secret.token}` }
             });
             
             const data = await res.json();
