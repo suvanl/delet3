@@ -21,7 +21,7 @@ module.exports = client => {
     };
 
 
-    // GET request to API for guild-specific settings
+    // Send GET request to API for guild-specific settings
     client.getSettings = async (guild) => {
         const url = `${process.env.URL}/guilds/${guild.id}`;
         try {
