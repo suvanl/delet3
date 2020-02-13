@@ -31,12 +31,15 @@ const client = new Client({
     disableEveryone: true
 });
 
+client.permLevels = require("./core/settings/permLevels");
+
 // Load in custom console logger
 client.logger = require("./core/modules/Logger");
 
 // Require custom core functions
-require("./core/functions/loadCommand.js")(client);
-require("./core/functions/getSettings.js")(client);
+require("./core/functions/loadCommand")(client);
+require("./core/functions/getSettings")(client);
+require("./core/functions/permLevel")(client);
 
 // Set up REST API server
 const server = restify.createServer();
@@ -82,7 +85,12 @@ const init = async () => {
         client.on(name, event.bind(null, client));
     });
 
-    // todo: permLevel stuff
+    // Cache permLevels
+    client.levelCache = {};
+    for (let i = 0; i < client.permLevels.levels.length; i++) {
+        const thisLevel = client.permLevels.levels[i];
+        client.levelCache[thisLevel.name] = thisLevel.level;
+    }
 
     // Discord login
     client.login(TOKEN);
