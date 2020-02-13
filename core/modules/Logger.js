@@ -6,7 +6,7 @@ exports.log = (content, type = "log") => {
 
     switch (type) {
         case "cmd": {
-            return console.log(`${timestamp} ${bgBlue(type.toUpperCase())} » ${content}`);
+            return console.log(`${timestamp} ${blue(type.toUpperCase())} » ${content}`);
         }
         case "dbg": {
             return console.log(`${timestamp} ${orange(type.toUpperCase())} » ${content}`);
@@ -15,7 +15,7 @@ exports.log = (content, type = "log") => {
             return console.log(`${timestamp} ${bgRed(type.toUpperCase())} » ${content}`);
         }
         case "inf": {
-            return console.log(`${timestamp} ${blue(type.toUpperCase())} » ${content}`);
+            return console.log(`${timestamp} ${bgBlue(type.toUpperCase())} » ${content}`);
         }
         case "log": {
             return console.log(`${timestamp} ${grey(type.toUpperCase())} » ${content}`);
