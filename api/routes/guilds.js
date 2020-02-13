@@ -87,7 +87,7 @@ module.exports = server => {
         if (!req.is("application/json")) return next(new errors.InvalidContentError("Expects 'application/json'"));
 
         try {
-            await Guild.findOneAndUpdate({ _id: req.params.id }, req.body);
+            await Guild.findOneAndUpdate({ "guildID": req.params.id }, req.body);
             res.send(200);
             next();
         } catch (err) {
@@ -98,7 +98,7 @@ module.exports = server => {
     // Delete guild
     server.del("/guilds/:id", async (req, res, next) => {
         try {
-            await Guild.findOneAndRemove({ _id: req.params.id });
+            await Guild.findOneAndRemove({ "guildID": req.params.id });
             res.send(204);
             next();
         } catch (err) {
