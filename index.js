@@ -38,6 +38,7 @@ client.logger = require("./core/modules/Logger");
 
 // Require custom core functions
 require("./core/functions/loadCommand")(client);
+require("./core/functions/genSecret")(client);
 require("./core/functions/getSettings")(client);
 require("./core/functions/permLevel")(client);
 
