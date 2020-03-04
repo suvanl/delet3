@@ -2,7 +2,9 @@ const { bgBlue, bgRed, bgYellow, blue, green, grey, orange } = require("chalk");
 const moment = require("moment");
 
 exports.log = (content, type = "log") => {
-    const timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss [GMT]")} |`;
+    const d = new Date();
+    const n = d.getTimezoneOffset();
+    const timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")} ${n === 0 ? "UTC" : `UTC+${n}`} |`;
 
     switch (type) {
         case "cmd": {
@@ -33,4 +35,5 @@ exports.log = (content, type = "log") => {
 exports.cmd = (...args) => this.log(...args, "cmd");
 exports.dbg = (...args) => this.log(...args, "dbg");
 exports.err = (...args) => this.log(...args, "err");
+exports.inf = (...args) => this.log(...args, "inf");
 exports.wrn = (...args) => this.log(...args, "wrn");
