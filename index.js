@@ -25,6 +25,8 @@ const readdir = promisify(require("fs").readdir);
 const restify = require("restify");
 const mongoose = require("mongoose");
 const rjwt = require("restify-jwt-community");
+const klaw = require("klaw");
+const path = require("path");
 
 const client = new Client({
     disabledEvents: ["TYPING_START"],
@@ -66,15 +68,6 @@ client.aliases = new Collection();
 const init = async () => {
     console.log(`Initialising ${bold("delet³")}...\n`);
 
-    // Load commands
-    const commands = await readdir("./commands/");
-    client.logger.log(`Loading ${blue(commands.length)} commands:`);
-    commands.forEach(file => {
-        if (!file.endsWith(".js")) return;
-        const response = client.loadCommand(file);
-        if (response) console.log(response);
-    });
-
     // Load events
     const events = await readdir("./events/");
     client.logger.log(`Loading ${cyan(events.length)} events:`);
@@ -84,6 +77,17 @@ const init = async () => {
         
         const event = require(`./events/${file}`);
         client.on(name, event.bind(null, client));
+    });
+
+    // Load commands
+    const commands = await readdir("./commands/");
+    client.logger.log(`Loading ${blue(commands.length)} commands:`);
+    
+    klaw("./commands").on("data", item => {
+        const file = path.parse(item.path);
+        if (!file.ext || file.ext !== ".js") return;
+        const res = client.loadCommand(file.dir, `${file.name}${file.ext}`);
+        if (!res) client.logger.err(res);
     });
 
     // Cache permLevels
