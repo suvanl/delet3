@@ -13,10 +13,10 @@ module.exports = server => {
         }
     });
 
-    // Get single user
+    // Get single user by user ID
     server.get("/users/:id", async (req, res, next) => {
         try {
-            const user = await User.findById(req.params.id);
+            const user = await User.find({ "userID": req.params.id });
             res.send(user);
             next();
         } catch (err) {
@@ -29,10 +29,10 @@ module.exports = server => {
         // Ensure Content-Type is application/json
         if (!req.is("application/json")) return next(new errors.InvalidContentError("Expects 'application/json'"));
 
-        const { username, points, triviaPoints } = req.body;
+        const { userID, points, triviaPoints } = req.body;
 
         const user = new User({
-            username,
+            userID,
             points,
             triviaPoints
         });
@@ -52,7 +52,7 @@ module.exports = server => {
         if (!req.is("application/json")) return next(new errors.InvalidContentError("Expects 'application/json'"));
 
         try {
-            await User.findOneAndUpdate({ _id: req.params.id }, req.body);
+            await User.findOneAndUpdate({ userID: req.params.id }, req.body);
             res.send(200);
             next();
         } catch (err) {
@@ -63,7 +63,7 @@ module.exports = server => {
     // Delete user
     server.del("/users/:id", async (req, res, next) => {
         try {
-            await User.findOneAndRemove({ _id: req.params.id });
+            await User.findOneAndRemove({ userID: req.params.id });
             res.send(204);
             next();
         } catch (err) {
