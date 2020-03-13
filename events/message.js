@@ -22,7 +22,7 @@ module.exports = async (client, message) => {
     if (message.content.indexOf(settings.prefix) !== 0) return;
 
     // Separate command name from args; sort args into array
-    const args = message.content.slice(settings.prefix.length).trim().split(/ +g/);
+    const args = message.content.slice(settings.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     // Fetch guild member if invisible/uncached
