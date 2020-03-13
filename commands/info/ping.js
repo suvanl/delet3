@@ -13,6 +13,6 @@ exports.config = {
 exports.help = {
     name: "ping",
     description: "Sends latency/API response times.",
-    category: "Miscellaneous",
+    category: "Info",
     usage: "ping"
 };
