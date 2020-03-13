@@ -2,10 +2,9 @@ const mongoose = require("mongoose");
 const timestamp = require("mongoose-timestamp");
 
 const UserSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        trim: true
+    userID: {
+        type: Number,
+        required: true
     },
     points: {
         type: Number,
