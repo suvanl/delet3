@@ -45,6 +45,7 @@ require("./core/functions/genSecret")(client);
 require("./core/functions/getSettings")(client);
 require("./core/functions/permLevel")(client);
 require("./core/functions/awaitReply")(client);
+require("./core/functions/misc");
 
 // Set up REST API server
 const server = restify.createServer();
