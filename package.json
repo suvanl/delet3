@@ -4,7 +4,7 @@
   "description": "delet³ for Discord",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest && eslint ."
   },
   "repository": {
     "type": "git",
