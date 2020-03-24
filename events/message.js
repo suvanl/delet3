@@ -2,7 +2,7 @@ const { blue } = require("chalk");
 
 module.exports = async (client, message) => {
     // Return if guild is unavailable (due to server outage)
-    if (!message.guild.available) return;
+    if (message.channel.type !== "dm" && !message.guild.available) return;
 
     // Ignore messages from other bot accounts
     if (message.author.bot) return;
