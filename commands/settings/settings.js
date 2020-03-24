@@ -56,12 +56,12 @@ exports.config = {
     aliases: ["set"],
     enabled: true,
     guildOnly: true,
-    permLevel: "Moderator"
+    permLevel: "Server Moderator"
 };
 
 exports.help = {
     name: "settings",
-    description: "Displays the current server's settings.",
-    category: "Settings",
+    description: "displays the current server's settings",
+    category: "settings",
     usage: "settings"
 };
