@@ -1,6 +1,8 @@
 exports.run = async (client, message, args, level) => {
     const lvlName = client.permLevels.levels.find(l => l.level === level).name;
-    message.reply(`your permission level is: \`${level}\` (**${lvlName}**).`);
+    const settings = await client.getSettings(message.guild);
+
+    message.reply(`your permission level is: \`${level}\` (**${lvlName}**).\nUse \`${settings.prefix}help\` to see a list of commands available to your level.`);
 };
 
 exports.config = {
