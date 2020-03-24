@@ -39,7 +39,7 @@ exports.config = {
 
 exports.help = {
     name: "prefix",
-    description: "changes delet's prefix on the current server.",
+    description: "changes delet's prefix on the current server",
     category: "settings",
     usage: "prefix [prefix]"
 };
