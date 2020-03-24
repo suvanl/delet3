@@ -1,4 +1,5 @@
 const { stripIndents } = require("common-tags");
+const { MessageEmbed } = require("discord.js");
 
 exports.run = async (client, message, args, level) => {
     if (!args[0]) {
@@ -19,7 +20,7 @@ exports.run = async (client, message, args, level) => {
         : p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1);
 
         sort.forEach(c => {
-            const cat = c.help.category.toProperCase();
+            const cat = c.help.category.toTitleCase();
             if (currentCat !== cat) {
                 out += `\u200b\n**${cat}**\n`;
                 currentCat = cat;
@@ -27,18 +28,49 @@ exports.run = async (client, message, args, level) => {
             out += `\`${message.settings.prefix}${c.help.name}\`: ${c.help.description}.\n`;
         });
 
-        const helpConfirm = await message.channel.send("<:tick:688400118549970984> Help is on its way!");
-        message.author.send(out, { split: { char: "\u200b" } }).catch(err => {
-            helpConfirm.edit(`<:x_:688400118327672843> Looks like I can't DM you, ${message.author}.\nPlease ensure your privacy settings on this server allow me to do so.`);
-            return client.logger.err(err);
-        });
+        if (message.channel.type === "text") {
+            const helpConfirm = await message.channel.send("<:tick:688400118549970984> Help is on its way!");
+            message.author.send(out, { split: { char: "\u200b" } }).catch(err => {
+                helpConfirm.edit(`<:x_:688400118327672843> Looks like I can't DM you, ${message.author}.\nPlease ensure your privacy settings on this server allow me to do so.`);
+                return client.logger.err(err);
+            });
+        } else if (message.channel.type === "dm") {
+            return message.channel.send(out, { split: { char: "\u200b" } });
+        }
     } else {
         // Command specific help
         let cmd = args[0];
         if (client.commands.has(cmd)) {
             cmd = client.commands.get(cmd);
             if (level < client.levelCache[cmd.config.permLevel]) return;
-            message.channel.send(`**${cmd.help.name}** command\n${cmd.help.description}\n\nUsage: ${cmd.help.usage}\nAliases: ${cmd.config.aliases.join(", ")}`);
+
+            const emoji = {
+                "fun": "🎮",
+                "info": "ℹ️",
+                "misc": "💬",
+                "settings": "⚙️"
+            };
+
+            const colour = {
+                "fun": "#fcec62",
+                "info": "#62bffc",
+                "misc": "#04d1bb",
+                "settings": "#6272fc"
+            };
+
+            const embed = new MessageEmbed()
+                .setColor(colour[cmd.help.category])
+                .setDescription(stripIndents`
+                    ${emoji[cmd.help.category]} **${cmd.help.name.toTitleCase()} Command**
+                    ${cmd.help.description}
+
+                    **usage**
+                    \`${message.settings.prefix}${cmd.help.usage}\`
+
+                    **aliases**
+                    \`${cmd.config.aliases.length !== 0 ? cmd.config.aliases.join(", ") : "[ none ]"}\``);
+
+            message.channel.send(embed);
         }
     }
 };
@@ -53,6 +85,6 @@ exports.config = {
 exports.help = {
     name: "help",
     description: "sends a list of commands available to your permission level",
-    category: "Misc",
+    category: "misc",
     usage: "help [command]"
 };
