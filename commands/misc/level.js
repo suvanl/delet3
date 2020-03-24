@@ -13,6 +13,6 @@ exports.config = {
 exports.help = {
     name: "level",
     description: "shows your permission level on the current server",
-    category: "Misc",
+    category: "misc",
     usage: "level"
 };
