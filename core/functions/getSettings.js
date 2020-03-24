@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 module.exports = client => {
     // Send GET request to API for guild-specific settings
     client.getSettings = async guild => {
-        const url = `${process.env.URL}/guilds/${guild.id}`;
+        const url = `${process.env.URL}/guilds/${guild ? guild.id : 0}`;
         try {
             const secret = await client.genSecret();
             const res = await fetch(url, {
