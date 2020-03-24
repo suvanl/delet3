@@ -2,16 +2,13 @@ const fetch = require("node-fetch");
 const { stripIndents } = require("common-tags");
 
 exports.run = async (client, message, args) => {
-    // let newPrefix = args[0] || the await reply input
-
     const msg = stripIndents`
         ⚙️ The current prefix is \`${message.settings.prefix}\`.
         🔄 Please enter the new prefix. Reply with \`cancel\` to exit.`;
 
     const newPrefix = args[0] || await client.awaitReply(message, msg);
     if (newPrefix.toLowerCase() === "cancel") return message.channel.send(stripIndents`
-        🚪 Ended the settings customisation procedure.
-    `);
+        🚪 Ended the settings customisation procedure.`);
 
     const secret = await client.genSecret();
     const url = `${process.env.URL}/guilds/${message.guild.id}`;
