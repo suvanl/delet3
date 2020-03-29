@@ -43,6 +43,8 @@ client.logger = require("./core/modules/Logger");
 require("./core/functions/loadCommand")(client);
 require("./core/functions/genSecret")(client);
 require("./core/functions/getSettings")(client);
+require("./core/functions/getUser")(client);
+require("./core/functions/addPoints")(client);
 require("./core/functions/permLevel")(client);
 require("./core/functions/awaitReply")(client);
 require("./core/functions/misc");

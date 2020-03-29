@@ -101,10 +101,33 @@ exports.run = async (client, message, args) => {
         // Send "invalid" message if answer doesn't match one of the valid choices
         if (quiz.type === "multiple" && !choice || quiz.type === "boolean" && !bool.includes(userAns.toTitleCase())) return message.channel.send(invalid);  
 
-        // If choice matches correct answer, send "correct answer" message
-        if (choice === quiz.correct_answer) return message.channel.send(stripIndents`
-            <:tick:688400118549970984> **Correct answer**
-            Well done!`);
+        // If choice matches correct answer:
+        if (choice === quiz.correct_answer) {
+            // Define correct answer message
+            let correct = stripIndents`
+                <:tick:688400118549970984> **Correct answer**
+                Well done!`;
+
+            // Add points (if in a guild text channel)
+            if (message.channel.type === "text") {
+                const userData = await client.getUser(message.author);
+                const currentPoints = userData.triviaPoints;
+
+                const dif = d.toLowerCase();
+                const points = { "easy": 1, "medium": 2, "hard": 3 };
+
+                const newTotal = currentPoints + points[dif];
+
+                await client.addPoints(message.author, "triviaPoints", newTotal);
+
+                // Send "correct answer" message with number of points gained
+                message.channel.send(correct += ` [+${points[dif]} ${points[dif] === 1 ? "point" : "points"}]`);
+            } else {
+                // Send "correct answer" message
+                message.channel.send(correct);
+            }
+            
+        }
         // Else, their answer must be incorrect
         else return message.channel.send(stripIndents`
             <:x_:688400118327672843> **Incorrect answer**
@@ -118,7 +141,7 @@ exports.run = async (client, message, args) => {
 exports.config = {
     aliases: ["quiz"],
     enabled: true,
-    guildOnly: true, // todo: set up conditional for adding points (so that points can only be earned fairly in guilds), then this can be set to false
+    guildOnly: false,
     permLevel: "User"
 };
 
