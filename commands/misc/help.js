@@ -1,5 +1,6 @@
 const { stripIndents } = require("common-tags");
 const { MessageEmbed } = require("discord.js");
+const { emoji, colour } = require("../../core/util/data");
 
 exports.run = async (client, message, args, level) => {
     if (!args[0]) {
@@ -43,20 +44,6 @@ exports.run = async (client, message, args, level) => {
         if (client.commands.has(cmd)) {
             cmd = client.commands.get(cmd);
             if (level < client.levelCache[cmd.config.permLevel]) return;
-
-            const emoji = {
-                "fun": "🎮",
-                "info": "ℹ️",
-                "misc": "💬",
-                "settings": "⚙️"
-            };
-
-            const colour = {
-                "fun": "#fcec62",
-                "info": "#62bffc",
-                "misc": "#04d1bb",
-                "settings": "#6272fc"
-            };
 
             const embed = new MessageEmbed()
                 .setColor(colour[cmd.help.category])

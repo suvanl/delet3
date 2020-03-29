@@ -1,3 +1,19 @@
+// Help command
+exports.emoji = {
+    "fun": "🎮",
+    "info": "ℹ️",
+    "misc": "💬",
+    "settings": "⚙️"
+};
+
+exports.colour = {
+    "fun": "#fcec62",
+    "info": "#62bffc",
+    "misc": "#04d1bb",
+    "settings": "#6272fc"
+};
+
+// Trivia command
 exports.categories = {
     "General Knowledge": 9,
     "Books": 10,
