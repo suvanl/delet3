@@ -1,9 +1,41 @@
 const fetch = require("node-fetch");
 const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
+const { categories } = require("../../core/util/data");
 
-exports.run = async (client, message) => {
-    const url = "https://opentdb.com/api.php?amount=1&type=boolean";
+exports.run = async (client, message, args) => {
+    // Send list of available categories
+    if (args[0] && args[0].toLowerCase() === "categories") {
+        const catArr = Array.from(Object.keys(categories));
+        const catList = catArr.map(c => `\`${c}\``).join(", ");
+        return message.channel.send(`📋 **Available categories**\n${catList}`);
+    }
+
+    // Define available levels of difficulty
+    const levels = ["easy", "medium", "hard"];
+
+    // Set difficulty
+    const d = args[0] || "medium";
+
+    // Inform user if invalid difficulty is specified
+    if (!levels.includes(d.toLowerCase())) return message.channel.send(stripIndents`
+        ⚠️ **Invalid difficulty**
+        Please choose from one of ${levels.map(l => `\`${l}\``).join("/")}.`);
+
+    // Define category as all words including + after args[1]; converted to valid number
+    let cat = args.slice(1).join(" ");
+    if (cat.toLowerCase().includes("and")) cat = args.slice(1).join(" ").replace(/and/g, "&");
+
+    const c = categories[cat.toTitleCase()] || 0;
+
+    // Inform user if invalid category is specified
+    if (args[1] && !c) return message.channel.send(stripIndents`
+        ⚠️ **Invalid category**
+        Use \`${message.settings.prefix}trivia categories\` to see a list of available categories.`);
+
+    // Interpolate difficulty & category info into URL string
+    const url = `https://opentdb.com/api.php?amount=1&category=${c}&difficulty=${d.toLowerCase()}`;
+
     try {
         // Fetch data from Open Trivia DB API
         const res = await fetch(url);
@@ -94,5 +126,5 @@ exports.help = {
     name: "trivia",
     description: "tests your knowledge on a topic of your choice",
     category: "fun",
-    usage: "trivia"
+    usage: "trivia [difficulty] [category]"
 };
