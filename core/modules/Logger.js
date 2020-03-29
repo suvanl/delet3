@@ -2,9 +2,9 @@ const { bgBlue, bgRed, bgYellow, blue, green, grey, orange } = require("chalk");
 const moment = require("moment");
 
 exports.log = (content, type = "log") => {
-    const d = new Date();
-    const n = d.getTimezoneOffset();
-    const timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")} ${n === 0 ? "UTC" : `UTC+${n}`} |`;
+    const z = moment().format("Z");
+    const tz = !z.includes(":30") ? z.replace(/0|:/g, "") : z;
+    const timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")} ${tz === "00:00" ? "UTC" : `UTC${tz}`} |`;
 
     switch (type) {
         case "cmd": {
