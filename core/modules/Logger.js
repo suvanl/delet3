@@ -4,7 +4,7 @@ const moment = require("moment");
 exports.log = (content, type = "log") => {
     const z = moment().format("Z");
     const tz = !z.includes(":30") ? z.replace(/0|:/g, "") : z;
-    const timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")} ${tz === "00:00" ? "UTC" : `UTC${tz}`} |`;
+    const timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")} ${z === "00:00" ? "UTC" : `UTC${tz}`} |`;
 
     switch (type) {
         case "cmd": {
