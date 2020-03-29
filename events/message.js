@@ -36,7 +36,7 @@ module.exports = async (client, message) => {
     if (!cmd) return;
 
     // Block guildOnly commands in DMs
-    if (cmd && !message.guild && cmd.config.guildOnly) return message.channel.send("Oops, this command is unavailable in DMs.");
+    if (cmd && !message.guild && cmd.config.guildOnly) return message.channel.send("🚫 This command is unavailable in DMs.");
     
     // permLevel check + response
     // todo: include user's permLevel name/number and required permLevel name/number in response
