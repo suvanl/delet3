@@ -11,6 +11,18 @@ exports.run = async (client, message, args) => {
         return message.channel.send(`📋 **Available categories**\n${catList}`);
     }
 
+    // Let user know how many points they have
+    const userData = await client.getUser(message.author);
+    const currentPoints = userData.triviaPoints;
+    if (args[0] && args[0].toLowerCase() === "points") return message.reply(`you currently have \`${currentPoints}\` trivia points.`);
+
+    // Send trivia leaderboard
+    const lbAliases = ["leaderboard", "lb"];
+    if (lbAliases.includes(args[0] && args[0].toLowerCase())) {
+        if (message.channel.type !== "text") return message.channel.send("🚫 Leaderboard is unavailable in DMs.");
+        // TODO: create trivia leaderboard
+    }
+
     // Define available levels of difficulty
     const levels = ["easy", "medium", "hard"];
 
@@ -110,9 +122,6 @@ exports.run = async (client, message, args) => {
 
             // Add points (if in a guild text channel)
             if (message.channel.type === "text") {
-                const userData = await client.getUser(message.author);
-                const currentPoints = userData.triviaPoints;
-
                 const dif = d.toLowerCase();
                 const points = { "easy": 1, "medium": 2, "hard": 3 };
 
