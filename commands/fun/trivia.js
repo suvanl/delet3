@@ -1,7 +1,10 @@
 const fetch = require("node-fetch");
+const Entities = require("html-entities").AllHtmlEntities;
 const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const { categories } = require("../../core/util/data");
+
+const e = new Entities();
 
 exports.run = async (client, message, args) => {
     // Send list of available categories
@@ -82,9 +85,9 @@ exports.run = async (client, message, args) => {
             .setColor("#6f99ff")
             .setDescription(stripIndents`
                 **Question**
-                ${quiz.question.decodeEntities()}
+                ${e.decode(quiz.question)}
 
-                ${options}
+                ${e.decode(options)}
 
                 **Category & Difficulty**
                 ${quiz.category} | ${quiz.difficulty.toTitleCase()}
