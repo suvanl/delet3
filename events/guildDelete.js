@@ -15,6 +15,8 @@ module.exports = async (client, guild) => {
         return client.logger.err(`Error deleting guild data:\n${err.stack}`);
     }
 
+    // TODO: delete guild user data from Db
+
     // Log name/ID of guild
     client.logger.inf(`${blue("guildDelete")}: "${cyan(guild.name)}" (${guild.id})`);
 };
