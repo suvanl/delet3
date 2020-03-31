@@ -3,6 +3,8 @@ module.exports = (client, member) => {
 
     if (settings.welcomeEnabled !== "true") return;
 
+    // TODO: save new member to DB
+
     // TODO: test this (by setting welcomeEnabled to true in settings)
     const welcomeStr = settings.welcomeMessage;
     const mapObj = { "{{server}}": guild.name, "user": member.user.tag };
