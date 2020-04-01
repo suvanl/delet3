@@ -61,6 +61,8 @@ module.exports = server => {
         }
     });
 
+    // TODO: support deleting a single user's data (i.e. if they leave the guild)
+
     // Delete user
     server.del("/users/:id", async (req, res, next) => {
         try {
