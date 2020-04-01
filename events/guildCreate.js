@@ -29,7 +29,7 @@ module.exports = async (client, guild) => {
     const userUrl = `${process.env.URL}/users`;
     const members = guild.members.cache.map(m => m.user.id);
     members.forEach(async id => {
-        const userBody = { "userID": parseInt(id) };
+        const userBody = { "userID": parseInt(id), "guildID": parseInt(guild.id) };
         try {
             await fetch(userUrl, {
                 method: "post",
