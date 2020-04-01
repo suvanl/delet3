@@ -10,7 +10,7 @@ module.exports = async (client, guild) => {
 
     // Store guild data with default settings in database
     const url = `${process.env.URL}/guilds`;
-    const body = { "guildID": parseInt(guild.id), name: guild.name };
+    const body = { "guildID": guild.id, name: guild.name };
     const meta = { "Content-Type": "application/json", "Authorization": `jwt ${secret.token}` };
     
     try {
@@ -27,9 +27,10 @@ module.exports = async (client, guild) => {
 
     // Store guild's user IDs in database
     const userUrl = `${process.env.URL}/users`;
+
     const members = guild.members.cache.map(m => m.user.id);
     members.forEach(async id => {
-        const userBody = { "userID": parseInt(id), "guildID": parseInt(guild.id) };
+        const userBody = { "userID": id, "guildID": guild.id };
         try {
             await fetch(userUrl, {
                 method: "post",
