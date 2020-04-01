@@ -3,11 +3,11 @@ const timestamp = require("mongoose-timestamp");
 
 const UserSchema = new mongoose.Schema({
     userID: {
-        type: Number,
+        type: String,
         required: true
     },
     guildID: {
-        type: Number,
+        type: String,
         required: true
     },
     points: {

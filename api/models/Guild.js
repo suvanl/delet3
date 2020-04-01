@@ -3,8 +3,8 @@ const timestamp = require("mongoose-timestamp");
 
 const GuildSchema = new mongoose.Schema({
     guildID: {
-        type: Number,
-        default: 0,
+        type: String,
+        default: "0",
         required: true
     },
     name: {
