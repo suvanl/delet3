@@ -6,6 +6,10 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    guildID: {
+        type: Number,
+        required: true
+    },
     points: {
         type: Number,
         default: 0

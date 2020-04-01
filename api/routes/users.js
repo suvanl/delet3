@@ -29,10 +29,11 @@ module.exports = server => {
         // Ensure Content-Type is application/json
         if (!req.is("application/json")) return next(new errors.InvalidContentError("Expects 'application/json'"));
 
-        const { userID, points, triviaPoints } = req.body;
+        const { userID, guildID, points, triviaPoints } = req.body;
 
         const user = new User({
             userID,
+            guildID,
             points,
             triviaPoints
         });
