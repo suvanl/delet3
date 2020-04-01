@@ -22,8 +22,34 @@ exports.run = async (client, message, args) => {
     // Send trivia leaderboard
     const lbAliases = ["leaderboard", "lb"];
     if (lbAliases.includes(args[0] && args[0].toLowerCase())) {
+        // Return if leaderboard/lb arg is used in DMs
         if (message.channel.type !== "text") return message.channel.send("🚫 Leaderboard is unavailable in DMs.");
-        // TODO: create trivia leaderboard
+
+        // Fetch all users
+        const all = await client.getUsers();
+
+        // Filter out users who aren't in this guild, as well as users who have 0 triviaPoints
+        const filtered = all.filter(a => a.guildID === message.guild.id && a.triviaPoints >= parseInt(1));
+
+        // Sort filtered users by number of trivia points
+        const sorted = filtered.sort((a, b) => {
+            return (a.triviaPoints < b.triviaPoints);
+        });
+
+        // Create leaderboard
+        let lbMsg = `🔢 **Trivia Leaderboard** for ${message.guild.name}\n\n`;
+
+        let index = 0;
+        const lb = sorted.map(async m => {
+            const u = await client.users.fetch(m.userID);
+            return `**${++index}** | ${u.username}#${u.discriminator} - ${m.triviaPoints} points`;
+        });
+
+        // Send leaderboard
+        return Promise.all(lb).then(res => {
+            lbMsg += res;
+            message.channel.send(lbMsg);
+        });
     }
 
     // Define available levels of difficulty
