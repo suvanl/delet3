@@ -13,6 +13,15 @@ exports.colour = {
     "settings": "#6272fc"
 };
 
+// Language command
+exports.langName = {
+    "en-GB": "English 🇬🇧"
+};
+
+exports.validLangs = [
+    "en-GB"
+];
+
 // Trivia command
 exports.medals = {
     1: "🥇",
