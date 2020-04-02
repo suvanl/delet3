@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
         🔄 Please enter the new prefix. Reply with \`cancel\` to exit.`;
 
     const newPrefix = args[0] || await client.awaitReply(message, msg);
-    if (newPrefix.toLowerCase() === "cancel") return message.channel.send("🚪 Ended the settings customisation procedure.");
+    if (!newPrefix || newPrefix.toLowerCase() === "cancel") return message.channel.send("🚪 Ended the settings customisation procedure.");
 
     try {
         const update = await client.updateSettings(message.guild, "prefix", newPrefix);
