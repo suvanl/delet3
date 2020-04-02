@@ -2,6 +2,7 @@ const { stripIndents } = require("common-tags");
 const { mlSettingsKey, friendlySettings } = require("../../core/util/data");
 
 exports.run = async (client, message) => {
+    // TODO: add functionality to change modLogData
     const msg = stripIndents`
         ⚙️ Which mod-log related setting would you like to update?
 
