@@ -1,4 +1,5 @@
 const { blue } = require("chalk");
+const { stripIndents } = require("common-tags");
 
 module.exports = async (client, message) => {
     // Return if guild is unavailable (due to server outage)
@@ -39,8 +40,10 @@ module.exports = async (client, message) => {
     if (cmd && !message.guild && cmd.config.guildOnly) return message.channel.send("🚫 This command is unavailable in DMs.");
     
     // permLevel check + response
-    // todo: include user's permLevel name/number and required permLevel name/number in response
-    if (level < client.levelCache[cmd.config.permLevel]) return message.channel.send("You don't have permission to use this command.");
+    if (level < client.levelCache[cmd.config.permLevel]) return message.channel.send(stripIndents`
+        ⛔ You don't have permission to use this command.
+        Your permission level is: \`${level}\` (**${client.permLevels.levels.find(l => l.level === level).name}**);
+        The required level is: \`${client.levelCache[cmd.config.permLevel]}\` (**${cmd.config.permLevel}**).`);
 
     // Change author's permLevel from being on `member` to `level`
     message.author.permLevel = level;
