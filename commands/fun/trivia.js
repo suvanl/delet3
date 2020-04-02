@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const Entities = require("html-entities").AllHtmlEntities;
 const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
-const { categories, medals } = require("../../core/util/data");
+const { categories } = require("../../core/util/data");
 
 const e = new Entities();
 
@@ -33,8 +33,11 @@ exports.run = async (client, message, args) => {
 
         // Sort filtered users by number of trivia points
         const sorted = filtered.sort((a, b) => {
-            return (a.triviaPoints < b.triviaPoints);
+            if (a.triviaPoints < b.triviaPoints) return 1;
+            else return -1;
         });
+
+        console.log(sorted);
 
         // Create leaderboard
         let lbMsg = `🔢 **Trivia Leaderboard** for ${message.guild.name}\n\n`;
@@ -53,7 +56,7 @@ exports.run = async (client, message, args) => {
             const embed = new MessageEmbed()
                 .setColor(filtered.length === 0 ? "#ff8d6f" : "#6fe1ff")
                 .setDescription(lbMsg);
-            
+
             message.channel.send(embed);
         });
     }
