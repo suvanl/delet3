@@ -30,11 +30,20 @@ exports.roleSettingsKey = {
     4: "autoRoleEnabled"
 };
 
+// SETTINGS COMMANDS
 exports.friendlySettings = {
     "adminRole": "admin role",
     "modRole": "mod role",
     "autoRoleName": "auto-role name",
-    "autoRoleEnabled": "auto-role on / off"
+    "autoRoleEnabled": "auto-role on / off",
+    "modLogChannel": "mod-log channel",
+    "modLogEnabled": "mod-log on / off"
+};
+
+// Modlog command
+exports.mlSettingsKey = {
+    1: "modLogChannel",
+    2: "modLogEnabled"
 };
 
 // Trivia command
