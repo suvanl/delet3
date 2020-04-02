@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
         const update = await client.updateSettings(message.guild, "prefix", newPrefix);
         if (update === 200) return message.channel.send(`<:tick:688400118549970984> Prefix successfully changed to \`${newPrefix}\`.`);
     } catch (err) {
-        message.channel.send("<:x_:688400118327672843> An error occurred whilst changing the prefix.");
+        message.channel.send("<:x_:688400118327672843> An error occurred while changing this setting.");
         return client.logger.err(`Error changing prefix:\n${err.stack}`);
     }
 };

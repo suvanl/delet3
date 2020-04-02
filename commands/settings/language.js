@@ -24,7 +24,7 @@ exports.run = async (client, message, args) => {
         const update = await client.updateSettings(message.guild, "language", newLanguage);
         if (update === 200) return message.channel.send(`<:tick:688400118549970984> Language successfully changed to \`${newLanguage}\`.`);
     } catch (err) {
-        message.channel.send("<:x_:688400118327672843> An error occurred whilst changing the language.");
+        message.channel.send("<:x_:688400118327672843> An error occurred while changing this setting.");
         return client.logger.err(`Error changing language:\n${err.stack}`);
     }
 };
