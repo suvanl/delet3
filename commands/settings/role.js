@@ -42,8 +42,7 @@ exports.run = async (client, message) => {
         // Define message prompt
         const msg = stripIndents`
             ⚙️ The current value of **${friendly.toTitleCase()}** is \`${s[selected]}\`.
-            🔄 Please enter the new value. Reply with \`cancel\` to exit.
-            `;
+            🔄 Please enter the new value. Reply with \`cancel\` to exit.`;
         
         const newValue = await client.awaitReply(message, msg);
         if (!newValue || newValue.toLowerCase() === "cancel") return message.channel.send("🚪 Ended the settings customisation procedure.");
