@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 
 module.exports = client => {
     // Send PUT request to API to update guild-specific settings
-    client.getSettings = async (guild, setting, newValue) => {
+    client.updateSettings = async (guild, setting, newValue) => {
         const url = `${process.env.URL}/guilds/${guild.id}`;
         const body = { "settings": { [setting]: newValue } };
 
@@ -10,11 +10,13 @@ module.exports = client => {
         const meta = { "Content-Type": "application/json", "Authorization": `jwt ${secret.token}` };
 
         try {
-            await fetch(url, {
+            const res = await fetch(url, {
                 method: "PUT",
                 body: JSON.stringify(body),
                 headers: meta
             });
+
+            return res.status;
         } catch (err) {
             return client.logger.err(`error in updateSettings:\n${err.stack}`);
         }
