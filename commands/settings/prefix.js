@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 const { stripIndents } = require("common-tags");
 
 exports.run = async (client, message, args) => {
@@ -10,20 +9,9 @@ exports.run = async (client, message, args) => {
     if (newPrefix.toLowerCase() === "cancel") return message.channel.send(stripIndents`
         🚪 Ended the settings customisation procedure.`);
 
-    const secret = await client.genSecret();
-    const url = `${process.env.URL}/guilds/${message.guild.id}`;
-    const body = { "settings": { "prefix": newPrefix } };
-
-    const meta = { "Content-Type": "application/json", "Authorization": `jwt ${secret.token}` };
-
     try {
-        const res = await fetch(url, {
-            method: "PUT",
-            body: JSON.stringify(body),
-            headers: meta
-        });
-
-        if (res.status === 200) return message.channel.send(`<:tick:688400118549970984> Prefix successfully changed to \`${newPrefix}\`.`);
+        const update = await client.updateSettings(message.guild, "prefix", newPrefix);
+        if (update === 200) return message.channel.send(`<:tick:688400118549970984> Prefix successfully changed to \`${newPrefix}\`.`);
     } catch (err) {
         message.channel.send("<:x_:688400118327672843> An error occurred whilst changing the prefix.");
         return client.logger.err(`Error changing prefix:\n${err.stack}`);

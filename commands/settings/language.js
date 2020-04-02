@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 const { stripIndents } = require("common-tags");
 const { langName, validLangs } = require("../../core/util/data");
 
@@ -22,20 +21,9 @@ exports.run = async (client, message, args) => {
         "${newLanguage}" is either an invalid or unavailable language tag.
         Please use \`${message.settings.prefix}language available\` to see a list of valid languages.`);
 
-    const secret = await client.genSecret();
-    const url = `${process.env.URL}/guilds/${message.guild.id}`;
-    const body = { "settings": { "language": newLanguage } };
-
-    const meta = { "Content-Type": "application/json", "Authorization": `jwt ${secret.token}` };
-
     try {
-        const res = await fetch(url, {
-            method: "PUT",
-            body: JSON.stringify(body),
-            headers: meta
-        });
-
-        if (res.status === 200) return message.channel.send(`<:tick:688400118549970984> Language successfully changed to \`${newLanguage}\`.`);
+        const update = await client.updateSettings(message.guild, "language", newLanguage);
+        if (update === 200) return message.channel.send(`<:tick:688400118549970984> Language successfully changed to \`${newLanguage}\`.`);
     } catch (err) {
         message.channel.send("<:x_:688400118327672843> An error occurred whilst changing the language.");
         return client.logger.err(`Error changing language:\n${err.stack}`);
