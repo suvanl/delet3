@@ -32,12 +32,7 @@ exports.run = async (client, message, args) => {
         const filtered = all.filter(a => a.guildID === message.guild.id && a.triviaPoints >= parseInt(1));
 
         // Sort filtered users by number of trivia points
-        const sorted = filtered.sort((a, b) => {
-            if (a.triviaPoints < b.triviaPoints) return 1;
-            else return -1;
-        });
-
-        console.log(sorted);
+        const sorted = filtered.sort((a, b) => a.triviaPoints < b.triviaPoints ? 1 : -1);
 
         // Create leaderboard
         let lbMsg = `🔢 **Trivia Leaderboard** for ${message.guild.name}\n\n`;
