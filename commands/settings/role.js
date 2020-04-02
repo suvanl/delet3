@@ -67,7 +67,7 @@ exports.run = async (client, message) => {
 exports.config = {
     aliases: [],
     enabled: true,
-    guildOnly: false,
+    guildOnly: true,
     permLevel: "Server Moderator"
 };
 
