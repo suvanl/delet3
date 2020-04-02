@@ -44,6 +44,7 @@ exports.run = async (client, message) => {
             ⚙️ The current value of **${friendly.toTitleCase()}** is \`${s[selected]}\`.
             🔄 Please enter the new value. Reply with \`cancel\` to exit.`;
         
+        // Prompt for new value
         const newValue = await client.awaitReply(message, msg);
         if (!newValue || newValue.toLowerCase() === "cancel") return message.channel.send("🚪 Ended the settings customisation procedure.");
 
@@ -53,6 +54,7 @@ exports.run = async (client, message) => {
             if (!role) return message.channel.send(`A role with the name \`${newValue}\` could not be found on this server.`);
         }
 
+        // Update value of chosen setting in guild settings
         try {
             const update = await client.updateSettings(message.guild, setting, newValue);
             if (update === 200) return message.channel.send(`<:tick:688400118549970984> ${friendly.toTitleCase()} successfully changed to \`${newValue}\`.`);
