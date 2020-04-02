@@ -22,7 +22,6 @@ exports.run = async (client, message) => {
     ctx.fillText(tf[settings.modLogEnabled], canvas.width / 3.1, canvas.height / 4.75);
     ctx.fillText(tf[settings.modLogEnabled], canvas.width / 3.1, canvas.height / 3.75);
 
-
     // Section 2
     ctx.fillText(settings.prefix, canvas.width / 4.3, canvas.height / 2.9);
 
