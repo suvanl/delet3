@@ -38,6 +38,7 @@ exports.run = async (client, message, args) => {
 
         // Create leaderboard
         let lbMsg = `🔢 **Trivia Leaderboard** for ${message.guild.name}\n\n`;
+        if (filtered.length === 0) lbMsg += `All users here have **0** points.\nUse the \`${message.settings.prefix}trivia\` command to earn some!`;
 
         let index = 0;
         const lb = sorted.map(async m => {
@@ -50,7 +51,7 @@ exports.run = async (client, message, args) => {
             lbMsg += res.join("\n");
             
             const embed = new MessageEmbed()
-                .setColor("#6fe1ff")
+                .setColor(filtered.length === 0 ? "#ff8d6f" : "#6fe1ff")
                 .setDescription(lbMsg);
             
             message.channel.send(embed);
