@@ -56,7 +56,7 @@ exports.run = async (client, message) => {
             if (update === 200) return message.channel.send(`<:tick:688400118549970984> ${friendly.toTitleCase()} successfully changed to \`${newValue.toLowerCase()}\`.`);
         } catch (err) {
             message.channel.send("<:x_:688400118327672843> An error occurred while changing this setting.");
-            return client.logger.err(`Error changing a role setting:\n${err.stack}`);   
+            return client.logger.err(`Error changing a modlog setting:\n${err.stack}`);   
         }
     }
 
