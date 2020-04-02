@@ -39,7 +39,6 @@ client.permLevels = require("./core/settings/permLevels");
 client.logger = require("./core/modules/Logger");
 
 // Require custom core functions
-// TODO: should probably require these all at once
 require("./core/functions/loadCommand")(client);
 require("./core/functions/genSecret")(client);
 require("./core/functions/getSettings")(client);
@@ -48,6 +47,7 @@ require("./core/functions/getUsers")(client);
 require("./core/functions/addPoints")(client);
 require("./core/functions/permLevel")(client);
 require("./core/functions/awaitReply")(client);
+require("./core/functions/updateSettings")(client);
 require("./core/functions/misc");
 
 // Set up REST API server
