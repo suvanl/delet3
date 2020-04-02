@@ -63,7 +63,6 @@ exports.run = async (client, message) => {
             return client.logger.err(`Error changing a role setting:\n${err.stack}`);
         }
     }
-
 };
 
 exports.config = {

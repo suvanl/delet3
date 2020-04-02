@@ -60,7 +60,6 @@ exports.run = async (client, message) => {
             return client.logger.err(`Error changing a modlog setting:\n${err.stack}`);   
         }
     }
-
 };
 
 exports.config = {
