@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const Entities = require("html-entities").AllHtmlEntities;
 const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
-const { categories } = require("../../core/util/data");
+const { categories, medals } = require("../../core/util/data");
 
 const e = new Entities();
 
@@ -42,13 +42,18 @@ exports.run = async (client, message, args) => {
         let index = 0;
         const lb = sorted.map(async m => {
             const u = await client.users.fetch(m.userID);
-            return `**${++index}** | ${u.username}#${u.discriminator} - ${m.triviaPoints} points`;
+            return `**${++index}** | ${u.username}#${u.discriminator} - **${m.triviaPoints}** points`;
         });
 
         // Send leaderboard
         return Promise.all(lb).then(res => {
-            lbMsg += res;
-            message.channel.send(lbMsg);
+            lbMsg += res.join("\n");
+            
+            const embed = new MessageEmbed()
+                .setColor("#6fe1ff")
+                .setDescription(lbMsg);
+            
+            message.channel.send(embed);
         });
     }
 

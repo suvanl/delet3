@@ -14,6 +14,12 @@ exports.colour = {
 };
 
 // Trivia command
+exports.medals = {
+    1: "🥇",
+    2: "🥈",
+    3: "🥉"
+};
+
 exports.categories = {
     "General Knowledge": 9,
     "Books": 10,
