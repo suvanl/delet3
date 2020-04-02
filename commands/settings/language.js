@@ -14,8 +14,7 @@ exports.run = async (client, message, args) => {
 
     const newLanguage = args[0] || await client.awaitReply(message, msg);
 
-    if (!newLanguage || newLanguage.toLowerCase() === "cancel") return message.channel.send(stripIndents`
-        🚪 Ended the settings customisation procedure.`);
+    if (!newLanguage || newLanguage.toLowerCase() === "cancel") return message.channel.send("🚪 Ended the settings customisation procedure.");
 
     if (!validLangs.includes(newLanguage)) return message.channel.send(stripIndents`
         "${newLanguage}" is either an invalid or unavailable language tag.
