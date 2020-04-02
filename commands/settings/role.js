@@ -1,5 +1,5 @@
 const { stripIndents } = require("common-tags");
-const { roleSettingsKey, friendlySettings } = require("../../core/util/data"); // theValue[friendlySettings]
+const { roleSettingsKey, friendlySettings } = require("../../core/util/data");
 
 exports.run = async (client, message) => {
     const msg = stripIndents`
