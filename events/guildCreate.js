@@ -20,7 +20,7 @@ module.exports = async (client, guild) => {
             headers: meta
         });
 
-        // TODO: find a way to save new guild data if the bot was added to a guild whilst offline (maybe run this same logic on the message event, if guildID does not exist in db)
+        // TODO: find a way to save new guild data if the bot was added to a guild whilst offline (maybe run this same logic on the message/ready event, if guildID does not exist in db)
     } catch (err) {
         return client.logger.err(`Error saving new guild data:\n${err.stack}`);
     }
