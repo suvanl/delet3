@@ -22,6 +22,21 @@ exports.validLangs = [
     "en-GB"
 ];
 
+// Role command
+exports.roleSettingsKey = {
+    1: "adminRole",
+    2: "modRole",
+    3: "autoRoleName",
+    4: "autoRoleEnabled"
+};
+
+exports.friendlySettings = {
+    "adminRole": "admin role",
+    "modRole": "mod role",
+    "autoRoleName": "auto-role name",
+    "autoRoleEnabled": "auto-role on / off"
+};
+
 // Trivia command
 exports.medals = {
     1: "🥇",
