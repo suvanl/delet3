@@ -18,17 +18,20 @@ module.exports = async (client, member) => {
         return client.logger.err(`Error saving new guildMember:\n${err.stack}`);
     }
 
-    // Welcome message stuff
-    const settings = client.getSettings(member.guild);
-    if (settings.welcomeEnabled !== "true") return;
+    // Get guild settings
+    const settings = await client.getSettings(member.guild);
 
-    // TODO: test this (by setting welcomeEnabled to true in settings)
+    // Return if welcomeEnabled isn't set to true
+    if (settings.welcomeEnabled !== true) return;
+
+    // Replace placeholders with actual data
     const welcomeStr = settings.welcomeMessage;
-    const mapObj = { "{{server}}": guild.name, "user": member.user.tag };
+    const mapObj = { "{{server}}": member.guild.name, "{{user}}": member.user.tag };
 
     const msg = welcomeStr.replace(/{{server}}|{{user}}/g, matched => {
         return mapObj[matched];
     });
 
-    member.guild.channels.find(c => c.name === settings.welcomeChannel.send(msg).catch(console.error));
+    // Find welcomeChannel and send welcomeMessage to it
+    member.guild.channels.cache.find(c => c.name === settings.welcomeChannel).send(msg);
 };
