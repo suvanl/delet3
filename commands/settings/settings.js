@@ -26,8 +26,7 @@ exports.run = async (client, message) => {
 
         💬 **Other**
         - Prefix: \`${message.settings.prefix}\`
-        - Language: \`${langNameText[message.settings.language]}\`
-    `);
+        - Language: \`${langNameText[message.settings.language]}\``);
 };
 
 exports.config = {
