@@ -27,12 +27,12 @@ exports.friendlySettings = {
     "adminRole": "admin role",
     "modRole": "mod role",
     "autoRoleName": "auto-role name",
-    "autoRoleEnabled": "auto-role on / off",
+    "autoRoleEnabled": "auto-role enabled",
     "modLogChannel": "mod-log channel",
-    "modLogEnabled": "mod-log on / off",
+    "modLogEnabled": "mod-log enabled",
     "welcomeChannel": "welcome channel",
     "welcomeMessage": "welcome message",
-    "welcomeEnabled": "welcome on / off"
+    "welcomeEnabled": "welcome enabled"
 };
 
 // Role command
