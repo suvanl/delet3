@@ -12,7 +12,7 @@ const permLevels = {
             name: "Server Moderator",
             verify: message => {
                 try {
-                    const modRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.modRole.toLowerCase());
+                    const modRole = message.guild.roles.find(r => r.name === message.settings.modRole);
                     if (modRole && message.member.roles.has(modRole.id)) return true;
                 } catch (err) {
                     return false;
@@ -24,7 +24,7 @@ const permLevels = {
             name: "Server Admin",
             verify: message => {
                 try {
-                    const adminRole = message.guild.roles.find(r => r.name.toLowerCase() === message.settings.adminRole.toLowerCase());
+                    const adminRole = message.guild.roles.find(r => r.name === message.settings.adminRole);
                     if (adminRole && message.member.roles.has(adminRole.id)) return true;
                 } catch (err) {
                     return false;
