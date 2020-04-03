@@ -5,18 +5,37 @@ module.exports = async (client, guild) => {
     // Delete guild data from database
     const secret = await client.genSecret();
     const url = `${process.env.URL}/guilds/${guild.id}`;
+    const meta = { "Authorization": `jwt ${secret.token}` };
     
     try {
         await fetch(url, {
             method: "delete",
-            headers: { "Authorization": `jwt ${secret.token}` }
+            headers: meta
         });
     } catch (err) {
         return client.logger.err(`Error deleting guild data:\n${err.stack}`);
     }
 
-    // TODO: delete guild user data from DB
+    // Fetch all users
+    const all = await client.getUsers();
 
+    // Filter out users who aren't in this guild
+    const filtered = all.filter(a => a.guildID === guild.id);
+
+    // Delete guild users from DB
+    filtered.forEach(async e => {
+        // Define delete request params
+        const userUrl = `${process.env.URL}/users/${e.userID}`;
+        try {
+            await fetch(userUrl, {
+                method: "delete",
+                headers: meta
+            });
+        } catch (err) {
+            return client.logger.err(`Error deleting guild user data:\n${err.stack}`);
+        }
+    });
+    
     // Log name/ID of guild
     client.logger.inf(`${blue("guildDelete")}: "${cyan(guild.name)}" (${guild.id})`);
 };
