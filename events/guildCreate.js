@@ -4,10 +4,6 @@ const fetch = require("node-fetch");
 module.exports = async (client, guild) => {
     const secret = await client.genSecret();
 
-    // Prevent new guild data being added if the guild already exists in database (this shouldn't happen in production anyway)
-    // const g = client.getSettings(guild);
-    // if (g.guildID === guild.id) return client.logger.wrn(`${guild.name} already exists in database`);
-
     // Store guild data with default settings in database
     const url = `${process.env.URL}/guilds`;
     const body = { "guildID": guild.id, name: guild.name };
