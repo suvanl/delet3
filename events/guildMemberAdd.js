@@ -21,17 +21,28 @@ module.exports = async (client, member) => {
     // Get guild settings
     const settings = await client.getSettings(member.guild);
 
-    // Return if welcomeEnabled isn't set to true
-    if (settings.welcomeEnabled !== true) return;
+    // If autoRoleEnabled is set to true...
+    if (settings.autoRoleEnabled === true) {
+        console.log("I'm in here");
+        // Find the required role by name; if it isn't found, return
+        const role = member.guild.roles.cache.find(r => r.name === settings.autoRoleName);
+        if (!role) return;
 
-    // Replace placeholders with actual data
-    const welcomeStr = settings.welcomeMessage;
-    const mapObj = { "{{server}}": member.guild.name, "{{user}}": member.user.tag };
+        // Add the role (by ID) to the guildMember
+        member.roles.add(role.id);
+    }
 
-    const msg = welcomeStr.replace(/{{server}}|{{user}}/g, matched => {
-        return mapObj[matched];
-    });
+    // If welcomeEnabled is set to true...
+    if (settings.welcomeEnabled === true) {
+        // Replace placeholders with actual data
+        const welcomeStr = settings.welcomeMessage;
+        const mapObj = { "{{server}}": member.guild.name, "{{user}}": member.user.tag };
 
-    // Find welcomeChannel and send welcomeMessage to it
-    member.guild.channels.cache.find(c => c.name === settings.welcomeChannel).send(msg);
+        const msg = welcomeStr.replace(/{{server}}|{{user}}/g, matched => {
+            return mapObj[matched];
+        });
+
+        // Find welcomeChannel and send welcomeMessage to it
+        member.guild.channels.cache.find(c => c.name === settings.welcomeChannel).send(msg);
+    }
 };
