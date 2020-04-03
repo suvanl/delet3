@@ -13,8 +13,7 @@ exports.run = async (client, message) => {
         .setAuthor(`delet ${deletVersion} - About`, client.user.displayAvatarURL())
         .setDescription(stripIndents`
             👥 **Users**: ${client.users.cache.size} | 💬 **Servers**: ${client.guilds.cache.size} | 🕙 **Uptime**: ${m.utc(client.uptime).format("HH:mm:ss")}
-            🧠 **Memory usage**: ~${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed()}MB | 🔑 **Owner**: ${ownerTag}
-            `)
+            🧠 **Memory usage**: ~${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed()}MB | 🔑 **Owner**: ${ownerTag}`)
         .setFooter(`Made with Discord.js ${version}`, "https://i.imgur.com/RWcHLuz.png")
         .setTimestamp();
 
