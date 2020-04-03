@@ -35,6 +35,10 @@ exports.friendlySettings = {
     "welcomeEnabled": "welcome enabled"
 };
 
+exports.langNameText = {
+    "en-GB": "English (UK)"
+};
+
 // Role command
 exports.roleSettingsKey = {
     1: "adminRole",
