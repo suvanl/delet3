@@ -9,7 +9,7 @@ exports.run = async (client, message) => {
         2️⃣ **Welcome message**
         3️⃣ **Welcome on/off**
 
-        Reply with \`cancel\` to exit`;
+        Reply with \`cancel\` to exit.`;
 
     // Prompt for selected setting
     const selected = await client.awaitReply(message, msg);
