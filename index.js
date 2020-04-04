@@ -48,6 +48,7 @@ require("./core/functions/addPoints")(client);
 require("./core/functions/permLevel")(client);
 require("./core/functions/awaitReply")(client);
 require("./core/functions/updateSettings")(client);
+require("./core/functions/resetDefaults")(client);
 require("./core/functions/misc");
 
 // Set up REST API server
