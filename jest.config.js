@@ -132,7 +132,7 @@ module.exports = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "node",
+  testEnvironment: "node", // eslint-disable-line comma-dangle
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
