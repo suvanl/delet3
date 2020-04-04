@@ -55,7 +55,7 @@ exports.run = async (client, message, args, level) => {
                     \`${message.settings.prefix}${cmd.help.usage}\`
 
                     **aliases**
-                    \`${cmd.config.aliases.length !== 0 ? cmd.config.aliases.join(", ") : "[ none ]"}\``);
+                    ${cmd.config.aliases.length !== 0 ? cmd.config.aliases.map(a => `\`${a}\``).join(", ") : "`[ none ]`"}`);
 
             message.channel.send(embed);
         }
