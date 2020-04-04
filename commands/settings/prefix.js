@@ -21,7 +21,7 @@ exports.config = {
     aliases: [],
     enabled: true,
     guildOnly: true,
-    permLevel: "Server Moderator"
+    permLevel: "Server Admin"
 };
 
 exports.help = {
