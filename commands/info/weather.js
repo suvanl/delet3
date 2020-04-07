@@ -23,8 +23,10 @@ exports.run = async (client, message, args) => {
 
     // Inform user if 404 occurs
     if (data.cod === "404") return message.channel.send(stripIndents`
-        ⚠️ An error occurred: \`${data.cod} ${data.message}\`.
-        ➡️ Please ensure you've provided a valid city name. Try specifying the country name as well.`);
+        ⚠️ **An error occurred: \`${data.cod} ${data.message}\`.**
+
+        ➡️ Please ensure you've provided a valid city name.
+        ℹ️ Use \`${message.settings.prefix}help weather\` for further information.`);
 
     // Get appropriate weather icon
     const img = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
