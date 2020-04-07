@@ -64,7 +64,7 @@ module.exports = server => {
     // Delete user
     server.del("/users/:id", async (req, res, next) => {
         try {
-            await User.findOneAndRemove({ userID: req.params.id });
+            await User.findOneAndRemove({ _id: req.params.id });
             res.send(204);
             next();
         } catch (err) {

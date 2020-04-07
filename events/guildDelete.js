@@ -25,7 +25,7 @@ module.exports = async (client, guild) => {
     // Delete guild users from DB
     filtered.forEach(async e => {
         // Define delete request params
-        const userUrl = `${process.env.URL}/users/${e.userID}`;
+        const userUrl = `${process.env.URL}/users/${e._id}`;
         try {
             await fetch(userUrl, {
                 method: "delete",
