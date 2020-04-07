@@ -6,7 +6,7 @@ module.exports = async (client, guild) => {
 
     // Store guild data with default settings in database
     const url = `${process.env.URL}/guilds`;
-    const body = { "guildID": guild.id, name: guild.name };
+    const body = { "guildID": guild.id, "name": guild.name };
     const meta = { "Content-Type": "application/json", "Authorization": `jwt ${secret.token}` };
     
     try {
