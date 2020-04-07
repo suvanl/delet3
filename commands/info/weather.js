@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
         ⚠️ An error occurred: \`${data.cod} ${data.message}\`.
         ➡️ Please ensure you've provided a valid city name. Try specifying the country name as well.`);
 
-    // Get appropriate weather iocn
+    // Get appropriate weather icon
     const img = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 
     // Convert angle to compass direction (for wind)
