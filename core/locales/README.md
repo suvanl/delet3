@@ -1,1 +1,0 @@
-**Language tag list:** https://en.wikipedia.org/wiki/Language_localisation#Language_tags_and_codes
