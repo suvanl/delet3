@@ -6,7 +6,7 @@ exports.run = async (client, message) => {
 
     // Cancel if 60s is up / if reply is "cancel" or "n(o)"
     const cancel = ["cancel", "n", "no"];
-    if (!res || cancel.includes(res.toLowerCase())) return message.channel.send("🚪 Ended the settings customisation procedure.");
+    if (!res || cancel.includes(res.toLowerCase())) return message.channel.send(`🚪 ${client.l10n(message, "settings.cancel")}`);
 
     // If reply is "y(es)"
     if (res.toLowerCase() === "y" || res.toLowerCase() === "yes") {

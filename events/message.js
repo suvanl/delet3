@@ -17,7 +17,7 @@ module.exports = async (client, message) => {
     // Respond with prefix if mentioned
     // TODO: use localisation rather than direct string input
     const mention = new RegExp(`^<@!?${client.user.id}> `);
-    if (message.content.match(mention)) return message.channel.send(`My prefix on this server is: \`${settings.prefix}\`.`);
+    if (message.content.match(mention)) return message.channel.send(`${client.l10n(message, "help.prefix")} \`${settings.prefix}\`.`);
 
     // TODO: add random number of points per message w/cooldown
 
@@ -39,7 +39,7 @@ module.exports = async (client, message) => {
     if (!cmd) return;
 
     // Block guildOnly commands in DMs
-    if (cmd && !message.guild && cmd.config.guildOnly) return message.channel.send("🚫 This command is unavailable in DMs.");
+    if (cmd && !message.guild && cmd.config.guildOnly) return message.channel.send(`🚫 ${client.l10n(message, "dm.unavailable")}`);
     
     // permLevel check + response
     if (level < client.levelCache[cmd.config.permLevel]) return message.channel.send(stripIndents`

@@ -15,7 +15,7 @@ exports.run = async (client, message) => {
     const selected = await client.awaitReply(message, msg);
 
     // If 60s is up / if reply is "cancel"
-    if (!selected || selected.toLowerCase() === "cancel") return message.channel.send("🚪 Ended the settings customisation procedure.");
+    if (!selected || selected.toLowerCase() === "cancel") return message.channel.send(`🚪 ${client.l10n(message, "settings.cancel")}`);
 
     // Valid answers
     const num = ["1", "2"];
@@ -43,7 +43,7 @@ exports.run = async (client, message) => {
 
         // Prompt for new value
         const newValue = await client.awaitReply(message, msg);
-        if (!newValue || newValue.toLowerCase() === "cancel") return message.channel.send("🚪 Ended the settings customisation procedure.");
+        if (!newValue || newValue.toLowerCase() === "cancel") return message.channel.send(`🚪 ${client.l10n(message, "settings.cancel")}`);
 
         // Check if newValue matches the name of a channel in the guild
         if (setting === "modLogChannel") {

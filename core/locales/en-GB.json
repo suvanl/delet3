@@ -1,3 +1,7 @@
 {
-    "hi": "hello"
+    "dm.unavailable": "This command is unavailable in DMs.",
+
+    "help.prefix": "My prefix on this server is:",
+
+    "settings.cancel": "Ended the settings customisation procedure."
 }
