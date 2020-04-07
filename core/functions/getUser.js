@@ -1,20 +1,14 @@
-const fetch = require("node-fetch");
-
 module.exports = client => {
     // Send GET request to API for a single user's data
-    client.getUser = async user => {
-        const url = `${process.env.URL}/users/${user.id}`;
-        try {
-            const secret = await client.genSecret();
-            const res = await fetch(url, {
-                method: "get",
-                headers: { "Authorization": `jwt ${secret.token}` }
-            });
-            
-            const data = await res.json();
-            return data[0];
-        } catch (err) {
-            return client.logger.err(`error in getUser:\n${err.stack}`);
-        }
+    client.getUser = async (guild, user) => {
+        // Fetch all users
+        const all = await client.getUsers();
+        
+        // Filter out users who aren't in this guild
+        const f = all.filter(a => a.guildID === guild.id);
+
+        // Find user by user ID
+        const u = f.filter(u => u.userID === user.id);
+        return u[0];
     };
 };

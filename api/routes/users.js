@@ -16,7 +16,7 @@ module.exports = server => {
     // Get single user by user ID
     server.get("/users/:id", async (req, res, next) => {
         try {
-            const user = await User.find({ "userID": req.params.id });
+            const user = await User.findById(req.params.id);
             res.send(user);
             next();
         } catch (err) {
@@ -53,7 +53,7 @@ module.exports = server => {
         if (!req.is("application/json")) return next(new errors.InvalidContentError("Expects 'application/json'"));
 
         try {
-            await User.findOneAndUpdate({ userID: req.params.id }, req.body);
+            await User.findOneAndUpdate({ _id: req.params.id }, req.body);
             res.send(200);
             next();
         } catch (err) {

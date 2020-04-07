@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
     }
 
     // Let user know how many points they have
-    const userData = await client.getUser(message.author);
+    const userData = await client.getUser(message.guild, message.author);
     const currentPoints = userData.triviaPoints;
     if (args[0] && args[0].toLowerCase() === "points") return message.reply(`you currently have \`${currentPoints}\` trivia points.`);
 
@@ -160,7 +160,7 @@ exports.run = async (client, message, args) => {
 
                 const newTotal = currentPoints + points[dif];
 
-                await client.addPoints(message.author, "triviaPoints", newTotal);
+                await client.addPoints(message.guild, message.author, "triviaPoints", newTotal);
 
                 // Send "correct answer" message with number of points gained
                 message.channel.send(correct += ` [+${points[dif]} ${points[dif] === 1 ? "point" : "points"}]`);
