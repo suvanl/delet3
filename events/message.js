@@ -15,9 +15,11 @@ module.exports = async (client, message) => {
     const settings = message.settings = await client.getSettings(message.guild);
 
     // Respond with prefix if mentioned
-    // todo: use localisation rather than direct string input
+    // TODO: use localisation rather than direct string input
     const mention = new RegExp(`^<@!?${client.user.id}> `);
     if (message.content.match(mention)) return message.channel.send(`My prefix on this server is: \`${settings.prefix}\`.`);
+
+    // TODO: add random number of points per message w/cooldown
 
     // Ignore messages that don't start with the bot's prefix
     if (message.content.indexOf(settings.prefix) !== 0) return;
