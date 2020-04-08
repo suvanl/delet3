@@ -1,7 +1,29 @@
 {
+    "channel": "channel",
+    "on_off": "on/off",
+    "error": "An error occurred.",
+
     "dm.unavailable": "This command is unavailable in DMs.",
 
     "help.prefix": "My prefix on this server is:",
+    "help.dmConfirm": "Help is on its way!",
 
-    "settings.cancel": "Ended the settings customisation procedure."
+    "fun.dmlb": "Leaderboard is unavailable in DMs.",
+
+    "settings.prompt.cat": "Which %category%-related setting would you like to change?",
+    "settings.prompt.newValue": "Please enter the new value.",
+    "settings.exitInfo": "Reply with `cancel` to exit.",
+    "settings.cancel": "Ended the settings customisation procedure.",
+    "settings.invalidNum": "Invalid value specified. Please reply with a value from %range%.",
+    "settings.restoringDefaults": "Restoring defaults...",
+    "settings.error": "An error occurred while changing this setting.",
+    "settings.missingChannel": "A channel with the name `%name%` could not be found on this server.",
+    "settings.missingRole": "A role with the name `%name%` could not be found on this server.",
+    "settings.adminRole": "Admin role",
+    "settings.modRole": "Mod role",
+    "settings.autoRoleName": "Auto-role name",
+    "settings.autoRoleEnabled": "Auto-role on/off",
+    "settings.welcomeChannel": "Welcome channel",
+    "settings.welcomeMessage": "Welcome message",
+    "settings.welcomeEnabled": "Welcome on/off"
 }
