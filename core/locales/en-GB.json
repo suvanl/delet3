@@ -8,7 +8,7 @@
     "help.prefix": "My prefix on this server is:",
     "help.dmConfirm": "Help is on its way!",
 
-    "fun.dmlb": "Leaderboard is unavailable in DMs.",
+    "trivia.dmlb": "Leaderboard is unavailable in DMs.",
 
     "settings.prompt.cat": "Which %category%-related setting would you like to change?",
     "settings.prompt.newValue": "Please enter the new value.",
