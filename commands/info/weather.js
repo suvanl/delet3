@@ -10,8 +10,8 @@ exports.run = async (client, message, args) => {
 
     // If no location is provided, return & inform user
     if (!location) return message.channel.send(stripIndents`
-        ℹ️ Please provide a location to look up weather info for.
-        📖 E.g. \`${message.settings.prefix}weather London\`.`);
+        ℹ️ ${client.l10n(message, "weather.noLocation")}
+        📖 ${client.l10n(message, "weather.example").replace(/%cmd%/g, `${message.settings.prefix}weather`)}.`);
 
     // Encode location as URI component
     const loc = encodeURIComponent(location);
@@ -23,10 +23,10 @@ exports.run = async (client, message, args) => {
 
     // Inform user if 404 occurs
     if (data.cod === "404") return message.channel.send(stripIndents`
-        ⚠️ **An error occurred: \`${data.cod} ${data.message}\`.**
+        ⚠️ **${client.l10n(message, "weather.404.error").replace(/%err%/g, `${data.cod} ${data.message}`)}**
 
-        ➡️ Please ensure you've provided a valid city name.
-        ℹ️ Use \`${message.settings.prefix}help weather\` for further information.`);
+        ➡️ ${client.l10n(message, "weather.404.valid")}
+        ℹ️ ${client.l10n(message, "weather.404.help").replace(/%cmd%/g, `${message.settings.prefix}help weather`)}`);
 
     // Get appropriate weather icon
     const img = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
