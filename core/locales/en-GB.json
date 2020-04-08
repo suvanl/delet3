@@ -39,6 +39,7 @@
     "weather.feels": "Feels like",
     "weather.humidity": "Humidity",
     "weather.wind": "Wind",
+    "weather.kmh": "km/h",
     "weather.sunrise": "Sunrise",
     "weather.sunset": "Sunset",
     "weather.footer": "Data provided by OpenWeatherMap | all times are local"

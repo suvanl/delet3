@@ -41,7 +41,7 @@ exports.run = async (client, message, args) => {
     // Predefine some of the data
     const flag = `:flag_${data.sys.country.toLowerCase()}:`;
     const updatedTime = moment.utc(moment.unix(data.dt + data.timezone)).format("HH:mm");
-    const wind = `${(Math.round(data.wind.speed) * 3.6).toFixed()}km/h ${data.wind.deg ? degToCompass(data.wind.deg) : ""}`;
+    const wind = `${(Math.round(data.wind.speed) * 3.6).toFixed()}${client.l10n(message, "weather.kmh")} ${data.wind.deg ? degToCompass(data.wind.deg) : ""}`;
     const sunrise = moment.utc(moment.unix(data.sys.sunrise + data.timezone)).format("HH:mm");
     const sunset = moment.utc(moment.unix(data.sys.sunset + data.timezone)).format("HH:mm");
 
