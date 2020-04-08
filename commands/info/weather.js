@@ -38,24 +38,31 @@ exports.run = async (client, message, args) => {
         return arr[(val % 16)];
     };
 
+    // Predefine some of the data
+    const flag = `:flag_${data.sys.country.toLowerCase()}:`;
+    const updatedTime = moment.utc(moment.unix(data.dt + data.timezone)).format("HH:mm");
+    const wind = `${(Math.round(data.wind.speed) * 3.6).toFixed()}km/h ${data.wind.deg ? degToCompass(data.wind.deg) : ""}`;
+    const sunrise = moment.utc(moment.unix(data.sys.sunrise + data.timezone)).format("HH:mm");
+    const sunset = moment.utc(moment.unix(data.sys.sunset + data.timezone)).format("HH:mm");
+
     // Construct & send embed
     const embed = new MessageEmbed()
         .setColor("#62bffc")
         .setThumbnail(img)
         .setDescription(stripIndents`
-            :flag_${data.sys.country.toLowerCase()}: __**Weather Info for ${data.name}, ${data.sys.country}**__
-            Last updated at ${moment.utc(moment.unix(data.dt + data.timezone)).format("HH:mm")} local time
+            ${flag} __**${client.l10n(message, "weather.title").replace(/%area%/g, `${data.name}, ${data.sys.country}`)}**__
+            ${client.l10n(message, "weather.updatedAt").replace(/%time%/, updatedTime)}
 
-            🌆 Conditions: **${data.weather[0].description}**
+            🌆 ${client.l10n(message, "weather.conditions")}: **${data.weather[0].description}**
 
-            🌡️ Temperature: **${Math.round(data.main.temp)}°C**
-            ☂️ Feels like: **${Math.round(data.main.feels_like)}°C**
-            💧 Humidity: **${data.main.humidity}%**
-            🍃 Wind: **${(Math.round(data.wind.speed) * 3.6).toFixed()}km/h ${data.wind.deg ? degToCompass(data.wind.deg) : ""}**
+            🌡️ ${client.l10n(message, "weather.temp")}: **${Math.round(data.main.temp)}°C**
+            ☂️ ${client.l10n(message, "weather.feels")}: **${Math.round(data.main.feels_like)}°C**
+            💧 ${client.l10n(message, "weather.humidity")}: **${data.main.humidity}%**
+            🍃 ${client.l10n(message, "weather.wind")}: **${wind}**
 
-            🌅 Sunrise: **${moment.utc(moment.unix(data.sys.sunrise + data.timezone)).format("HH:mm")}**
-            🌇 Sunset: **${moment.utc(moment.unix(data.sys.sunset + data.timezone)).format("HH:mm")}**`)
-        .setFooter("Data provided by OpenWeatherMap | all times are local", "https://i.imgur.com/OodcJh8.jpg");
+            🌅 ${client.l10n(message, "weather.sunrise")}: **${sunrise}**
+            🌇 ${client.l10n(message, "weather.sunset")}: **${sunset}**`)
+        .setFooter(client.l10n(message, "weather.footer"), "https://i.imgur.com/OodcJh8.jpg");
     
     message.channel.send(embed);
 };

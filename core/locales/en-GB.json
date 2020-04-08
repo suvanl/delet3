@@ -31,5 +31,15 @@
     "weather.example": "E.g. `%cmd% London`",
     "weather.404.error": "An error occurred: `%err%`.",
     "weather.404.valid": "Please ensure you've provided a valid city name.",
-    "weather.404.help": "Use `%cmd%` for further information."
+    "weather.404.help": "Use `%cmd%` for further information.",
+    "weather.title": "Weather Info for %area%",
+    "weather.updatedAt": "Last updated at %time% local time",
+    "weather.conditions": "Conditions",
+    "weather.temp": "Temperature",
+    "weather.feels": "Feels like",
+    "weather.humidity": "Humidity",
+    "weather.wind": "Wind",
+    "weather.sunrise": "Sunrise",
+    "weather.sunset": "Sunset",
+    "weather.footer": "Data provided by OpenWeatherMap | all times are local"
 }
