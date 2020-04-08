@@ -15,15 +15,17 @@ exports.run = async (client, message, args) => {
     }
 
     // Let user know how many points they have
-    const userData = await client.getUser(message.guild, message.author);
-    const currentPoints = userData.triviaPoints;
-    if (args[0] && args[0].toLowerCase() === "points") return message.reply(`you currently have \`${currentPoints}\` trivia points.`);
+    if (message.channel.type === "text") {
+        const userData = await client.getUser(message.guild, message.author);
+        const currentPoints = userData.triviaPoints;
+        if (args[0] && args[0].toLowerCase() === "points") return message.reply(`you currently have \`${currentPoints}\` trivia points.`);
+    }
 
     // Send trivia leaderboard
     const lbAliases = ["leaderboard", "lb"];
     if (lbAliases.includes(args[0] && args[0].toLowerCase())) {
         // Return if leaderboard/lb arg is used in DMs
-        if (message.channel.type !== "text") return message.channel.send("🚫 Leaderboard is unavailable in DMs.");
+        if (message.channel.type !== "text") return message.channel.send(`🚫 ${client.l10n(message, "fun.dmlb")}`);
 
         // Fetch all users
         const all = await client.getUsers();
@@ -176,7 +178,7 @@ exports.run = async (client, message, args) => {
             The correct answer was \`${quiz.correct_answer}\`; you chose \`${choice}\`. Don't give up, though - try again!`);
     } catch (err) {
         client.logger.err(err.stack);
-        message.channel.send("An error occurred.");
+        return message.channel.send(client.l10n(message, "error"));
     }
 };
 
