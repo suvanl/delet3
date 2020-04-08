@@ -1,0 +1,3 @@
+files:
+  - source: /core/locales/en-GB.json
+    translation: '%original_path%/%locale%.%file_extension%'
