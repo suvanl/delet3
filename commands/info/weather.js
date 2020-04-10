@@ -38,10 +38,35 @@ exports.run = async (client, message, args) => {
         return arr[(val % 16)];
     };
 
+    let windDirection = data.wind.deg ? degToCompass(data.wind.deg) : "";
+
+    // Localise compass directions
+    const wdFriendly = {
+        "N": client.l10n(message, "weather.n"),
+        "NNE": client.l10n(message, "weather.nne"),
+        "NE": client.l10n(message, "weather.ne"),
+        "ENE": client.l10n(message, "weather.ene"),
+        "E": client.l10n(message, "weather.e"),
+        "ESE": client.l10n(message, "weather.ese"),
+        "SE": client.l10n(message, "weather.se"),
+        "SSE": client.l10n(message, "weather.sse"),
+        "S": client.l10n(message, "weather.s"),
+        "SSW": client.l10n(message, "weather.ssw"),
+        "SW": client.l10n(message, "weather.sw"),
+        "WSW": client.l10n(message, "weather.wsw"),
+        "W": client.l10n(message, "weather.w"),
+        "WNW": client.l10n(message, "weather.wnw"),
+        "NW": client.l10n(message, "weather.nw"),
+        "NNW": client.l10n(message, "weather.nnw")
+    };
+
+    // If wind direction data exists, convert to a user-friendly compass direction
+    if (data.wind.deg) windDirection = wdFriendly[degToCompass(data.wind.deg)];
+
     // Predefine some of the data
     const flag = `:flag_${data.sys.country.toLowerCase()}:`;
     const updatedTime = moment.utc(moment.unix(data.dt + data.timezone)).format("HH:mm");
-    const wind = `${(Math.round(data.wind.speed) * 3.6).toFixed()}${client.l10n(message, "weather.kmh")} ${data.wind.deg ? degToCompass(data.wind.deg) : ""}`;
+    const wind = `${(Math.round(data.wind.speed) * 3.6).toFixed()}${client.l10n(message, "weather.kmh")} ${windDirection}`;
     const sunrise = moment.utc(moment.unix(data.sys.sunrise + data.timezone)).format("HH:mm");
     const sunset = moment.utc(moment.unix(data.sys.sunset + data.timezone)).format("HH:mm");
 
