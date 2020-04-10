@@ -5,6 +5,9 @@
 
     "dm.unavailable": "This command is unavailable in DMs.",
 
+    "avatar.user": "%user%'s avatar",
+    "avatar.url": "Direct URL",
+
     "help.prefix": "My prefix on this server is:",
     "help.dmConfirm": "Help is on its way!",
 

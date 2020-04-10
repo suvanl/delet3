@@ -18,8 +18,8 @@ exports.run = async (client, message, args) => {
     const embed = new MessageEmbed()
         .setColor("#99AAB5")
         .setDescription(stripIndents`
-            🖼️ **${tag}'s avatar**
-            🔗 **[Direct URL](${url})**`)
+            🖼️ **${client.l10n(message, "avatar.user").replace(/%user%/g, tag)}**
+            🔗 **[${client.l10n(message, "avatar.url")}](${url})**`)
         .setImage(url);
 
     message.channel.send(embed);
