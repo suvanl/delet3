@@ -1,13 +1,13 @@
 {
     "channel": "kanal",
-    "on_off": "på/av",
+    "on_off": "av/på",
     "error": "Et problem har oppstått.",
     "dm.unavailable": "Denne kommandoen kan ikke brukes i private meldinger.",
     "avatar.user": "%user% sin avatar",
-    "avatar.url": "Direkt URL",
+    "avatar.url": "Direkte URL",
     "help.prefix": "Min prefiks på denne serveren er:",
     "help.dmConfirm": "Hjelp er på vei!",
-    "trivia.dmlb": "Leaderboard er ikke tilgjenglig i private meldinger.",
+    "trivia.dmlb": "Leaderboard er ikke tilgjengelig i private meldinger.",
     "settings.prompt.cat": "Hvilken %category%-relatert innstilling vil du bytte?",
     "settings.prompt.newValue": "Vennligst velg en ny verdi.",
     "settings.exitInfo": "Svar med `cancel` for å avslutte.",
@@ -55,5 +55,5 @@
     "weather.kmh": "km/h",
     "weather.sunrise": "Soloppgang",
     "weather.sunset": "Solnedgang",
-    "weather.footer": "Data provided by OpenWeatherMap | all times are local"
+    "weather.footer": "Data levert av OpenWeatherMap | alle tidene er lokale"
 }
