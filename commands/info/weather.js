@@ -76,7 +76,7 @@ exports.run = async (client, message, args) => {
         .setThumbnail(img)
         .setDescription(stripIndents`
             ${flag} __**${client.l10n(message, "weather.title").replace(/%area%/g, `${data.name}, ${data.sys.country}`)}**__
-            ${client.l10n(message, "weather.updatedAt").replace(/%time%/, updatedTime)}
+            ${client.l10n(message, "weather.updatedAt").replace(/%time%/g, updatedTime)}
 
             🌆 ${client.l10n(message, "weather.conditions")}: **${data.weather[0].description}**
 
