@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
     if (args[0] && args[0].toLowerCase() === "available") return message.channel.send(stripIndents`
         🌍 **Available languages**
 
-        ${validLangs.map(l => `**-** ${langName[l]} (\`${l}\`)`).join("\n")}`);
+        ${validLangs.map(l => `${langName[l]} (\`${l}\`)`).join("\n")}`);
 
     const newLanguage = args[0] || await client.awaitReply(message, msg);
 
