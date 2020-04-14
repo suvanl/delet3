@@ -15,11 +15,15 @@ exports.colour = {
 
 // Language command
 exports.langName = {
-    "en-GB": "English 🇬🇧"
+    "nl-NL": "🇳🇱 Nederlands",
+    "en-GB": "🇬🇧 English",
+    "no-NO": "🇳🇴 Norsk"
 };
 
 exports.validLangs = [
-    "en-GB"
+    "nl-NL",
+    "en-GB",
+    "no-NO"
 ];
 
 // SETTINGS COMMANDS
