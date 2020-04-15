@@ -3,6 +3,7 @@
     "on_off": "on/off",
     "error": "An error occurred.",
     "points": "points",
+    "latency": "latency",
     "dm.unavailable": "This command is unavailable in DMs.",
     "avatar.user": "%user%'s avatar",
     "avatar.url": "Direct URL",
