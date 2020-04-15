@@ -1,6 +1,6 @@
 exports.run = async (client, message) => {
     const msg = await message.channel.send("🏓 Pong!");
-    msg.edit(`🏓 Pong! Latency: \`${msg.createdTimestamp - message.createdTimestamp}ms\`; WebSocket ping: \`${Math.round(client.ws.ping)}ms\`.`);
+    msg.edit(`🏓 Pong! ${client.l10n(message, "latency")}: \`${msg.createdTimestamp - message.createdTimestamp}ms\`; WebSocket ping: \`${Math.round(client.ws.ping)}ms\`.`);
 };
 
 exports.config = {
