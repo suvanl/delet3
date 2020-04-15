@@ -3,6 +3,7 @@
     "on_off": "aan/uit",
     "error": "Er is een fout opgetreden.",
     "points": "points",
+    "latency": "latency",
     "dm.unavailable": "Dit commando is niet beschikbaar in DM's.",
     "avatar.user": "%user%'s avatar",
     "avatar.url": "Directe URL",
