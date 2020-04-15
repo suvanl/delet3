@@ -2,6 +2,7 @@
     "channel": "channel",
     "on_off": "on/off",
     "error": "An error occurred.",
+    "points": "points",
 
     "dm.unavailable": "This command is unavailable in DMs.",
 
@@ -12,6 +13,11 @@
     "help.dmConfirm": "Help is on its way!",
 
     "trivia.dmlb": "Leaderboard is unavailable in DMs.",
+    "trivia.categories": "Available categories",
+    "trivia.points": "you currently have `%num%` trivia points.",
+    "trivia.lb.empty": "All users here have **0** points.",
+    "trivia.lb.emptyInfo": "Use the `%cmd%` command to earn some!",
+    "trivia.lb.header": "**Trivia Leaderboard** for %name%",
 
     "settings.prompt.cat": "Which %category%-related setting would you like to change?",
     "settings.prompt.newValue": "Please enter the new value.",

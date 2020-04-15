@@ -11,14 +11,14 @@ exports.run = async (client, message, args) => {
     if (args[0] && args[0].toLowerCase() === "categories") {
         const catArr = Array.from(Object.keys(categories));
         const catList = catArr.map(c => `\`${c}\``).join(", ");
-        return message.channel.send(`📋 **Available categories**\n${catList}`);
+        return message.channel.send(`📋 **${client.l10n(message, "trivia.categories")}**\n${catList}`);
     }
 
     // Let user know how many points they have
     if (message.channel.type === "text") {
         const userData = await client.getUser(message.guild, message.author);
         const currentPoints = userData.triviaPoints;
-        if (args[0] && args[0].toLowerCase() === "points") return message.reply(`you currently have \`${currentPoints}\` trivia points.`);
+        if (args[0] && args[0].toLowerCase() === "points") return message.reply(client.l10n(message, "trivia.points").replace(/%num%/g, currentPoints));
     }
 
     // Send trivia leaderboard
@@ -37,13 +37,15 @@ exports.run = async (client, message, args) => {
         const sorted = filtered.sort((a, b) => a.triviaPoints < b.triviaPoints ? 1 : -1);
 
         // Create leaderboard
-        let lbMsg = `🔢 **Trivia Leaderboard** for ${message.guild.name}\n\n`;
-        if (filtered.length === 0) lbMsg += `All users here have **0** points.\nUse the \`${message.settings.prefix}trivia\` command to earn some!`;
+        let lbMsg = `🔢 ${client.l10n(message, "trivia.lb.header").replace(/%name%/g, message.guild.name)}\n\n`;
+        if (filtered.length === 0) lbMsg += stripIndents`
+            ${client.l10n(message, "trivia.lb.empty")}
+            ${client.l10n(message, "trivia.lb.emptyInfo").replace(/%cmd%/g, `${message.settings.prefix}trivia`)}`;
 
         let index = 0;
         const lb = sorted.map(async m => {
             const u = await client.users.fetch(m.userID);
-            return `**${++index}** | ${u.username}#${u.discriminator} - **${m.triviaPoints}** points`;
+            return `**${++index}** | ${u.username}#${u.discriminator} - **${m.triviaPoints}** ${client.l10n(message, "points")}`;
         });
 
         // Send leaderboard
@@ -143,7 +145,7 @@ exports.run = async (client, message, args) => {
 
         const invalid = stripIndents`
             ⚠️ **Invalid answer**
-            The correct answer was \`${quiz.correct_answer}\`.`;
+            The correct answer was \`${e.decode(quiz.correct_answer)}\`.`;
 
         // Send "invalid" message if answer doesn't match one of the valid choices
         if (quiz.type === "multiple" && !choice || quiz.type === "boolean" && !bool.includes(userAns.toTitleCase())) return message.channel.send(invalid);  
@@ -159,6 +161,9 @@ exports.run = async (client, message, args) => {
             if (message.channel.type === "text") {
                 const dif = d.toLowerCase();
                 const points = { "easy": 1, "medium": 2, "hard": 3 };
+
+                const userData = await client.getUser(message.guild, message.author);
+                const currentPoints = userData.triviaPoints;
 
                 const newTotal = currentPoints + points[dif];
 
