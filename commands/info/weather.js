@@ -16,8 +16,11 @@ exports.run = async (client, message, args) => {
     // Encode location as URI component
     const loc = encodeURIComponent(location);
 
+    // Get two-letter language code for the "lang" parameter in the API request
+    const lang = message.settings.language.slice(0, 2) || "en";
+
     // Send GET request to OpenWeatherMap API for weather data
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&units=metric&appid=${OWM_KEY}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&units=metric&lang=${lang}&appid=${OWM_KEY}`;
     const res = await fetch(url);
     const data = await res.json();
 
