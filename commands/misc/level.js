@@ -1,6 +1,10 @@
+const { stripIndents } = require("common-tags");
+
 exports.run = async (client, message, args, level) => {
     const lvlName = client.permLevels.levels.find(l => l.level === level).name;
-    message.reply(`your permission level is: \`${level}\` (**${lvlName}**).\nUse \`${message.settings.prefix}help\` to see a list of commands available to your level.`);
+    message.reply(stripIndents`
+        ${client.l10n(message, "level.lvl").replace(/%lvl%/g, `\`${level}\` (**${lvlName}**)`)}
+        ${client.l10n(message, "level.info").replace(/%cmd%/g, `\`${message.settings.prefix}help\``)}`);
 };
 
 exports.config = {
