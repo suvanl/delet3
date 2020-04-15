@@ -6,6 +6,9 @@ const { categories } = require("../../core/util/data");
 
 const e = new Entities();
 
+// TODO: localise the rest of this command? see the following commit comment:
+// https://github.com/suvanl/delet3/commit/23bd7641af96b791860c1090cd8bcc3c771907e1#commitcomment-38520979
+
 exports.run = async (client, message, args) => {
     // Send list of available categories
     if (args[0] && args[0].toLowerCase() === "categories") {
