@@ -3,6 +3,7 @@
     "on_off": "av/på",
     "error": "Et problem har oppstått.",
     "points": "points",
+    "latency": "latency",
     "dm.unavailable": "Denne kommandoen kan ikke brukes i private meldinger.",
     "avatar.user": "%user% sin avatar",
     "avatar.url": "Direkte URL",
