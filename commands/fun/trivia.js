@@ -201,5 +201,5 @@ exports.help = {
     name: "trivia",
     description: "tests your knowledge on a topic of your choice",
     category: "fun",
-    usage: "trivia [difficulty] [category]|[points]|leaderboard"
+    usage: "trivia [difficulty] [category]|points|leaderboard"
 };
