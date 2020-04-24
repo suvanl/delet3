@@ -10,6 +10,7 @@ exports.run = async (client, message, args) => {
     // Get avatar by providing GuildMember's username
     if (args[0] && !args[0].startsWith("<@!")) {
         user = member = message.guild.members.cache.find(m => m.user.username === args[0]);
+        if (!user) return message.channel.send(client.l10n(message, "avatar.user.invalid"));
         url = member.user.displayAvatarURL({ size: 1024 });
         tag = member.user.tag;
     }
