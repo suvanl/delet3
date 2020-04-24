@@ -28,9 +28,16 @@ exports.run = async (client, message) => {
 
     // Activity
     let activity = "";
+    const friendlyActivity = {
+        "PLAYING": client.l10n(message, "user.activity.playing"),
+        "STREAMING": client.l10n(message, "user.activity.streaming"),
+        "LISTENING": client.l10n(message, "user.activity.listening"),
+        "WATCHING": client.l10n(message, "user.activity.watching")
+    };
+
     if (user.presence.activities.length !== 0) {
         const a = user.presence.activities[0];
-        activity = a.type !== "CUSTOM_STATUS" ? `${a.type.toTitleCase()} **${a.name.truncate(24)}**` : a.name;
+        activity = a.type !== "CUSTOM_STATUS" ? `${friendlyActivity[a.type]} **${a.name}**` : `**${a.name.truncate(24)}**`;
     }
 
     // User data for points
@@ -39,7 +46,8 @@ exports.run = async (client, message) => {
     // Roles (with @everyone filtered out)
     const r = message.guild.member(user).roles.cache;
     const roleMap = r.map(r => `\`${r.name}\``);
-    const roles = roleMap.filter(r => r !== "`@everyone`");
+    let roles = roleMap.filter(r => r !== "`@everyone`");
+    if (roles.length === 0) roles = ["None"];
 
     // Create and send embed
     const embed = new MessageEmbed()
@@ -55,10 +63,10 @@ exports.run = async (client, message) => {
             ${utc(message.guild.member(user).joinedTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
 
             🧮 **${client.l10n(message, "points").toTitleCase()}**
-            Trivia: ${data.triviaPoints} • Regular: ${data.points}
+            Trivia: ${data.triviaPoints} • ${client.l10n(message, "user.points.regular")}: ${data.points}
 
             📋 **${client.l10n(message, "user.roles")}**
-            ${roles.slice(0, 3).join(", ")} ${roles.length >= 4 ? `and ${roles.length - 3} others` : ""}`)
+            ${roles.slice(0, 3).join(", ")} ${roles.length >= 4 ? client.l10n(message, "user.roles.more").replace(/%num%/g, roles.length - 3) : ""}`)
         .setFooter(`${client.l10n(message, "user.id")}: ${user.id} | ${client.l10n(message, "utc")}`);
     
     message.channel.send(embed);
