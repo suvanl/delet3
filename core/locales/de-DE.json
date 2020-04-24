@@ -7,6 +7,7 @@
     "dm.unavailable": "This command is unavailable in DMs.",
     "avatar.user": "%user%'s avatar",
     "avatar.url": "Direct URL",
+    "avatar.user.invalid": "A user with that name could not be found on this server.",
     "help.prefix": "My prefix on this server is:",
     "help.dmConfirm": "Help is on its way!",
     "help.dmError": "Looks like I can't DM you, %user%.",
