@@ -44,23 +44,22 @@ exports.run = async (client, message) => {
     // Create and send embed
     const embed = new MessageEmbed()
         .setColor("#8cfed9")
+        .setThumbnail(user.displayAvatarURL({ size: 1024 }))
         .setDescription(stripIndents`
             **${user.tag}** ${badges} | ${statusEmoji} ${user.presence.activities.length === 0 ? status[user.presence.status].toTitleCase() : activity}
 
-            💥 **Account created**
-            ${utc(user.createdTimestamp).format("DD/MM/YYYY [at] HH:mm")}
+            💥 **${client.l10n(message, "user.created")}**
+            ${utc(user.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
 
-            🏠 **Joined this server**
-            ${utc(message.guild.member(user).joinedTimestamp).format("DD/MM/YYYY [at] HH:mm")}
+            🏠 **${client.l10n(message, "user.joined")}**
+            ${utc(message.guild.member(user).joinedTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
 
-            🧮 **Points**
+            🧮 **${client.l10n(message, "points").toTitleCase()}**
             Trivia: ${data.triviaPoints} • Regular: ${data.points}
 
-            📋 **Roles**
-            ${roles.slice(0, 3).join(", ")} ${roles.length >= 4 ? `and ${roles.length - 3} others` : ""}
-        `)
-        .setThumbnail(user.displayAvatarURL({ size: 1024 }))
-        .setFooter(`User ID: ${user.id} | all times are UTC`);
+            📋 **${client.l10n(message, "user.roles")}**
+            ${roles.slice(0, 3).join(", ")} ${roles.length >= 4 ? `and ${roles.length - 3} others` : ""}`)
+        .setFooter(`${client.l10n(message, "user.id")}: ${user.id} | ${client.l10n(message, "utc")}`);
     
     message.channel.send(embed);
 };
