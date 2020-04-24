@@ -16,8 +16,6 @@ exports.run = async (client, message) => {
     let badges = userFlags.map(f => `<:${f.toLowerCase()}:${badge[f.toLowerCase()]}>`);
     if (badges.length === 0 && user.bot) badges = "<:bot:703336283577122826>";
 
-    // Predefined data
-
     // Status
     const status = {
         "online": client.l10n(message, "user.status.online"),
@@ -42,8 +40,6 @@ exports.run = async (client, message) => {
     const r = message.guild.member(user).roles.cache;
     const roleMap = r.map(r => `\`${r.name}\``);
     const roles = roleMap.filter(r => r !== "`@everyone`");
-
-    console.log(roles.length);
 
     // Create and send embed
     const embed = new MessageEmbed()
