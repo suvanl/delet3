@@ -34,7 +34,7 @@
     "trivia.categories": "Tilgjengelige kategorier",
     "trivia.points": "du har for øyeblikket `%num%` triviapoeng.",
     "trivia.lb.empty": "Alle brukere her har **0** poeng.",
-    "trivia.lb.emptyInfo": "Bruk kommandoen '%cmd%' for å tjene noen!",
+    "trivia.lb.emptyInfo": "Bruk kommandoen `%cmd%` for å tjene noen!",
     "trivia.lb.header": "**Trivia Leaderboard** for %name%",
     "settings.prompt.cat": "Hvilken %category%-relatert innstilling vil du bytte?",
     "settings.prompt.newValue": "Vennligst velg en ny verdi.",
