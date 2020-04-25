@@ -37,7 +37,7 @@ exports.run = async (client, message) => {
 
     if (user.presence.activities.length !== 0) {
         const a = user.presence.activities[0];
-        activity = a.type !== "CUSTOM_STATUS" ? `${friendlyActivity[a.type]} **${a.name}**` : `**${a.name.truncate(24)}**`;
+        activity = a.type !== "CUSTOM_STATUS" ? `${friendlyActivity[a.type].replace(/%activity%/g, `**${a.name}**`)}` : `**${a.name.truncate(24)}**`;
     }
 
     // User data for points
