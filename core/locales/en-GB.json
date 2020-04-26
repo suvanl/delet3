@@ -34,6 +34,7 @@
     "server.cFilter.disabled": "disabled",
     "server.cFilter.noRole": "scan content from members without a role",
     "server.cFilter.all": "scan content from all members",
+    "server.boost.lvl": "Level **%num%**",
 
     "help.prefix": "My prefix on this server is:",
     "help.dmConfirm": "Help is on its way!",
