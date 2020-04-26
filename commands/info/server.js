@@ -6,7 +6,7 @@ exports.run = async (client, message) => {
     const guild = message.guild;
 
     // Whether to display verified icon or not
-    const verified = guild.verified ? "" : "<:verified:703993007485091871>";
+    const verified = guild.verified ? "<:verified:703993007485091871>" : "";
 
     // Text/voice channel numbers
     const tChannels = guild.channels.cache.filter(c => c.type === "text").size;
@@ -36,25 +36,25 @@ exports.run = async (client, message) => {
         .setColor("#fed98c")
         .setThumbnail(guild.iconURL({ size: 1024 }))
         .setDescription(stripIndents`
-            **${guild.name}** ${verified} | <:server_boost:703991798015459390> Level **${guild.premiumTier}**
+            **${guild.name}** ${verified} | <:server_boost:703991798015459390> ${client.l10n(message, "server.boost.lvl").replace(/%num%/g, guild.premiumTier)}
 
-            💥 **Server created**
+            💥 **${client.l10n(message, "server.created")}**
             ${utc(guild.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
 
-            💬 **Channels**
-            ${tChannels} text • ${vChannels} voice (\`${guild.region}\`)
+            💬 **${client.l10n(message, "server.channels")}**
+            ${client.l10n(message, "server.channels.txt").replace(/%num%/g, tChannels)} • ${client.l10n(message, "server.channels.voice").replace(/%num%/g, vChannels)} (\`${guild.region}\`)
 
-            👥 **Members**
-            ${guild.memberCount - bots} users • ${bots} bots
+            👥 **${client.l10n(message, "server.members")}**
+            ${client.l10n(message, "server.users").replace(/%num%/g, guild.memberCount - bots)} • ${client.l10n(message, "server.bots").replace(/%num%/g, bots)}
 
-            🔑 **Owner**
+            🔑 **${client.l10n(message, "server.owner")}**
             ${guild.owner.user.tag}
 
-            ✅ **Verification**
-            Level: ${vLevels[guild.verificationLevel]}
-            Content filter: ${cFilter[guild.explicitContentFilter]}
+            ✅ **${client.l10n(message, "server.verif")}**
+            ${client.l10n(message, "server.verif.lvl")} ${vLevels[guild.verificationLevel]}
+            ${client.l10n(message, "server.cFilter.lvl")} ${cFilter[guild.explicitContentFilter]}
         `)
-        .setFooter(`Server ID: ${guild.id} | ${client.l10n(message, "utc")}`);
+        .setFooter(`${client.l10n(message, "server.id").replace(/%id%/g, guild.id)} | ${client.l10n(message, "utc")}`);
 
     message.channel.send(embed);
 };
