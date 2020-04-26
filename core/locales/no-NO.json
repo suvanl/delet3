@@ -30,6 +30,7 @@
     "server.cFilter.disabled": "disabled",
     "server.cFilter.noRole": "scan content from members without a role",
     "server.cFilter.all": "scan content from all members",
+    "server.boost.lvl": "Level **%num%**",
     "help.prefix": "Min prefiks på denne serveren er:",
     "help.dmConfirm": "Hjelp er på vei!",
     "help.dmError": "Ser ikke ut som jeg kan sende deg en melding, %user%.",
