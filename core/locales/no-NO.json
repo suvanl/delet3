@@ -28,8 +28,8 @@
     "server.verif.low": "lav",
     "server.verif.medium": "medium",
     "server.cFilter.disabled": "av",
-    "server.cFilter.noRole": "skan innholdet fra medlemmer uten en rolle",
-    "server.cFilter.all": "skan innhold fra alle medlemmer",
+    "server.cFilter.noRole": "scan innholdet fra medlemmer uten en rolle",
+    "server.cFilter.all": "scan innhold fra alle medlemmer",
     "server.boost.lvl": "Level **%num%**",
     "server.created": "Server opprettet",
     "server.channels": "Kanaler",
@@ -103,9 +103,9 @@
     "weather.sunrise": "Soloppgang",
     "weather.sunset": "Solnedgang",
     "weather.footer": "Data levert av OpenWeatherMap | alle tidene er lokale",
-    "yt.noQuery": "You must provide a video name to search for.",
-    "yt.search.results": "YouTube search results",
-    "yt.search.number": "Reply with a number (%range%) to select a video...",
-    "yt.cancel": "Ended the video selection procedure.",
-    "yt.vid": "Here's the video you requested, %user%:"
+    "yt.noQuery": "Du må oppgi et videonavn for å søke etter.",
+    "yt.search.results": "YouTube søke resultat",
+    "yt.search.number": "Svar med et tall (%range%) to select a video...",
+    "yt.cancel": "Avsluttet prosedyre for valg av video.",
+    "yt.vid": "Her er videoen du forespurte, %user%:"
 }
