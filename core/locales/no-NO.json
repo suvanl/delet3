@@ -102,5 +102,10 @@
     "weather.kmh": "km/h",
     "weather.sunrise": "Soloppgang",
     "weather.sunset": "Solnedgang",
-    "weather.footer": "Data levert av OpenWeatherMap | alle tidene er lokale"
+    "weather.footer": "Data levert av OpenWeatherMap | alle tidene er lokale",
+    "yt.noQuery": "You must provide a video name to search for.",
+    "yt.search.results": "YouTube search results",
+    "yt.search.number": "Reply with a number (%range%) to select a video...",
+    "yt.cancel": "Ended the video selection procedure.",
+    "yt.vid": "Here's the video you requested, %user%:"
 }
