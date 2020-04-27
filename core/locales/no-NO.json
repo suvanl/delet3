@@ -105,7 +105,7 @@
     "weather.footer": "Data levert av OpenWeatherMap | alle tidene er lokale",
     "yt.noQuery": "Du må oppgi et videonavn for å søke etter.",
     "yt.search.results": "YouTube søke resultat",
-    "yt.search.number": "Svar med et tall (%range%) to select a video...",
+    "yt.search.number": "Svar med et tall (%range%) for å velge video...",
     "yt.cancel": "Avsluttet prosedyre for valg av video.",
     "yt.vid": "Her er videoen du forespurte, %user%:"
 }
