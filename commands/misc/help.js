@@ -30,9 +30,11 @@ exports.run = async (client, message, args, level) => {
         });
 
         if (message.channel.type === "text") {
-            const helpConfirm = await message.channel.send("🏃‍♀️💨 Help is on its way!");
+            const helpConfirm = await message.channel.send(`🏃‍♀️💨 ${client.l10n(message, "help.dmConfirm")}`);
             message.author.send(out, { split: { char: "\u200b" } }).catch(err => {
-                helpConfirm.edit(`<:x_:688400118327672843> Looks like I can't DM you, ${message.author}.\nPlease ensure your privacy settings on this server allow me to do so.`);
+                helpConfirm.edit(stripIndents`
+                    <:x_:688400118327672843> ${client.l10n(message, "help.dmError").replace(/%user%/g, message.author)}
+                    ${client.l10n(message, "help.dmErrorInfo")}`);
                 return client.logger.err(err);
             });
         } else if (message.channel.type === "dm") {

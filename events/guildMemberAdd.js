@@ -23,7 +23,6 @@ module.exports = async (client, member) => {
 
     // If autoRoleEnabled is set to true...
     if (settings.autoRoleEnabled === true) {
-        console.log("I'm in here");
         // Find the required role by name; if it isn't found, return
         const role = member.guild.roles.cache.find(r => r.name === settings.autoRoleName);
         if (!role) return;

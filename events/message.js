@@ -15,7 +15,6 @@ module.exports = async (client, message) => {
     const settings = message.settings = await client.getSettings(message.guild);
 
     // Respond with prefix if mentioned
-    // TODO: use localisation rather than direct string input
     const mention = new RegExp(`^<@!?${client.user.id}> `);
     if (message.content.match(mention)) return message.channel.send(`${client.l10n(message, "help.prefix")} \`${settings.prefix}\`.`);
 

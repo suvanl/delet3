@@ -2,15 +2,16 @@ const { stripIndents } = require("common-tags");
 const { roleSettingsKey, friendlySettings } = require("../../core/util/data");
 
 exports.run = async (client, message) => {
+    const cat = "role";
     const msg = stripIndents`
-        ⚙️ Which role-related setting would you like to update?
+        ⚙️ ${client.l10n(message, "settings.prompt.cat").replace(/%category%/g, cat)}
 
-        1️⃣ **Admin role**
-        2️⃣ **Mod role**
-        3️⃣ **Auto-role name**
-        4️⃣ **Auto-role on/off**
+        1️⃣ **${client.l10n(message, "settings.adminRole")}**
+        2️⃣ **${client.l10n(message, "settings.modRole")}**
+        3️⃣ **${client.l10n(message, "settings.autoRoleName")}**
+        4️⃣ **${client.l10n(message, "settings.autoRoleEnabled")}**
         
-        Reply with \`cancel\` to exit.`;
+        ${client.l10n(message, "settings.exitInfo")}`;
 
     // Prompt for selected setting
     const selected = await client.awaitReply(message, msg);
@@ -22,7 +23,7 @@ exports.run = async (client, message) => {
     const num = ["1", "2", "3", "4"];
 
     // If user doesn't reply with a number between 1 and 4
-    if (!num.includes(selected)) return message.channel.send("Invalid value specified. Please reply with a value from 1-4.");
+    if (!num.includes(selected)) return message.channel.send(client.l10n(message, "settings.invalidNum").replace(/%range%/g, "1-4"));
     else {
         // Else, if they have replied with 1-4...
         // Convert number to settings key name
@@ -42,7 +43,7 @@ exports.run = async (client, message) => {
         // Define message prompt
         const msg = stripIndents`
             ⚙️ The current value of **${friendly.toTitleCase()}** is \`${s[selected]}\`.
-            🔄 Please enter the new value. Reply with \`cancel\` to exit.`;
+            🔄 ${client.l10n(message, "settings.prompt.newValue")} ${client.l10n(message, "settings.exitInfo")}`;
         
         // Prompt for new value
         const newValue = await client.awaitReply(message, msg);
@@ -51,7 +52,7 @@ exports.run = async (client, message) => {
         // Check if newValue matches the name of a role on the guild (unless autoRoleEnabled is being changed, which takes boolean values)
         if (setting !== "autoRoleEnabled") {
             const role = message.guild.roles.cache.find(r => r.name === newValue);
-            if (!role) return message.channel.send(`A role with the name \`${newValue}\` could not be found on this server.`);
+            if (!role) return message.channel.send(`${client.l10n(message, "settings.missingRole").replace(/%name%/g, newValue)}`);
         }
 
         // Update value of chosen setting in guild settings
@@ -59,7 +60,7 @@ exports.run = async (client, message) => {
             const update = await client.updateSettings(message.guild, setting, newValue);
             if (update === 200) return message.channel.send(`<:tick:688400118549970984> ${friendly.toTitleCase()} successfully changed to \`${newValue}\`.`);
         } catch (err) {
-            message.channel.send("<:x_:688400118327672843> An error occurred while changing this setting.");
+            message.channel.send(`<:x_:688400118327672843> ${client.l10n(message, "settings.error")}`);
             return client.logger.err(`Error changing a role setting:\n${err.stack}`);
         }
     }

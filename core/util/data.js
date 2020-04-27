@@ -1,8 +1,33 @@
+// User command
+exports.badge = {
+    "discord_employee": "703323189891039383",
+    "discord_partner": "703323189815673014",
+    "hypesquad_events": "703323189467545711",
+    "bughunter_level_1": "703326057859645511",
+    "house_bravery": "703281163585716364",
+    "house_brilliance": "703281163564875836",
+    "house_balance": "703281163233394759",
+    "early_supporter": "703326057788342392",
+    // "team_user": "",
+    // "system": "",
+    "bughunter_level_2": "703328093623943268",
+    "verified_bot": "703326057817833479",
+    "verified_developer": "703326057683746958"
+};
+
+exports.statusIcon = {
+    "online": "703331782216515695",
+    "idle": "703331782103269518",
+    "dnd": "703331782124372119",
+    "offline": "703331781969051669"
+};
+
 // Help command
 exports.emoji = {
     "fun": "🎮",
     "info": "ℹ️",
     "misc": "💬",
+    "search": "🔍",
     "settings": "⚙️"
 };
 
@@ -10,16 +35,21 @@ exports.colour = {
     "fun": "#fcec62",
     "info": "#62bffc",
     "misc": "#04d1bb",
+    "search": "#fc6272",
     "settings": "#6272fc"
 };
 
 // Language command
 exports.langName = {
-    "en-GB": "English 🇬🇧"
+    "nl-NL": "🇳🇱 Nederlands",
+    "en-GB": "🇬🇧 English",
+    "no-NO": "🇳🇴 Norsk"
 };
 
 exports.validLangs = [
-    "en-GB"
+    "nl-NL",
+    "en-GB",
+    "no-NO"
 ];
 
 // SETTINGS COMMANDS

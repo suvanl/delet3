@@ -10,7 +10,7 @@ exports.run = async (client, message) => {
 
     // If reply is "y(es)"
     if (res.toLowerCase() === "y" || res.toLowerCase() === "yes") {
-        const msg = await message.channel.send("🔄 Restoring defaults...");
+        const msg = await message.channel.send(`🔄 ${client.l10n(message, "settings.restoringDefaults")}`);
         const reset = await client.resetDefaults(message.guild);
         if (reset === 201) return msg.edit("<:tick:688400118549970984> Default server settings were successfully restored.");
     }
