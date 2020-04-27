@@ -8,7 +8,7 @@ const e = new Entities();
 exports.run = async (client, message, args) => {
     // Define query
     const q = args.join(" ");
-    if (!q) return message.channel.send("ℹ You must provide a video name to search for.");
+    if (!q) return message.channel.send(`ℹ ${client.l10n(message, "yt.noQuery")}`);
 
     // YouTube API base URL
     const baseUrl = "https://www.googleapis.com/youtube/v3/search";
@@ -29,17 +29,17 @@ exports.run = async (client, message, args) => {
     // Define prompt message
     const range = `1-${vids.length}`;
     const msg = stripIndents`
-        <:youtube:704116193421688862> **YouTube search results**
+        <:youtube:704116193421688862> **${client.l10n(message, "yt.search.results")}**
 
         ${list}
         
-        **Reply with a number (${range}) to select a video...**`;
+        **${client.l10n(message, "yt.search.number").replace(/%range%/g, range)}**`;
     
     // Prompt for selected video
     const selected = await client.awaitReply(message, msg, 30000);
 
     // If 30s is up, or if user replies with "cancel"
-    if (!selected || selected.toLowerCase() === "cancel") return message.channel.send("🚪 Ended the video selection procedure.");
+    if (!selected || selected.toLowerCase() === "cancel") return message.channel.send(`🚪 ${client.l10n(message, "yt.cancel")}`);
 
     // Valid answers
     const num = Array.from({ length: vids.length }, (v, k) => k + 1);
@@ -58,7 +58,7 @@ exports.run = async (client, message, args) => {
         const vidUrl = `https://youtu.be/${vidId}`;
 
         // Send URL (along with some text to indicate user-requested content)
-        return message.channel.send(`Here's the video you requested, ${message.author}:\n${vidUrl}`);
+        return message.channel.send(`${client.l10n(message, "yt.vid").replace(/%user%/g, message.author)}\n${vidUrl}`);
     }
 };
 
