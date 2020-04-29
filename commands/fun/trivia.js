@@ -6,9 +6,6 @@ const { categories } = require("../../core/util/data");
 
 const e = new Entities();
 
-// TODO: localise the rest of this command? see the following commit comment:
-// https://github.com/suvanl/delet3/commit/23bd7641af96b791860c1090cd8bcc3c771907e1#commitcomment-38520979
-
 exports.run = async (client, message, args) => {
     // Send list of available categories
     if (args[0] && args[0].toLowerCase() === "categories") {
@@ -69,10 +66,12 @@ exports.run = async (client, message, args) => {
     // Set difficulty
     const d = args[0] || "medium";
 
-    // Inform user if invalid difficulty is specified
+    // Inform user if invalid difficulty is specified:
+        // ⚠️ Invalid difficulty
+        // Please choose from one of easy/medium/hard
     if (!levels.includes(d.toLowerCase())) return message.channel.send(stripIndents`
-        ⚠️ **Invalid difficulty**
-        Please choose from one of ${levels.map(l => `\`${l}\``).join("/")}.`);
+        ⚠️ **${client.l10n(message, "trivia.diff.invalid")}**
+        ${client.l10n(message, "trivia.diff.list").replace(/%lvls%/g, levels.map(l => `\`${l}\``).join("/"))}.`);
 
     // Define category as all words including + after args[1]; converted to valid number
     let cat = args.slice(1).join(" ");
@@ -80,10 +79,12 @@ exports.run = async (client, message, args) => {
 
     const c = categories[cat.toTitleCase()] || 0;
 
-    // Inform user if invalid category is specified
+    // Inform user if invalid category is specified:
+        // ⚠️ Invalid category
+        // Use %trivia categories to see a list of available categories.
     if (args[1] && !c) return message.channel.send(stripIndents`
-        ⚠️ **Invalid category**
-        Use \`${message.settings.prefix}trivia categories\` to see a list of available categories.`);
+        ⚠️ **${client.l10n(message, "trivia.cat.invalid")}**
+        ${client.l10n(message, "trivia.cat.help").replace(/%cmd%/g, `\`${message.settings.prefix}trivia categories\``)}`);
 
     // Interpolate difficulty & category info into URL string
     const url = `https://opentdb.com/api.php?amount=1&category=${c}&difficulty=${d.toLowerCase()}`;
@@ -116,29 +117,37 @@ exports.run = async (client, message, args) => {
 
         if (quiz.type === "boolean") options = "**TRUE** or **FALSE**?";
 
-        // Create MessageEmbed object
+        // Create MessageEmbed object:
+            // Question
+            // [question text]
+            //
+            // [options]
+            //
+            // Category & Difficulty
+            // cat | diff
         const embed = new MessageEmbed()
             .setAuthor("Trivia", "https://i.imgur.com/Z20hATC.png")
             .setColor("#6f99ff")
             .setDescription(stripIndents`
-                **Question**
+                **${client.l10n(message, "trivia.embed.question")}**
                 ${e.decode(quiz.question)}
 
                 ${e.decode(options)}
 
-                **Category & Difficulty**
-                ${quiz.category} | ${quiz.difficulty.toTitleCase()}
-            `)
-            .setFooter("Answer within 60 seconds!", message.author.displayAvatarURL())
+                **${client.l10n(message, "trivia.embed.catdiff")}**
+                ${quiz.category} | ${quiz.difficulty.toTitleCase()}`)
+            .setFooter(client.l10n(message, "trivia.embed.footer"), message.author.displayAvatarURL())
             .setTimestamp();
         
         // Wait 60 seconds (awaitReply default "limit" property value) for user's answer
         const userAns = await client.awaitReply(message, embed);
 
-        // Send "timed out" message
+        // Send "timed out" message:
+            // ⏰ Time's up!
+            // Trivia session timed out as you did not answer within 60 seconds.
         if (!userAns) return message.channel.send(stripIndents`
-            <a:alarm:688395323458322438> **Time's up!**
-            Trivia session timed out as you did not answer within 60 seconds.`);
+            <a:alarm:688395323458322438> **${client.l10n(message, "trivia.timeout")}**
+            ${client.l10n(message, "trivia.timeout.info")}`);
 
         // Set choices based on quiz type
         let choice = randomisedChoices[["a", "b", "c", "d"].indexOf(userAns.toLowerCase())];
@@ -146,19 +155,24 @@ exports.run = async (client, message, args) => {
 
         const bool = ["True", "False"];
 
+        // Define invalid answer message:
+            // ⚠️ Invalid answer
+            // The correct answer was [ans].
         const invalid = stripIndents`
-            ⚠️ **Invalid answer**
-            The correct answer was \`${e.decode(quiz.correct_answer)}\`.`;
+            ⚠️ **${client.l10n(message, "trivia.ans.invalid")}**
+            ${client.l10n(message, "trivia.ans").replace(/%ans%/g, e.decode(quiz.correct_answer))}`;
 
         // Send "invalid" message if answer doesn't match one of the valid choices
         if (quiz.type === "multiple" && !choice || quiz.type === "boolean" && !bool.includes(userAns.toTitleCase())) return message.channel.send(invalid);  
 
         // If choice matches correct answer:
         if (choice === quiz.correct_answer) {
-            // Define correct answer message
+            // Define correct answer message:
+                // ✅ Correct answer
+                // Well done!
             let correct = stripIndents`
-                <:tick:688400118549970984> **Correct answer**
-                Well done!`;
+                <:tick:688400118549970984> **${client.l10n(message, "trivia.ans.correct")}**
+                ${client.l10n(message, "trivia.ans.gg")}`;
 
             // Add points (if in a guild text channel)
             if (message.channel.type === "text") {
@@ -172,18 +186,24 @@ exports.run = async (client, message, args) => {
 
                 await client.addPoints(message.guild, message.author, "triviaPoints", newTotal);
 
-                // Send "correct answer" message with number of points gained
-                message.channel.send(correct += ` [+${points[dif]} ${points[dif] === 1 ? "point" : "points"}]`);
+                // Send "correct answer" message with number of points gained:
+                // First, define the word for "point"/"points" in the current locale
+                const pointWord = client.l10n(message, "point");
+                const pointsWord = client.l10n(message, "points");
+
+                // Then, send the message
+                message.channel.send(correct += ` [+${points[dif]} ${points[dif] === 1 ? pointWord : pointsWord}]`);
             } else {
                 // Send "correct answer" message
                 message.channel.send(correct);
             }
-            
         }
-        // Else, their answer must be incorrect
+        // Else, their answer must be incorrect - send the incorrect answer message:
+            // ❌ Incorrect answer
+            // The correct answer was [correct_ans]; you chose [choice]. Don't give up, though - try again!
         else return message.channel.send(stripIndents`
-            <:x_:688400118327672843> **Incorrect answer**
-            The correct answer was \`${quiz.correct_answer}\`; you chose \`${choice}\`. Don't give up, though - try again!`);
+            <:x_:688400118327672843> **${client.l10n(message, "trivia.ans.wrong")}**
+            ${client.l10n(message, "trivia.ans.info").replace(/%ans%/g, e.decode(quiz.correct_answer)).replace(/%choice%/g, choice)}`);
     } catch (err) {
         client.logger.err(err.stack);
         return message.channel.send(client.l10n(message, "error"));
