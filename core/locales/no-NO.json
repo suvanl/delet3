@@ -70,7 +70,7 @@
     "trivia.ans.correct": "Korrekt svar",
     "trivia.ans.gg": "Bra gjort!",
     "trivia.ans.wrong": "Feil svar",
-    "trivia.ans.info": "Riktig svar var `%ans%`; du valgte \"%choice%\". Ikke gi opp - prøv igjen!",
+    "trivia.ans.info": "Riktig svar var `%ans%`; du valgte `%choice%`. Ikke gi opp - prøv igjen!",
     "settings.prompt.cat": "Hvilken %category%-relatert innstilling vil du bytte?",
     "settings.prompt.newValue": "Vennligst velg en ny verdi.",
     "settings.exitInfo": "Svar med `cancel` for å avslutte.",
