@@ -17,7 +17,7 @@ exports.run = async (client, message) => {
 
     // Get "Listening to Spotify" activity
     const spotifyActivity = activities.filter(a => a.name === "Spotify" && a.type === "LISTENING");
-    if (!spotifyActivity.length) return message.channel.send(notListening)
+    if (!spotifyActivity.length) return message.channel.send(notListening);
 
     // Define Spotify track ID
     const id = spotifyActivity[0].syncID;
