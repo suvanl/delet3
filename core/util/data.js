@@ -1,5 +1,5 @@
 // Spotify command
-exports.key = {
+exports.keys = {
     0: "C",
     1: "C♯/D♭",
     2: "D",

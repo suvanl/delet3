@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const moment = require("moment");
 const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
-const { key } = require("../../core/util/data");
+const { keys } = require("../../core/util/data");
 const { SPOTIFY_ID: ID, SPOTIFY_SECRET: SECRET } = process.env;
 
 exports.run = async (client, message) => {
@@ -48,6 +48,9 @@ exports.run = async (client, message) => {
     const emoji = "<:spotify:704771723232542900>";
     const artists = tData.artists.map(a => a.name).join(", ");
     const releaseDate = moment(tData.album.release_date, "YYYY-MM-DD").format("DD/MM/YYYY");
+    
+    let key = keys[afData.key];
+    if (afData.mode === 0 && key.includes("/")) key = `${key.substring(0, key.length - 3)}m`;
 
     // Create and send embed
     const embed = new MessageEmbed()
@@ -57,7 +60,7 @@ exports.run = async (client, message) => {
             ${emoji} **${tData.name}** by **${artists}**
             [Play on Spotify](${tData.external_urls.spotify})
 
-            🎼 Key: **${key[afData.key]}${afData.mode === 0 ? "m" : ""}** • Time signature: **${afData.time_signature}/4** • Tempo: **${Math.round(afData.tempo)}** BPM
+            🎼 Key: **${key}** • Time signature: **${afData.time_signature}/4** • Tempo: **${Math.round(afData.tempo)}** BPM
             🔢 Danceability: **${Math.round(afData.danceability * 10)}/10** • Energy: **${Math.round(afData.energy * 10)}/10** • Acousticness: **${Math.round(afData.acousticness * 10)}/10**`)
         .setFooter(`${tData.album.name} • Released on ${releaseDate}`);
 
