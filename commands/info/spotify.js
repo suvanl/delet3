@@ -5,7 +5,7 @@ const { stripIndents } = require("common-tags");
 const { keys } = require("../../core/util/data");
 const { SPOTIFY_ID: ID, SPOTIFY_SECRET: SECRET } = process.env;
 
-exports.run = async (client, message) => {
+exports.run = async (client, message, args) => {
     // Define "not listening to a song" message
     const notListening = stripIndents`
         ℹ **Not listening to a song**
@@ -34,6 +34,24 @@ exports.run = async (client, message) => {
     // Parse trackInfo data as JSON
     const tData = await trackInfo.json();
 
+    // Repeated track & embed data
+    const artists = tData.artists.map(a => a.name).join(", ");
+    const trackTitle = `**${tData.name}** by **${artists}**`;
+    const albumArt = tData.album.images[0].url;
+    const emoji = "<:spotify:704771723232542900>";
+
+    // If user only requests album art
+    const artArgs = ["art", "cover"];
+
+    if (args[0] && artArgs.includes(args[0])) {
+        const embed = new MessageEmbed()
+            .setColor("#2bde6a")
+            .setImage(albumArt)
+            .setDescription(`${emoji} ${trackTitle}`);
+
+        return message.channel.send(embed);
+    }
+
     // Send GET request to Spotify API for audio features (AF)
     const afUrl = `https://api.spotify.com/v1/audio-features/${id}`;
     const afInfo = await fetch(afUrl, {
@@ -45,8 +63,6 @@ exports.run = async (client, message) => {
     const afData = await afInfo.json();
 
     // Predefined data for embed
-    const emoji = "<:spotify:704771723232542900>";
-    const artists = tData.artists.map(a => a.name).join(", ");
     const releaseDate = moment(tData.album.release_date, "YYYY-MM-DD").format("DD/MM/YYYY");
     
     let key = keys[afData.key];
@@ -55,9 +71,9 @@ exports.run = async (client, message) => {
     // Create and send embed
     const embed = new MessageEmbed()
         .setColor("#2bde6a")
-        .setThumbnail(tData.album.images[0].url)
+        .setThumbnail(albumArt)
         .setDescription(stripIndents`
-            ${emoji} **${tData.name}** by **${artists}**
+            ${emoji} ${trackTitle}
             [Play on Spotify](${tData.external_urls.spotify})
 
             🎼 Key: **${key}** • Time signature: **${afData.time_signature}/4** • Tempo: **${Math.round(afData.tempo)}** BPM
@@ -99,5 +115,5 @@ exports.help = {
     name: "spotify",
     description: "sends info about the track you're currently listening to on Spotify",
     category: "info",
-    usage: "spotify"
+    usage: "spotify [cover]"
 };
