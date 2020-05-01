@@ -92,7 +92,7 @@
     "spotify.trackTitle": "%song% av %artists%",
     "spotify.play": "Spill på Spotify",
     "spotify.key": "Toneart",
-    "spotify.timeSignature": "Tids signatur",
+    "spotify.timeSignature": "Taktsignatur",
     "spotify.tempo": "Tempo",
     "spotify.tempo.value": "**%num%** BPM",
     "spotify.danceability": "Danceability",
