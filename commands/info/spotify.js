@@ -6,10 +6,12 @@ const { keys } = require("../../core/util/data");
 const { SPOTIFY_ID: ID, SPOTIFY_SECRET: SECRET } = process.env;
 
 exports.run = async (client, message, args) => {
-    // Define "not listening to a song" message
+    // Define "not listening" message:
+        // ℹ Not listening to a song
+        // Please ensure you're listening to a song (on a Spotify account that's connected to Discord)
     const notListening = stripIndents`
-        ℹ **Not listening to a song**
-        Please ensure you're listening to a song (on a Spotify account that's connected to Discord).`;
+        ℹ **${client.l10n(message, "spotify.notListening")}**
+        ${client.l10n(message, "spotify.notListening.info")}`;
 
     // Message author's current activities
     const activities = message.author.presence.activities;
@@ -36,7 +38,11 @@ exports.run = async (client, message, args) => {
 
     // Repeated track & embed data
     const artists = tData.artists.map(a => a.name).join(", ");
-    const trackTitle = `**${tData.name}** by **${artists}**`;
+
+    const trackTitle = client.l10n(message, "spotify.trackTitle")
+        .replace(/%song%/g, `**${tData.name}**`)
+        .replace(/%artists%/g, `**${artists}**`);
+    
     const albumArt = tData.album.images[0].url;
     const emoji = "<:spotify:704771723232542900>";
 
@@ -68,17 +74,28 @@ exports.run = async (client, message, args) => {
     let key = keys[afData.key];
     if (afData.mode === 0 && key.includes("/")) key = `${key.substring(0, key.length - 3)}m`;
 
+    // First row
+    const keyTxt = client.l10n(message, "spotify.key");
+    const timeSignature = client.l10n(message, "spotify.timeSignature");
+    const tempo = client.l10n(message, "spotify.tempo");
+    const tempoValue = client.l10n(message, "spotify.tempo.value").replace(/%num%/g, Math.round(afData.tempo));
+
+    // Second row
+    const danceability = client.l10n(message, "spotify.danceability");
+    const energy = client.l10n(message, "spotify.energy");
+    const acousticness = client.l10n(message, "spotify.acousticness");
+
     // Create and send embed
     const embed = new MessageEmbed()
         .setColor("#2bde6a")
         .setThumbnail(albumArt)
         .setDescription(stripIndents`
             ${emoji} ${trackTitle}
-            [Play on Spotify](${tData.external_urls.spotify})
+            [${client.l10n(message, "spotify.play")}](${tData.external_urls.spotify})
 
-            🎼 Key: **${key}** • Time signature: **${afData.time_signature}/4** • Tempo: **${Math.round(afData.tempo)}** BPM
-            🔢 Danceability: **${Math.round(afData.danceability * 10)}/10** • Energy: **${Math.round(afData.energy * 10)}/10** • Acousticness: **${Math.round(afData.acousticness * 10)}/10**`)
-        .setFooter(`${tData.album.name} • Released on ${releaseDate}`);
+            🎼 ${keyTxt}: **${key}** • ${timeSignature}: **${afData.time_signature}/4** • ${tempo}: ${tempoValue}
+            🔢 ${danceability}: **${Math.round(afData.danceability * 10)}/10** • ${energy}: **${Math.round(afData.energy * 10)}/10** • ${acousticness}: **${Math.round(afData.acousticness * 10)}/10**`)
+        .setFooter(`${tData.album.name} • ${client.l10n(message, "spotify.releaseDate").replace(/%date%/g, releaseDate)}`);
 
     return message.channel.send(embed);
 };
