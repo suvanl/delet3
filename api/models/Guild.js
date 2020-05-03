@@ -54,6 +54,15 @@ const GuildSchema = new mongoose.Schema({
             default: "Moderator",
             trim: true
         },
+        pointsEnabled: {
+            type: Boolean,
+            default: true,
+            trim: true
+        },
+        pointsCooldown: {
+            type: Number,
+            default: 2
+        },
         prefix: {
             type: String,
             default: "%",
@@ -75,7 +84,6 @@ const GuildSchema = new mongoose.Schema({
             trim: true
         }
     }
-    
 });
 
 GuildSchema.plugin(timestamp);
