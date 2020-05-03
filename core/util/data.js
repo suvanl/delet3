@@ -76,6 +76,8 @@ exports.friendlySettings = {
     "autoRoleEnabled": "auto-role enabled",
     "modLogChannel": "mod-log channel",
     "modLogEnabled": "mod-log enabled",
+    "pointsEnabled": "points system enabled",
+    "pointsCooldown": "points cooldown",
     "welcomeChannel": "welcome channel",
     "welcomeMessage": "welcome message",
     "welcomeEnabled": "welcome enabled"
@@ -97,6 +99,12 @@ exports.roleSettingsKey = {
 exports.mlSettingsKey = {
     1: "modLogChannel",
     2: "modLogEnabled"
+};
+
+// Points command
+exports.ptsSettingsKey = {
+    1: "pointsCooldown",
+    2: "pointsEnabled"
 };
 
 // Welcome command
