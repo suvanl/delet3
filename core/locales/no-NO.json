@@ -50,6 +50,8 @@
     "help.dmErrorInfo": "Sørg for at personverninnstillingene dine på denne serveren tillater meg å gjøre det.",
     "level.lvl": "ditt tillatelsesnivå er: %lvl%.",
     "level.info": "Bruk %cmd% for å se en liste over tilgjengelige kommandoer for ditt nivå.",
+    "points.lb.header": "**Points Leaderboard** for %name%",
+    "points.points": "you currently have `%num%` points.",
     "trivia.dmlb": "Leaderboard er ikke tilgjengelig i private meldinger.",
     "trivia.categories": "Tilgjengelige kategorier",
     "trivia.points": "du har for øyeblikket `%num%` triviapoeng.",
