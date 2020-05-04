@@ -50,6 +50,8 @@
     "help.dmErrorInfo": "Please ensure your privacy settings on this server allow me to do so.",
     "level.lvl": "your permission level is: %lvl%.",
     "level.info": "Use %cmd% to see a list of commands available to your level.",
+    "points.lb.header": "**Points Leaderboard** for %name%",
+    "points.points": "you currently have `%num%` points.",
     "trivia.dmlb": "Klassement is niet beschikbaar in DM's.",
     "trivia.categories": "Available categories",
     "trivia.points": "you currently have `%num%` trivia points.",
