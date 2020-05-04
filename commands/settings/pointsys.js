@@ -64,7 +64,7 @@ exports.config = {
 };
 
 exports.help = {
-    name: "points",
+    name: "pointsys",
     description: "changes points-related settings",
     category: "settings",
     usage: "points"
