@@ -1,3 +1,4 @@
+const moment = require("moment");
 const { blue } = require("chalk");
 const { stripIndents } = require("common-tags");
 
@@ -18,7 +19,21 @@ module.exports = async (client, message) => {
     const mention = new RegExp(`^<@!?${client.user.id}> `);
     if (message.content.match(mention)) return message.channel.send(`${client.l10n(message, "help.prefix")} \`${settings.prefix}\`.`);
 
-    // TODO: add random number of points per message w/cooldown
+    // Points system:
+    // - if in a guild, and points are enabled in settings:
+    //  - if the current unix timestamp is greater than the cooldown (in seconds), add X points (where X is a random integer between 10-20)
+    if (message.guild && message.settings.pointsEnabled) {
+        const userData = await client.getUser(message.guild, message.author);
+
+        const current = userData.points;
+        const updated = userData.pointsUpdatedTimestamp;
+        const cooldown = message.settings.pointsCooldown;
+        const now = moment().unix();
+
+        const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+        if (now > updated + (cooldown * 60)) await client.addPoints(message.guild, message.author, "points", current + randInt(10, 20));
+    }
 
     // Ignore messages that don't start with the bot's prefix
     if (message.content.indexOf(settings.prefix) !== 0) return;
