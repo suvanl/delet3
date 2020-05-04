@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
 
         const lb = sorted.map(async m => {
             const u = await client.users.fetch(m.userID);
-            return `**${++index}** | ${u.username}#${u.discriminator} - ${m.points} ${client.l10n(message, "points")}`;
+            return `**${++index}** | ${u.username}#${u.discriminator} - **${m.points}** ${client.l10n(message, "points")}`;
         });
 
         // Send leaderboard
