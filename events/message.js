@@ -21,7 +21,8 @@ module.exports = async (client, message) => {
 
     // Points system:
     // - if in a guild, and points are enabled in settings:
-    //  - if the current unix timestamp is greater than the cooldown (in seconds), add X points (where X is a random integer between 10-20)
+    //  - if the current unix timestamp is greater than the cooldown (in seconds), add X points
+    //    where X is a random integer between 10-20
     if (message.guild && message.settings.pointsEnabled) {
         const userData = await client.getUser(message.guild, message.author);
 
