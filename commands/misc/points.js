@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
             lbMsg += res.join("\n");
             
             const embed = new MessageEmbed()
-                .setColor(filtered.length === 0 ? "#ff8d6f" : "#e1ff6f")
+                .setColor(filtered.length === 0 ? "#ff8d6f" : "#77d9cc")
                 .setDescription(lbMsg);
 
             message.channel.send(embed);
