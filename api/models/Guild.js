@@ -13,6 +13,10 @@ const GuildSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    caseNumber: {
+        type: Number,
+        default: 0
+    },
     settings: {
         adminRole: {
             type: String,
