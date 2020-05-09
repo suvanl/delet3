@@ -43,6 +43,7 @@ exports.emoji = {
     "fun": "🎮",
     "info": "ℹ️",
     "misc": "💬",
+    "moderation": "🚨",
     "search": "🔍",
     "settings": "⚙️"
 };
@@ -51,6 +52,7 @@ exports.colour = {
     "fun": "#fcec62",
     "info": "#62bffc",
     "misc": "#04d1bb",
+    "moderation": "#ff8f66",
     "search": "#fc6272",
     "settings": "#6272fc"
 };
