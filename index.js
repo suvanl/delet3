@@ -96,7 +96,7 @@ const init = async () => {
     klaw("./commands").on("data", item => {
         const file = path.parse(item.path);
         if (!file.ext || file.ext !== ".js") return;
-        const res = client.loadCommand(file.dir, `${file.name}${file.ext}`);
+        const res = client.loadCommand(file.dir, file.name);
         if (!res) client.logger.err(res);
     });
 
