@@ -16,7 +16,7 @@
     "avatar.user.invalid": "En bruker med det navnet kunne ikke bli funnet på denne serveren.",
     "perm.insufficient": "Ugyldig tillatelse",
     "perm.insufficient.info": "Du må ha `%perm%` tillatelsen for å bruke denne kommandoen.",
-    "perm.banMembers": "Bannlys Medlemmer",
+    "perm.banMembers": "Forby Medlemmer",
     "mod.noModLog": "Kanalen for mod-log var ikke funnet",
     "mod.noModLog.info": "Vennligst bruk `%cmd%`for å sette den til en kanal som allerede eksisterer.",
     "mod.noUser": "Bruker ikke spesifisert",
