@@ -1,4 +1,5 @@
 const fetch = require("node-fetch");
+const moment = require("moment");
 
 module.exports = client => {
     // Add points to a user object (can be of type "triviaPoints" or "points")
@@ -14,7 +15,7 @@ module.exports = client => {
 
         // Define params for PUT request
         const url = `${process.env.URL}/users/${u[0]._id}`;
-        const body = { [type]: amount };
+        const body = { [type]: amount, "pointsUpdatedTimestamp": moment().unix() };
 
         const secret = await client.genSecret();
         const meta = { "Content-Type": "application/json", "Authorization": `jwt ${secret.token}` };

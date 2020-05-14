@@ -5,7 +5,7 @@ exports.run = async (client, message) => {
     message.channel.send(stripIndents`
         __**Server Settings**__
 
-        ℹ️ **Use \`${message.settings.prefix}<category>\` to change settings in each category**
+        ℹ️ **Use \`${message.settings.prefix}<category>\` to change settings in each category***
         📖 **E.g. \`${message.settings.prefix}welcome\` to change welcome-related settings**
         ➡️ **To change "Other" settings, use \`${message.settings.prefix}<setting>\`**
 
@@ -18,6 +18,10 @@ exports.run = async (client, message) => {
         👮 **Modlog**
         - Mod-Log Channel: \`${message.settings.modLogChannel}\`
         - Mod-Log Enabled: \`${message.settings.modLogEnabled}\`
+
+        🔢 **Points System** (*pointsys)
+        - Points Cooldown: \`${message.settings.pointsCooldown} minutes\`
+        - Points Enabled: \`${message.settings.pointsEnabled}\`
 
         👋 **Welcome**
         - Welcome Channel: \`${message.settings.welcomeChannel}\`

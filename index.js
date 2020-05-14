@@ -42,11 +42,13 @@ client.logger = require("./core/modules/Logger");
 require("./core/functions/loadCommand")(client);
 require("./core/functions/genSecret")(client);
 require("./core/functions/getSettings")(client);
+require("./core/functions/getGuild")(client);
 require("./core/functions/getUser")(client);
 require("./core/functions/getUsers")(client);
 require("./core/functions/addPoints")(client);
 require("./core/functions/permLevel")(client);
 require("./core/functions/awaitReply")(client);
+require("./core/functions/updateCaseNumber")(client);
 require("./core/functions/updateSettings")(client);
 require("./core/functions/resetDefaults")(client);
 require("./core/functions/l10n")(client);
@@ -94,7 +96,7 @@ const init = async () => {
     klaw("./commands").on("data", item => {
         const file = path.parse(item.path);
         if (!file.ext || file.ext !== ".js") return;
-        const res = client.loadCommand(file.dir, `${file.name}${file.ext}`);
+        const res = client.loadCommand(file.dir, file.name);
         if (!res) client.logger.err(res);
     });
 

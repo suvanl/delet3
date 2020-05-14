@@ -10,7 +10,8 @@ module.exports = client => {
         const lf = localeFiles.map(file => file.split(".")[0]);
         if (!lf.includes(locale)) return client.logger.err(`Missing locale file: "${locale}"`);
 
-        const locFile = require(`${localeDir}${sep}${locale}.json`);
+        let locFile = require(`${localeDir}${sep}${locale}.json`);
+        if (!locFile[str]) locFile = require(`${localeDir}${sep}en-GB.json`);
         return locFile[str];
     };
 };

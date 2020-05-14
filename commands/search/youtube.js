@@ -71,7 +71,7 @@ exports.config = {
 
 exports.help = {
     name: "youtube",
-    description: "searches YouTube for the specified video",
+    description: "searches YouTube for a specified video",
     category: "search",
     usage: "youtube <query>"
 };

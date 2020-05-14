@@ -14,6 +14,10 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    pointsUpdatedTimestamp: {
+        type: Number,
+        default: 1
+    },
     triviaPoints: {
         type: Number,
         default: 0

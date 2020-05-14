@@ -1,3 +1,19 @@
+// Spotify command
+exports.keys = {
+    0: "C",
+    1: "C♯/D♭",
+    2: "D",
+    3: "D♯/E♭",
+    4: "E",
+    5: "F",
+    6: "F♯/G♭",
+    7: "G",
+    8: "G♯/A♭",
+    9: "A",
+    10: "A♯/B♭",
+    11: "B"
+};
+
 // User command
 exports.badge = {
     "discord_employee": "703323189891039383",
@@ -27,6 +43,7 @@ exports.emoji = {
     "fun": "🎮",
     "info": "ℹ️",
     "misc": "💬",
+    "moderation": "🚨",
     "search": "🔍",
     "settings": "⚙️"
 };
@@ -35,6 +52,7 @@ exports.colour = {
     "fun": "#fcec62",
     "info": "#62bffc",
     "misc": "#04d1bb",
+    "moderation": "#ff8f66",
     "search": "#fc6272",
     "settings": "#6272fc"
 };
@@ -60,6 +78,8 @@ exports.friendlySettings = {
     "autoRoleEnabled": "auto-role enabled",
     "modLogChannel": "mod-log channel",
     "modLogEnabled": "mod-log enabled",
+    "pointsEnabled": "points system enabled",
+    "pointsCooldown": "points cooldown",
     "welcomeChannel": "welcome channel",
     "welcomeMessage": "welcome message",
     "welcomeEnabled": "welcome enabled"
@@ -81,6 +101,12 @@ exports.roleSettingsKey = {
 exports.mlSettingsKey = {
     1: "modLogChannel",
     2: "modLogEnabled"
+};
+
+// Points command
+exports.ptsSettingsKey = {
+    1: "pointsCooldown",
+    2: "pointsEnabled"
 };
 
 // Welcome command
