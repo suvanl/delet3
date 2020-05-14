@@ -6,7 +6,7 @@
     "points": "poeng",
     "latency": "ventetid",
     "utc": "alle tidene er i UTC",
-    "details": "Use `%cmd%` for further details.",
+    "details": "Bruk `%cmd%` for flere detaljer.",
     "ban.noun": "Ban",
     "dm.unavailable": "Denne kommandoen kan ikke brukes i private meldinger.",
     "prompt.continue": "Reply with `continue` to proceed, or with `cancel` to exit.",
