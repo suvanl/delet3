@@ -58,6 +58,11 @@ const GuildSchema = new mongoose.Schema({
             default: "Moderator",
             trim: true
         },
+        nickRequestEnabled: {
+            type: Boolean,
+            default: false,
+            trim: true
+        },
         pointsEnabled: {
             type: Boolean,
             default: true,
