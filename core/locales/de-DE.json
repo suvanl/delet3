@@ -114,6 +114,8 @@
     "settings.welcomeEnabled": "Welcome on/off",
     "settings.pointsEnabled": "Points system on/off",
     "settings.pointsCooldown": "Points system cooldown",
+    "settings.nickRequestChannel": "Nick request channel",
+    "settings.nickRequestEnabled": "Nick request system on/off",
     "spotify.notListening": "Not listening to a song",
     "spotify.notListening.info": "Please ensure you're listening to a song (on a Spotify account that's connected to Discord).",
     "spotify.trackTitle": "%song% von %artists%",
