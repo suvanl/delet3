@@ -114,6 +114,8 @@
     "settings.welcomeEnabled": "Velkommen av/på",
     "settings.pointsEnabled": "Poengsystem av/på",
     "settings.pointsCooldown": "Poengsystem cooldown",
+    "settings.nickRequestChannel": "Nick request channel",
+    "settings.nickRequestEnabled": "Nick request system on/off",
     "spotify.notListening": "Hører ikke på en sang",
     "spotify.notListening.info": "Forsikre deg om at du hører på en sang (på en Spotify-konto som er koblet til Discord).",
     "spotify.trackTitle": "%song% av %artists%",
