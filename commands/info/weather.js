@@ -69,13 +69,14 @@ exports.run = async (client, message, args) => {
     // Predefine some of the data
     const flag = `:flag_${data.sys.country.toLowerCase()}:`;
     const updatedTime = moment.utc(moment.unix(data.dt + data.timezone)).format("HH:mm");
+    const temp = Math.round(data.main.temp);
     const wind = `${(Math.round(data.wind.speed) * 3.6).toFixed()}${client.l10n(message, "weather.kmh")} ${windDirection}`;
     const sunrise = moment.utc(moment.unix(data.sys.sunrise + data.timezone)).format("HH:mm");
     const sunset = moment.utc(moment.unix(data.sys.sunset + data.timezone)).format("HH:mm");
 
     // Construct & send embed
     const embed = new MessageEmbed()
-        .setColor("#62bffc")
+        .setColor(tempColour(temp))
         .setThumbnail(img)
         .setDescription(stripIndents`
             ${flag} __**${client.l10n(message, "weather.title").replace(/%area%/g, `${data.name}, ${data.sys.country}`)}**__
@@ -83,7 +84,7 @@ exports.run = async (client, message, args) => {
 
             🌆 ${client.l10n(message, "weather.conditions")}: **${data.weather[0].description}**
 
-            🌡️ ${client.l10n(message, "weather.temp")}: **${Math.round(data.main.temp)}°C**
+            🌡️ ${client.l10n(message, "weather.temp")}: **${temp}°C**
             ☂️ ${client.l10n(message, "weather.feels")}: **${Math.round(data.main.feels_like)}°C**
             💧 ${client.l10n(message, "weather.humidity")}: **${data.main.humidity}%**
             🍃 ${client.l10n(message, "weather.wind")}: **${wind}**
@@ -93,6 +94,93 @@ exports.run = async (client, message, args) => {
         .setFooter(client.l10n(message, "weather.footer"), "https://i.imgur.com/OodcJh8.jpg");
     
     message.channel.send(embed);
+};
+
+// Function to set embed colour based on temperature value
+// Ranges are partially based on those on the BBC Weather website (https://bbc.co.uk/weather)
+// Gradients used: 
+// - https://www.colorhexa.com/adfdcd-to-fc6272 (Reverse HSV)
+// - https://www.colorhexa.com/62bffc-to-adfdcd (RGB)
+tempColour = x => {
+    let colour;
+    switch (true) {
+        case x < -15:
+            colour = "#6ec9f4";
+            break;
+
+        case x < -10:
+            colour = "#7bd4ec";
+            break;
+
+        case x < -5:
+            colour = "#87dee4";
+            break;
+
+        case x < -2:
+            colour = "#94e8dd";
+            break;
+
+        case x < 0:
+            colour = "#a1f3d5";
+            break;
+
+        case x < 4:
+            colour = "#adfdcd";
+            break;
+
+        case x < 8:
+            colour = "#a7fdb7";
+            break;
+
+        case x < 10:
+            colour = "#a2fda0";
+            break;
+
+        case x < 12:
+            colour = "#b0fd9a";
+            break;
+
+        case x < 14:
+            colour = "#c1fd94";
+            break;
+
+        case x < 16:
+            colour = "#d5fd8e";
+            break;
+
+        case x < 18:
+            colour = "#ebfd87";
+            break;
+
+        case x < 20:
+            colour = "#fcf581";
+            break;
+
+        case x < 24:
+            colour = "#fcd97b";
+            break;
+
+        case x < 29:
+            colour = "#fcbb75";
+            break;
+
+        case x < 35:
+            colour = "#fc9b6e";
+            break;
+
+        case x < 40:
+            colour = "#fc7868";
+            break;
+
+        case x >= 40:
+            colour = "#fc6272";
+            break;
+
+        default:
+            colour = "#62bffc";
+    }
+    
+    return colour;
 };
 
 exports.config = {
