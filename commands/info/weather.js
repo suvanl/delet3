@@ -6,12 +6,15 @@ const { OWM_KEY } = process.env;
 
 exports.run = async (client, message, args) => {
     // Define location
-    const location = args.join(" ");
+    let location = args.join(" ");
 
     // If no location is provided, return & inform user
     if (!location) return message.channel.send(stripIndents`
         ℹ️ ${client.l10n(message, "weather.noLocation")}
         📖 ${client.l10n(message, "weather.example").replace(/%cmd%/g, `${message.settings.prefix}weather`)}.`);
+
+    // If location contains apostrophe, ensure it is a valid one
+    if (location.includes("‘")) location = location.replace(/‘/g, "'");
 
     // Encode location as URI component
     const loc = encodeURIComponent(location);
