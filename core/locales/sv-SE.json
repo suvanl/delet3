@@ -128,6 +128,8 @@
     "spotify.energy": "Energy",
     "spotify.acousticness": "Acousticness",
     "spotify.releaseDate": "Released on %date%",
+    "forecast.noLocation": "Please provide a location to look up the weather forecast for.",
+    "forecast.example": "E.g. `%cmd% London`",
     "weather.noLocation": "Please provide a location to look up weather info for.",
     "weather.example": "E.g. `%cmd% London`",
     "weather.404.error": "An error occurred: `%err%`.",
