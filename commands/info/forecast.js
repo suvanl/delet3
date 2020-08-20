@@ -63,6 +63,9 @@ exports.run = async (client, message, args) => {
 
     // IMAGE GENERATION
 
+    // Start typing to indicate image is being generated
+    message.channel.startTyping();
+
     // Create canvas
     const canvas = createCanvas(988, 627);
     const ctx = canvas.getContext("2d");
@@ -208,6 +211,9 @@ exports.run = async (client, message, args) => {
     // Create and send attachment
     const attachment = new MessageAttachment(canvas.toBuffer(), "forecast.png");
     message.channel.send(attachment);
+
+    // Stop typing once image has been sent
+    message.channel.stopTyping();
 };
 
 exports.config = {
