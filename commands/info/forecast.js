@@ -94,11 +94,11 @@ exports.run = async (client, message, args) => {
 
     // Current min temp
     ctx.font = "60px Inter Bold";
+    ctx.fillStyle = "#8eb5d2";
     ctx.fillText(`${("0" + Math.round(data.daily[0].temp.min)).slice(-2)}`, 311, 275);
 
     // degrees C
     ctx.font = "30px Inter";
-    ctx.fillStyle = "#d9e7f1";
     ctx.fillText("°C", 390, 253);
 
     // H o u r l y   f o r e c a s t
