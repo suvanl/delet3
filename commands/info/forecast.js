@@ -50,6 +50,17 @@ exports.run = async (client, message, args) => {
     const res = await fetch(url);
     const data = await res.json();
 
+    // Function returning a boolean stating whether it is night (past sunset)
+    // in the requested area
+    const isNight = () => {
+        const currentTime = data.current.dt + data.timezone_offset;
+        const sunsetTime = data.current.sunset + data.timezone_offset;
+        const nextSunrise = data.daily[1].sunrise + data.timezone_offset;
+
+        if ((currentTime > sunsetTime) && (currentTime < nextSunrise)) return true;
+        else return false;
+    };
+
     // IMAGE GENERATION
 
     // Create canvas
@@ -59,11 +70,18 @@ exports.run = async (client, message, args) => {
     // Locate assets directory
     const assetsDir = `${process.cwd()}${sep}assets`;
 
+    // Define background image locations
+    const dayBg = `${assetsDir}${sep}forecast${sep}forecast-day.png`;
+    const nightBg = `${assetsDir}${sep}forecast${sep}forecast-night.png`;
+
     // Define icon base URL
     const iconURL = "https://openweathermap.org/img/wn";
 
+    // Define day/night main fillStyle
+    const mainFillStyle = isNight() ? "#aaaab2" : "#ffffff";
+
     // Set background image
-    const background = await loadImage(`${assetsDir}${sep}forecast${sep}forecast-day.png`);
+    const background = isNight() ? await loadImage(nightBg) : await loadImage(dayBg);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
     // Register Inter font variants
@@ -72,11 +90,12 @@ exports.run = async (client, message, args) => {
 
     // Heading
     ctx.font = "40px Inter Bold";
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = isNight() ? "#d2d2d2" : "#ffffff";
     ctx.fillText(`${name}, ${country}`, 73, 102);
 
     // Current day and conditions
     ctx.font = "30px Inter Bold";
+    ctx.fillStyle = mainFillStyle;
     ctx.fillText(`${moment.utc(moment.unix(data.current.dt + data.timezone_offset)).format("dddd")}, ${data.current.weather[0].description}`, 73, 200);
 
     // Icon
@@ -89,12 +108,12 @@ exports.run = async (client, message, args) => {
 
     // degrees C
     ctx.font = "30px Inter";
-    ctx.fillStyle = "#d9e7f1";
+    ctx.fillStyle = isNight() ? "#8d8d97" : "#d9e7f1";
     ctx.fillText("°C", 229, 253); // alt 239
 
     // Current min temp
     ctx.font = "60px Inter Bold";
-    ctx.fillStyle = "#8eb5d2";
+    ctx.fillStyle = isNight() ? "#656569" : "#8eb5d2";
     ctx.fillText(`${("0" + Math.round(data.daily[0].temp.min)).slice(-2)}`, 311, 275);
 
     // degrees C
@@ -104,7 +123,7 @@ exports.run = async (client, message, args) => {
     // H o u r l y   f o r e c a s t
 
     ctx.font = "16px Inter Bold";
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = mainFillStyle;
 
     // Hours
     ctx.fillText(moment.utc(moment.unix(data.hourly[1].dt + data.timezone_offset)).format("HH:mm"), 528, 228);
@@ -177,7 +196,7 @@ exports.run = async (client, message, args) => {
     ctx.fillText(`${Math.round(data.daily[6].temp.max)}°`, 832, 485);
 
     // Daily temperature text (min)
-    ctx.fillStyle = "#accae0";
+    ctx.fillStyle = isNight() ? "#656569" : "#accae0";
     ctx.fillText(`${Math.round(data.daily[0].temp.min)}°`, 83, 521);
     ctx.fillText(`${Math.round(data.daily[1].temp.min)}°`, 210, 521);
     ctx.fillText(`${Math.round(data.daily[2].temp.min)}°`, 334, 521);
