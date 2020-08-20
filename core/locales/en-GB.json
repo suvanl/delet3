@@ -128,6 +128,8 @@
     "settings.welcomeEnabled": "Welcome on/off",
     "settings.pointsEnabled": "Points system on/off",
     "settings.pointsCooldown": "Points system cooldown",
+    "settings.nickRequestChannel": "Nick request channel",
+    "settings.nickRequestEnabled": "Nick request system on/off",
 
     "spotify.notListening": "Not listening to a song",
     "spotify.notListening.info": "Please ensure you're listening to a song (on a Spotify account that's connected to Discord).",
@@ -141,6 +143,9 @@
     "spotify.energy": "Energy",
     "spotify.acousticness": "Acousticness",
     "spotify.releaseDate": "Released on %date%",
+
+    "forecast.noLocation": "Please provide a location to look up the weather forecast for.",
+    "forecast.example": "E.g. `%cmd% London`",
 
     "weather.noLocation": "Please provide a location to look up weather info for.",
     "weather.example": "E.g. `%cmd% London`",

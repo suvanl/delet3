@@ -4,7 +4,7 @@ module.exports = client => {
     // Generate secret
     client.genSecret = async () => {
         try {
-            const url = `${process.env.url}/auth`;
+            const url = `${process.env.URL}/auth`;
             const body = { "email": process.env.DB_EMAIL, "password": process.env.DB_PASS };
     
             const res = await fetch(url, {

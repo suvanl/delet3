@@ -78,6 +78,8 @@ exports.friendlySettings = {
     "autoRoleEnabled": "auto-role enabled",
     "modLogChannel": "mod-log channel",
     "modLogEnabled": "mod-log enabled",
+    "nickRequestChannel": "nick request channel",
+    "nickRequestEnabled": "nick request enabled",
     "pointsEnabled": "points system enabled",
     "pointsCooldown": "points cooldown",
     "welcomeChannel": "welcome channel",
@@ -101,6 +103,11 @@ exports.roleSettingsKey = {
 exports.mlSettingsKey = {
     1: "modLogChannel",
     2: "modLogEnabled"
+};
+
+exports.nickSettingsKey = {
+    1: "nickRequestChannel",
+    2: "nickRequestEnabled"
 };
 
 // Points command
