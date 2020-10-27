@@ -29,8 +29,8 @@ const klaw = require("klaw");
 const path = require("path");
 
 const client = new Client({
-    disabledEvents: ["TYPING_START"],
-    disableEveryone: true
+    disableMentions: "everyone",
+    ws: { intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_PRESENCES"] }
 });
 
 client.permLevels = require("./core/settings/permLevels");

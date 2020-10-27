@@ -17,7 +17,7 @@ exports.keys = {
 // User command
 exports.badge = {
     "discord_employee": "703323189891039383",
-    "discord_partner": "703323189815673014",
+    "partnered_server_owner": "703323189815673014",
     "hypesquad_events": "703323189467545711",
     "bughunter_level_1": "703326057859645511",
     "house_bravery": "703281163585716364",
@@ -28,7 +28,7 @@ exports.badge = {
     // "system": "",
     "bughunter_level_2": "703328093623943268",
     "verified_bot": "703326057817833479",
-    "verified_developer": "703326057683746958"
+    "early_verified_bot_developer": "703326057683746958"
 };
 
 exports.statusIcon = {
