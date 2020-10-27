@@ -30,7 +30,8 @@ const path = require("path");
 
 const client = new Client({
     disabledEvents: ["TYPING_START"],
-    disableEveryone: true
+    disableEveryone: true,
+    ws: { intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MEMBERS", "GUILD_PRESENCES"] }
 });
 
 client.permLevels = require("./core/settings/permLevels");
