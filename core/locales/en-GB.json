@@ -37,6 +37,7 @@
 
     "mod.embed.action": "Action: %act%",
     "mod.embed.member": "Member: %user%",
+    "mod.embed.userID": "User ID: %id%",
     "mod.embed.reason": "Reason: %rsn%",
     "mod.embed.issued": "Issued by %user%",
     "mod.embed.case": "Case %num%",

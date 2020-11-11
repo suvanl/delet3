@@ -113,6 +113,7 @@ exports.run = async (client, message, args) => {
         // Create and send embed (to modLogChannel):
             // 🔨 Action: Ban
             // 👤 Member: %user%
+            // #️⃣ User ID: %id%
             // ❔ Reason: %rsn%
             // Issued by %user% | Case %num%
         const embed = new MessageEmbed()
@@ -122,6 +123,7 @@ exports.run = async (client, message, args) => {
                 🔨 ${client.l10n(message, "mod.embed.action").replace(/%act%/g, `**${client.l10n(message, "ban.noun")}**`)}
 
                 👤 ${client.l10n(message, "mod.embed.member").replace(/%user%/g, `**${user.tag}**`)}
+                #️⃣ ${client.l10n(message, "mod.embed.userID").replace(/%id%/g, `**${user.id}**`)}
                 ❔ ${client.l10n(message, "mod.embed.reason").replace(/%rsn%/g, `**${reason ? reason : client.l10n(message, "mod.ban.reason.null")}**`)}`)
             .setFooter(`${issuedBy} • ${caseNumber}`, message.author.displayAvatarURL());
 
