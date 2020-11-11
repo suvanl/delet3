@@ -30,6 +30,7 @@
     "mod.ban.reason.null": "Ingen begrunnelse spesifisert",
     "mod.embed.action": "Type: %act%",
     "mod.embed.member": "Medlem: %user%",
+    "mod.embed.userID": "User ID: %id%",
     "mod.embed.reason": "Begrunnelse: %rsn%",
     "mod.embed.issued": "Utført av %user%",
     "mod.embed.case": "Saksnummer %num%",
