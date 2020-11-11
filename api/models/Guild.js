@@ -17,6 +17,13 @@ const GuildSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    activePunishments: {
+        bans: {
+            type: Array,
+            default: [],
+            trim: true
+        }
+    },
     settings: {
         adminRole: {
             type: String,
