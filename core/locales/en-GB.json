@@ -26,6 +26,7 @@
     "mod.noModLog.info": "Please use `%cmd%` to set it to a channel that exists on this server.",
     "mod.noUser": "User not specified",
     "mod.noUser.info": "You can specify a user by mentioning them, or by providing their user ID.",
+    "mod.noUser.idOnly.info": "You can specify a user by providing their user ID.",
     "mod.invalidUser": "User not found",
     "mod.invalidUser.info": "Please ensure you've mentioned a user in this server or provided a valid user ID.",
     "mod.cancel": "Ended the moderation procedure.",
