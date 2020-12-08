@@ -40,8 +40,11 @@ module.exports = server => {
         // Ensure Content-Type is application/json
         if (!req.is("application/json")) return next(new errors.InvalidContentError("Expects 'application/json'"));
 
-        const { guildID, 
+        const {
+            // basic info
+            guildID, 
             name, 
+            // settings
             adminRole, 
             autoRoleEnabled, 
             autoRoleName, 
@@ -53,7 +56,9 @@ module.exports = server => {
             prefix, 
             welcomeChannel, 
             welcomeEnabled, 
-            welcomeMessage } = req.body;
+            welcomeMessage,
+            // activePunishments
+            bans } = req.body;
 
         const guild = new Guild({
             guildID,
@@ -69,7 +74,8 @@ module.exports = server => {
             prefix, 
             welcomeChannel, 
             welcomeEnabled, 
-            welcomeMessage
+            welcomeMessage,
+            bans
         });
 
         try {
