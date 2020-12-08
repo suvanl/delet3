@@ -160,12 +160,6 @@ exports.run = async (client, message, args) => {
         if (reason.toLowerCase() === "continue") reason = null;
     }
 
-    // // Set days to 0 if unspecified
-    // if (!days) days = 0;
-
-    // // Cap days at 7
-    // if (days > 7) days = 7;
-
     // TODO: implement option to DM a message to ban target
 
     // Handle ban process
@@ -262,5 +256,5 @@ exports.help = {
     name: "ban",
     description: "bans the specified user",
     category: "moderation",
-    usage: "ban <@user|userID> <duration> <reason> [days of message history to delete]"
+    usage: "ban <@user|userID> <duration> <reason>"
 };
