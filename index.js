@@ -51,6 +51,7 @@ require("./core/functions/awaitReply")(client);
 require("./core/functions/updateCaseNumber")(client);
 require("./core/functions/updateSettings")(client);
 require("./core/functions/resetDefaults")(client);
+require("./core/functions/addPunishment")(client);
 require("./core/functions/l10n")(client);
 require("./core/functions/misc");
 
