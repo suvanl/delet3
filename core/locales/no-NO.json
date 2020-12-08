@@ -21,6 +21,7 @@
     "mod.noModLog.info": "Vennligst bruk `%cmd%`for å sette den til en kanal som allerede eksisterer.",
     "mod.noUser": "Bruker ikke spesifisert",
     "mod.noUser.info": "Du can spesifisere en bruker ved å tagge dem, eller ved å bruke deres bruker ID.",
+    "mod.noUser.idOnly.info": "You can specify a user by providing their user ID.",
     "mod.invalidUser": "Bruker ikke funnet",
     "mod.invalidUser.info": "Vennligst forsikre deg om at du har tagget en bruker på denne serveren, eller brukt en gyldig bruker ID.",
     "mod.cancel": "Avsluttet moderasjon prosedyren.",
