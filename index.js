@@ -1,6 +1,6 @@
 /*-------------------------------------------------
  * delet³ for Discord
- * Copyright (c) 2020 suvanl. All rights reserved.
+ * Copyright (c) 2021 suvanl. All rights reserved.
  * See LICENSE.md in project root for license info.
  *------------------------------------------------*/
 
