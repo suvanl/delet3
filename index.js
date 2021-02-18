@@ -52,6 +52,7 @@ require("./core/functions/updateCaseNumber")(client);
 require("./core/functions/updateSettings")(client);
 require("./core/functions/resetDefaults")(client);
 require("./core/functions/addPunishment")(client);
+require("./core/functions/removePunishment")(client);
 require("./core/functions/l10n")(client);
 require("./core/functions/misc");
 
@@ -92,7 +93,7 @@ const init = async () => {
 
     // Load commands
     const commands = await readdir("./commands/");
-    client.logger.log(`Loading ${blue(commands.length)} commands:`);
+    client.logger.log(`Loading ${blue(commands.length)} commands:`);  // TODO: fix this so that it displays the correct number of command files
     
     klaw("./commands").on("data", item => {
         const file = path.parse(item.path);
