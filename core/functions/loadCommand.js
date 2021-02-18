@@ -3,7 +3,7 @@ const { sep } = require("path");
 
 module.exports = client => {
     client.loadCommand = (cmdPath, name) => {
-        try {            
+        try {
             const props = require(`${cmdPath}${sep}${name}`);
             props.config.location = cmdPath;
             if (props.init) props.init(client);
