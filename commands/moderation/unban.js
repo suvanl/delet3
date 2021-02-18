@@ -44,10 +44,19 @@ exports.run = async (client, message, args) => {
 
     // Check if a ban with the specified user ID exists in the collection
     if (bans.some(u => id === u.user.id)) {
-        // Unban specified member
+        // Unban specified member from guild
         const unban = await message.guild.members.unban(id);
 
-        // TODO: Remove ban from database
+        // Get all active bans on this guild
+        const guildData = await client.getGuild(message.guild);
+        const dbBans = guildData.activePunishments["bans"];
+
+        // Check if a ban with the specified user ID exists within the "bans" array, by checking if it returns a valid index.
+        // The Array.prototype.findIndex() function returns -1 if an index cannot be found.
+        if (dbBans.findIndex(obj => obj.userID === id) !== -1) {
+            // If a ban does exist, remove it
+            await client.removePunishment("bans", message.guild, "337216913585209345");
+        }
 
         // Inform user that the member was unbanned successfully
         message.channel.send(`<:tick:688400118549970984> **${unban.tag}** (${unban.id}) was successfully unbanned.`);
