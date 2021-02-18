@@ -38,23 +38,18 @@ client.permLevels = require("./core/settings/permLevels");
 // Load in custom console logger
 client.logger = require("./core/modules/Logger");
 
-// Require custom core functions
-require("./core/functions/loadCommand")(client);
-require("./core/functions/genSecret")(client);
-require("./core/functions/getSettings")(client);
-require("./core/functions/getGuild")(client);
-require("./core/functions/getUser")(client);
-require("./core/functions/getUsers")(client);
-require("./core/functions/addPoints")(client);
-require("./core/functions/permLevel")(client);
-require("./core/functions/awaitReply")(client);
-require("./core/functions/updateCaseNumber")(client);
-require("./core/functions/updateSettings")(client);
-require("./core/functions/resetDefaults")(client);
-require("./core/functions/addPunishment")(client);
-require("./core/functions/removePunishment")(client);
-require("./core/functions/l10n")(client);
+// Require custom misc functions
 require("./core/functions/misc");
+
+// Require custom core functions
+klaw("./core/functions")
+    .on("data", item => {
+        const file = path.parse(item.path);
+        if (!file.ext || file.ext !== ".js") return;
+        if (file.name === "misc") return;
+        require(`${file.dir}${path.sep}${file.base}`)(client);
+    });
+
 
 // Set up REST API server
 const server = restify.createServer();
@@ -92,15 +87,18 @@ const init = async () => {
     });
 
     // Load commands
-    const commands = await readdir("./commands/");
-    client.logger.log(`Loading ${blue(commands.length)} commands:`);  // TODO: fix this so that it displays the correct number of command files
-    
-    klaw("./commands").on("data", item => {
-        const file = path.parse(item.path);
-        if (!file.ext || file.ext !== ".js") return;
-        const res = client.loadCommand(file.dir, file.name);
-        if (!res) client.logger.err(res);
-    });
+    client.logger.log("Loading commands:");
+    const items = [];
+    klaw("./commands")
+        .on("data", item => {
+            const file = path.parse(item.path);
+            if (!file.ext || file.ext !== ".js") return;
+            items.push(item.path);
+            const res = client.loadCommand(file.dir, file.name);
+            if (!res) client.logger.err(res);
+        })
+        .on("end", () => client.logger.log(`Successfully loaded ${blue(items.length)} commands`));
+
 
     // Cache permLevels
     client.levelCache = {};
