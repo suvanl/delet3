@@ -95,8 +95,6 @@ exports.run = async (client, message, args) => {
         const data = await res.json();
         const quiz = data.results[0];
 
-        console.log(quiz);
-
         // Set possible choices as all incorrect answers + correct answer
         const choices = quiz.incorrect_answers;
         choices.push(quiz.correct_answer);
