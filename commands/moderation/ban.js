@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
+const moment = require("moment");
 
 exports.run = async (client, message, args) => {
     // Only run if message author has the BAN_MEMBERS permission
@@ -65,28 +66,39 @@ exports.run = async (client, message, args) => {
 
     // RegExp to match duration format (e.g. 5h, 7d)
     const durationRe = /\b((\d+(\.\d+)?)(h|hr|hrs?|hours?|d|days?))?\b/g;
+
+    // Define invalid duration/value format message
+    const invalidFormatMsg = stripIndents`
+        ❌ **${client.l10n(message, "mod.ban.duration.invalid")}**
+        ${client.l10n(message, "mod.ban.duration.format")}`;
     
     // If duration argument (args[1]) is given in an invalid format:
     //  NOTE: The following check works as <String>.match(RegExp) returns an array of matches.
     //        If the first item in the array is an empty string, this would mean the duration string
     //        does not match the regular expression. For some reason, the returned array has two empty
     //        strings in cases where an invalid duration value is provided. Surely it should return an
-    //        empty array instead, right?
-    if (duration && duration.toString().match(durationRe)[0] === "") return message.channel.send(stripIndents`
-        ❌ **Invalid duration value/format**
-        The valid duration format is: \`X<hours/days>\`, e.g. \`5hours\` or \`7days\`.`);
+    //        empty array instead, right? I'm guessing this happens due to the nature of the RegExp.
+    //
+    //   MSG: ❌ Invalid duration value/format
+    //        The valid duration format is: \`X<hours/days>\`, e.g. \`5hours\` or \`7days\`.
+    if (duration && duration.toString().match(durationRe)[0] === "") return message.channel.send(invalidFormatMsg);
 
     if (duration) duration = await durationToSeconds(duration.toString().toLowerCase());
 
     // If duration isn't specified
     if (!duration) {
-        // Define prompt message
+        // Define prompt message:
+            // ℹ No duration specified
+            //
+            // • If no duration is specified, the ban will be permanent.
+            // • Would you like to specify a duration? [y/n]
+            // • Reply with cancel to exit
         const msg = stripIndents`
-        ℹ **No duration specified**
+            ℹ **${client.l10n(message, "mod.ban.duration.null")}**
 
-        • If no duration is specified, the ban will be **permanent**.
-        • Would you like to specify a duration? [\`y\`/\`n\`]
-        • Reply with \`cancel\` to exit`;
+            • ${client.l10n(message, "mod.ban.duration.null.info")}
+            • ${client.l10n(message, "mod.ban.duration.null.request")} [\`y\`/\`n\`]
+            • ${client.l10n(message, "mod.exitInfo")}`;
 
         // Define response as an awaited reply
         const response = await client.awaitReply(message, msg);
@@ -99,16 +111,24 @@ exports.run = async (client, message, args) => {
 
         // If they do wish to specify a response...
         if (response.toLowerCase() === "y") {
-            // Define prompt message
+            // Define prompt message:
+                // ℹ How long would you like to ban **%usr%** for?
+                //
+                // 🇦: 1 hour
+                // 🇧: 1 day
+                // 🇨: 7 days
+                //
+                // • Alternatively, reply with a custom duration.
+                // • Reply with `cancel` to exit.
             const msg = stripIndents`
-                ℹ How long would you like to ban **${user.tag}** for?
+                ℹ ${client.l10n(message, "mod.mod.ban.durationPrompt").replace(/%usr%/g, user.tag)}
 
-                🇦: 1 hour
-                🇧: 1 day
-                🇨: 7 days
+                🇦: ${client.l10n(message, "mod.ban.durationPrompt.a")}
+                🇧: ${client.l10n(message, "mod.ban.durationPrompt.b")}
+                🇨: ${client.l10n(message, "mod.ban.durationPrompt.c")}
                 
-                • Alternatively, reply with a custom duration.
-                • Reply with \`cancel\` to exit.`;
+                • ${client.l10n(message, "mod.ban.durationPrompt.alt")}
+                • ${client.l10n(message, "mod.exitInfo")}`;
 
             // Define valid responses (other than a custom value)
             const validLetters = ["a", "b", "c"];
@@ -117,9 +137,8 @@ exports.run = async (client, message, args) => {
             const response = await client.awaitReply(message, msg);
             const lwr = response.toLowerCase();
 
-            if (!lwr.match(durationRe)) return message.channel.send(stripIndents`
-                ❌ **Invalid duration value/format**
-                The valid duration format is: \`X<h/d>\`, e.g. \`5h\` (5 hours) or \`7d\` (7 days).`);
+            // If duration format is invalid, inform user and return
+            if (!lwr.match(durationRe)) return message.channel.send(invalidFormatMsg);
 
             // If no response, or if the response is "cancel", inform the user and return
             if (!response || response.toLowerCase() === "cancel") return message.channel.send(`🚪 ${client.l10n(message, "mod.cancel")}`);
@@ -187,18 +206,33 @@ exports.run = async (client, message, args) => {
         const caseNum = guildData.caseNumber;
 
         // TODO: handle sending of the embed in guildBanAdd event?
-        // then bans that aren't done using the bot can be logged too
-        // though it might be harder to fetch the reason;
-        // refer to audit log for reason info?
+        // This way, bans that aren't done using the bot can be logged too.
+        // However, this may make it harder to fetch the reason.
+        // Fetch reason from audit log?
 
         // Embed footer data
         const issuedBy = client.l10n(message, "mod.embed.issued").replace(/%user%/g, message.author.tag);
         const caseNumber = client.l10n(message, "mod.embed.case").replace(/%num%/g, caseNum);
 
+        // Localise duration in embed:
+        // First, get the unix timestamp of the ban's expiry time by adding the ban duration (in seconds) to the current unix timestamp
+        const expiry = moment().unix() + duration;
+        
+        // Convert this time to an ISO 8601 timestamp
+        const iso = moment.unix(expiry).format("YYYY-MM-DD HH:mm:ss");
+
+        // Set the locale for moment to display the time in:
+        // If the guild's language is set to "no-NO", use "nb" as the locale code. Else, just use the value of message.settings.language
+        moment.locale(message.settings.language === "no-NO" ? "nb" : message.settings.language);
+
+        // Get the duration in relative terms (from now)
+        const relative = moment(iso).fromNow(true);
+
         // Create and send embed (to modLogChannel):
             // 🔨 Action: Ban
             // 👤 Member: %user%
             // #️⃣ User ID: %id%
+            // ⌛ Duration: %dur%
             // ❔ Reason: %rsn%
             // Issued by %user% | Case %num%
         const embed = new MessageEmbed()
@@ -209,12 +243,11 @@ exports.run = async (client, message, args) => {
 
                 👤 ${client.l10n(message, "mod.embed.member").replace(/%user%/g, `**${user.tag}**`)}
                 #️⃣ ${client.l10n(message, "mod.embed.userID").replace(/%id%/g, `**${user.id}**`)}
-                ⌛ Duration: **${duration}s**
+                ⌛ ${client.l10n(message, "mod.embed.duration").replace(/%dur%/g, `**${relative}**`)}
                 ❔ ${client.l10n(message, "mod.embed.reason").replace(/%rsn%/g, `**${reason ? reason : client.l10n(message, "mod.ban.reason.null")}**`)}`)
             .setFooter(`${issuedBy} • ${caseNumber}`, message.author.displayAvatarURL());
 
         return modLog.send(embed);
-        // TODO: localise Duration in embed
     }
 };
 
