@@ -1,6 +1,6 @@
 /*-------------------------------------------------
  * delet³ for Discord
- * Copyright (c) 2020 suvanl. All rights reserved.
+ * Copyright (c) 2021 suvanl. All rights reserved.
  * See LICENSE.md in project root for license info.
  *------------------------------------------------*/
 
@@ -13,7 +13,7 @@ const { blue, cyan, green, red, bold, underline } = require("chalk");
 
 const nodeVer = process.version.slice(1).split(".")[0];
 const minVer = "12";
-const recVer = "12";
+const recVer = "14";
 
 if (nodeVer < 12) throw new Error(red(`Node.js ${minVer} or higher is required - please update. v${recVer} is recommended.`));
 else console.log(`Node.js version check ${green("passed")} ✔\nmin: ${red(minVer)} | recommended: ${green(recVer)} | current: ${underline.green(nodeVer)}\n`);
@@ -38,21 +38,18 @@ client.permLevels = require("./core/settings/permLevels");
 // Load in custom console logger
 client.logger = require("./core/modules/Logger");
 
-// Require custom core functions
-require("./core/functions/loadCommand")(client);
-require("./core/functions/genSecret")(client);
-require("./core/functions/getSettings")(client);
-require("./core/functions/getGuild")(client);
-require("./core/functions/getUser")(client);
-require("./core/functions/getUsers")(client);
-require("./core/functions/addPoints")(client);
-require("./core/functions/permLevel")(client);
-require("./core/functions/awaitReply")(client);
-require("./core/functions/updateCaseNumber")(client);
-require("./core/functions/updateSettings")(client);
-require("./core/functions/resetDefaults")(client);
-require("./core/functions/l10n")(client);
+// Require custom misc functions
 require("./core/functions/misc");
+
+// Require custom core functions
+klaw("./core/functions")
+    .on("data", item => {
+        const file = path.parse(item.path);
+        if (!file.ext || file.ext !== ".js") return;
+        if (file.name === "misc") return;
+        require(`${file.dir}${path.sep}${file.base}`)(client);
+    });
+
 
 // Set up REST API server
 const server = restify.createServer();
@@ -90,15 +87,18 @@ const init = async () => {
     });
 
     // Load commands
-    const commands = await readdir("./commands/");
-    client.logger.log(`Loading ${blue(commands.length)} commands:`);
-    
-    klaw("./commands").on("data", item => {
-        const file = path.parse(item.path);
-        if (!file.ext || file.ext !== ".js") return;
-        const res = client.loadCommand(file.dir, file.name);
-        if (!res) client.logger.err(res);
-    });
+    client.logger.log("Loading commands:");
+    const items = [];
+    klaw("./commands")
+        .on("data", item => {
+            const file = path.parse(item.path);
+            if (!file.ext || file.ext !== ".js") return;
+            items.push(item.path);
+            const res = client.loadCommand(file.dir, file.name);
+            if (!res) client.logger.err(res);
+        })
+        .on("end", () => client.logger.log(`Successfully loaded ${blue(items.length)} commands`));
+
 
     // Cache permLevels
     client.levelCache = {};
