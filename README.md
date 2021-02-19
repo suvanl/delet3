@@ -35,4 +35,4 @@ This project is still in **alpha**. New features are still being introduced. del
 3. Run `node index.js` to start the bot.
 
 ## Translations
-delet<sup>3</sup> supports multi-locale support! To start contributing translations, please follow the [translation guide](https://gist.github.com/suvanl/d349831795a0a70de58ba08791dcb539) to see how to access the Crowdin project.
+delet<sup>3</sup> has multi-locale support! To start contributing translations, please follow the [translation guide](https://gist.github.com/suvanl/d349831795a0a70de58ba08791dcb539) to see how to access the Crowdin project.
