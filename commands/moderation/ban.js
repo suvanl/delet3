@@ -67,7 +67,9 @@ exports.run = async (client, message, args) => {
     // RegExp to match duration format (e.g. 5h, 7d)
     const durationRe = /\b((\d+(\.\d+)?)(h|hr|hrs?|hours?|d|days?))?\b/g;
 
-    // Define invalid duration/value format message
+    // Define invalid duration/value format message:
+    //  ❌ Invalid duration value/format
+    //  The valid duration format is: \`X<hours/days>\`, e.g. \`5hours\` or \`7days\`.
     const invalidFormatMsg = stripIndents`
         ❌ **${client.l10n(message, "mod.ban.duration.invalid")}**
         ${client.l10n(message, "mod.ban.duration.format")}`;
@@ -78,9 +80,6 @@ exports.run = async (client, message, args) => {
     //        does not match the regular expression. For some reason, the returned array has two empty
     //        strings in cases where an invalid duration value is provided. Surely it should return an
     //        empty array instead, right? I'm guessing this happens due to the nature of the RegExp.
-    //
-    //   MSG: ❌ Invalid duration value/format
-    //        The valid duration format is: \`X<hours/days>\`, e.g. \`5hours\` or \`7days\`.
     if (duration && duration.toString().match(durationRe)[0] === "") return message.channel.send(invalidFormatMsg);
 
     if (duration) duration = await durationToSeconds(duration.toString().toLowerCase());
@@ -121,7 +120,7 @@ exports.run = async (client, message, args) => {
                 // • Alternatively, reply with a custom duration.
                 // • Reply with `cancel` to exit.
             const msg = stripIndents`
-                ℹ ${client.l10n(message, "mod.mod.ban.durationPrompt").replace(/%usr%/g, user.tag)}
+                ℹ ${client.l10n(message, "mod.ban.durationPrompt").replace(/%usr%/g, user.tag)}
 
                 🇦: ${client.l10n(message, "mod.ban.durationPrompt.a")}
                 🇧: ${client.l10n(message, "mod.ban.durationPrompt.b")}
