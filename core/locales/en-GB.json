@@ -8,6 +8,7 @@
     "utc": "all times are UTC",
     "details": "Use `%cmd%` for further details.",
     "ban.noun": "Ban",
+    "unban.noun": "Unban",
 
     "dm.unavailable": "This command is unavailable in DMs.",
 
@@ -45,6 +46,9 @@
     "mod.ban.durationPrompt.b": "1 day",
     "mod.ban.durationPrompt.c": "7 days",
     "mod.ban.durationPrompt.alt": "Alternatively, reply with a custom duration.",
+
+    "mod.unban.success": "**%usr%** (%id%) was successfully unbanned.",
+    "mod.unban.invalid": "An invalid user ID was provided. Perhaps this user isn't banned?",
 
     "mod.exitInfo": "Reply with `cancel` to exit.",
 
