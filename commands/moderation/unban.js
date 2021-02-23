@@ -58,28 +58,40 @@ exports.run = async (client, message, args) => {
             await client.removePunishment("bans", message.guild, "337216913585209345");
         }
 
-        // Inform user that the member was unbanned successfully
-        message.channel.send(`<:tick:688400118549970984> **${unban.tag}** (${unban.id}) was successfully unbanned.`);
+        // Map object for replacing both %usr% and %id% (using a function as the second arg in String.prototype.replace)
+        const mapObj = { "%usr%": unban.tag, "%id%": unban.id };
+        // Inform user that the member was unbanned successfully:
+        //  ✅ **%usr%** (%id%) was successfully unbanned.
+        message.channel.send(`<:tick:688400118549970984> ${client.l10n(message, "mod.unban.success").replace(/%usr%|%id%/g, matched => {
+            return mapObj[matched];
+        })}`);
 
         // If modLogEnabled is true and modLogData includes "kickBan", create an embed
         if (message.settings.modLogEnabled && message.settings.modLogData.includes("kickBan")) {
+            // Embed content:
+            //  ↩️ Action: Unban
+            //  👤 Member: %user%
+            //  #️⃣ User ID: %id%
+            //  ❔ Reason: %rsn%
+            //  Issued by %user% | Case %num%
             const embed = new MessageEmbed()
                 .setColor("#5fa9f2")
                 .setThumbnail(unban.displayAvatarURL())
                 .setDescription(stripIndents`
-                    ↩️ Action: **Unban**
+                    ↩️ ${client.l10n(message, "mod.embed.action").replace(/%act%/g, `**${client.l10n(message, "unban.noun")}**`)}
 
-                    👤 Member: **${unban.tag}**
-                    #️⃣ User ID: **${unban.id}**
-                    ❔ Reason: **${reason}**`)
+                    👤 ${client.l10n(message, "mod.embed.member").replace(/%user%/g, `**${unban.tag}**`)}
+                    #️⃣ ${client.l10n(message, "mod.embed.userID").replace(/%id%/g, `**${unban.id}**`)}
+                    ❔ ${client.l10n(message, "mod.embed.reason").replace(/%rsn%/g, `**${reason}**`)}`)
                 .setFooter(client.l10n(message, "mod.embed.issued").replace(/%user%/g, message.author.tag), message.author.displayAvatarURL());
 
             // Send embed
             return modLog.send(embed);
         }
     } else { 
-        // Else, inform the user that the user could not be found in the collection
-        return message.channel.send("An invalid user ID was provided. Perhaps this user isn't banned?");
+        // Else, inform the user that the user could not be found in the collection:
+        //  ❌ An invalid user ID was provided. Perhaps this user isn't banned?
+        return message.channel.send(`❌ ${client.l10n(message, "mod.unban.invalid")}`);
     }
 };
 
