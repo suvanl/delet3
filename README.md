@@ -32,7 +32,8 @@ This project is still in **alpha**. New features are still being introduced. del
 
 1. Clone or download this repository.
 2. Rename the `.env.example` file in the project root to `.env`, and enter the required data. See `.github/guides/setup.md` for instructions.
-3. Run `node index.js` to start the bot.
+3. Run `npm install` to install all required modules. Use the `--production` flag if you want to skip devDependencies.
+4. Run `node index.js` to start the bot.
 
 ## Translations
 delet<sup>3</sup> has multi-locale support! To start contributing translations, please follow the [translation guide](https://gist.github.com/suvanl/d349831795a0a70de58ba08791dcb539) to see how to access the Crowdin project.
