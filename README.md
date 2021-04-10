@@ -27,7 +27,7 @@ This project is still in **alpha**. New features are still being introduced. del
 ## Installing delet<sup>3</sup>
 
 **Prerequisites:**
-- [Node.js](https://nodejs.org/en/) (v14.15.5 LTS is recommended)
+- [Node.js](https://nodejs.org/en/) (v14 LTS is recommended)
 
 
 **Instructions:**
