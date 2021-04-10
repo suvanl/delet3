@@ -59,14 +59,16 @@ exports.colour = {
 
 // Language command
 exports.langName = {
-    "nl-NL": "🇳🇱 Nederlands",
+    "de-DE": "🇩🇪 Deutsch",
     "en-GB": "🇬🇧 English",
+    "nl-NL": "🇳🇱 Nederlands",
     "no-NO": "🇳🇴 Norsk"
 };
 
 exports.validLangs = [
-    "nl-NL",
+    "de-DE",
     "en-GB",
+    "nl-NL",
     "no-NO"
 ];
 
