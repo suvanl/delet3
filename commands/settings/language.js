@@ -7,6 +7,7 @@ exports.run = async (client, message, args) => {
         📖 Use \`${message.settings.prefix}language available\` to see a list of valid languages (with tags).
         🔄 Please enter the new language tag. Reply with \`cancel\` to exit.`;
 
+    // TODO: improve this so that it loops through the files in core/locales rather than using the validLangs array
     if (args[0] && args[0].toLowerCase() === "available") return message.channel.send(stripIndents`
         🌍 **Available languages**
 
