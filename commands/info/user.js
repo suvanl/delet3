@@ -44,6 +44,7 @@ exports.run = async (client, message) => {
     const data = await client.getUser(message.guild, user);
 
     // Roles (with @everyone filtered out)
+    // TODO: place the user's hoisted (main) role at the start of the list
     const r = message.guild.member(user).roles.cache;
     const roleMap = r.map(r => `\`${r.name}\``);
     let roles = roleMap.filter(r => r !== "`@everyone`");
