@@ -114,6 +114,7 @@
     "trivia.ans.wrong": "Falsche Antwort",
     "trivia.ans.info": "Die richtige Antwort war `%ans%`; du hast `%choice%` ausgewählt. Gib nicht auf versuche es erneut!",
     "settings.prompt.cat": "Welche %category%-bezogen Einstellung möchten Sie ändern?",
+    "settings.prompt.currentValue": "The current value of **%setting%** is `%value%`.",
     "settings.prompt.newValue": "Bitte gibt einen neuen Wert ein.",
     "settings.exitInfo": "Antworte mit `cancel` um diese Aktion abzubrechen.",
     "settings.cancel": "Ende des Verfahren von der Anpassung von Einstellungen.",
