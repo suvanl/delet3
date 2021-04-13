@@ -114,6 +114,7 @@
     "trivia.ans.wrong": "Feil svar",
     "trivia.ans.info": "Riktig svar var `%ans%`; du valgte `%choice%`. Ikke gi opp - prøv igjen!",
     "settings.prompt.cat": "Hvilken %category%-relatert innstilling vil du bytte?",
+    "settings.prompt.currentValue": "The current value of **%setting%** is `%value%`.",
     "settings.prompt.newValue": "Vennligst velg en ny verdi.",
     "settings.exitInfo": "Svar med `cancel` for å avslutte.",
     "settings.cancel": "Avsluttet prosedyren for tilpasning av innstillinger.",
