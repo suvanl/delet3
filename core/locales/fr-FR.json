@@ -114,6 +114,7 @@
     "trivia.ans.wrong": "Incorrect answer",
     "trivia.ans.info": "The correct answer was `%ans%`; you chose `%choice%`. Don't give up, though - try again!",
     "settings.prompt.cat": "Which %category%-related setting would you like to change?",
+    "settings.prompt.currentValue": "The current value of **%setting%** is `%value%`.",
     "settings.prompt.newValue": "Please enter the new value.",
     "settings.exitInfo": "Reply with `cancel` to exit.",
     "settings.cancel": "Ended the settings customisation procedure.",
