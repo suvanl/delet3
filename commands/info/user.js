@@ -35,9 +35,19 @@ exports.run = async (client, message) => {
         "WATCHING": client.l10n(message, "user.activity.watching")
     };
 
+    console.log(user.presence.activities[0]);
+    const a = user.presence.activities[0];
+    
+
+    // If user has a current activity
     if (user.presence.activities.length !== 0) {
-        const a = user.presence.activities[0];
-        activity = a.type !== "CUSTOM_STATUS" ? `${friendlyActivity[a.type].replace(/%activity%/g, `**${a.name}**`)}` : `**${a.name.truncate(24)}**`;
+        if (a.type === "CUSTOM_STATUS") {
+            // display their activity in the following format: [Emoji (if present)] [Status Message (if present)]
+            activity = `${a.emoji ? a.emoji : "\u200b"} **${a.state ? a.state.truncate(24) : a.name}**`;
+        } else {
+            // if their status isn't a custom status, display their current activity (e.g. Listening to Spotify)
+            activity = friendlyActivity[a.type].replace(/%activity%/g, `**${a.name}**`);
+        }
     }
 
     // User data for points
