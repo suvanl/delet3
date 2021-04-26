@@ -36,17 +36,17 @@ exports.run = async (client, message) => {
     };
 
     console.log(user.presence.activities[0]);
-    const a = user.presence.activities[0];
+    const currentActivity = user.presence.activities[0];
     
 
     // If user has a current activity
     if (user.presence.activities.length !== 0) {
-        if (a.type === "CUSTOM_STATUS") {
+        if (currentActivity.type === "CUSTOM_STATUS") {
             // display their activity in the following format: [Emoji (if present)] [Status Message (if present)]
-            activity = `${a.emoji ? a.emoji : "\u200b"} **${a.state ? a.state.truncate(24) : a.name}**`;
+            activity = `${currentActivity.emoji ? currentActivity.emoji : "\u200b"} **${currentActivity.state ? currentActivity.state.truncate(24) : currentActivity.name}**`;
         } else {
             // if their status isn't a custom status, display their current activity (e.g. Listening to Spotify)
-            activity = friendlyActivity[a.type].replace(/%activity%/g, `**${a.name}**`);
+            activity = friendlyActivity[currentActivity.type].replace(/%activity%/g, `**${currentActivity.name}**`);
         }
     }
 
@@ -55,8 +55,8 @@ exports.run = async (client, message) => {
 
     // Roles (with @everyone filtered out)
     // TODO: place the user's hoisted (main) role at the start of the list
-    const r = message.guild.member(user).roles.cache;
-    const roleMap = r.map(r => `\`${r.name}\``);
+    const userRoles = message.guild.member(user).roles.cache;
+    const roleMap = userRoles.map(r => `\`${r.name}\``);
     let roles = roleMap.filter(r => r !== "`@everyone`");
     if (roles.length === 0) roles = ["None"];
 
