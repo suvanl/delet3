@@ -24,6 +24,10 @@ This project is still in **alpha**. New features are still being introduced. del
 
 - If you'd like to see the content of a message string, you can refer to the `core/locales/en-GB.json` file, which is the base locale file
 
+**Custom Emojis**
+
+Currently, custom emojis are referenced using strings containing the emoji name and ID. However, the ID is server-specific. Therefore, if self-hosting the bot, custom emojis will not be displayed unless their IDs are edited manually. Configuring custom emoji IDs will be made much simpler in a future release.
+
 ## Installing delet<sup>3</sup>
 
 **Prerequisites:**
