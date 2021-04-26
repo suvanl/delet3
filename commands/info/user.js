@@ -3,10 +3,21 @@ const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const { badge, statusIcon } = require("../../core/util/data");
 
-exports.run = async (client, message) => {
-    // Get user by mention (fallback: self)
-    // TODO: ability to get user by username as well
-    const user = message.mentions.users.first() || message.author;
+exports.run = async (client, message, args) => {
+    // Set user as message author by default
+    let user = message.author;
+
+    // If message contains any mentioned users, set the user as the first mention
+    if (message.mentions.users.first()) user = message.mentions.users.first();
+    
+    // If args have been supplied but no mentions are present, we'll assume the user is trying to reference a user by
+    // their username. Therefore, we'll attempt to find a user in this server that has a username matching the value
+    // of the first provided argument.
+    if (args[0] && !message.mentions.users.first()) user = client.users.cache.find(user => user.username == args[0]);
+
+    // If a user with the specified username cannot be found in the current server, inform the user of this.
+    if (!user) return message.channel.send(client.l10n(message, "avatar.user.invalid"));
+
     
     // Fetch user flags and convert them to an array of bitfield names
     const fetchFlags = await user.fetchFlags();
@@ -75,6 +86,7 @@ exports.run = async (client, message) => {
 
     // If the user has no roles, display "None"
     if (roles.length === 0) roles = ["None"];
+
 
     // Create and send embed
     const embed = new MessageEmbed()
