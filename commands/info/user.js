@@ -8,15 +8,16 @@ exports.run = async (client, message) => {
     // TODO: ability to get user by username as well
     const user = message.mentions.users.first() || message.author;
     
-    // Flags
+    // Fetch user flags and convert them to an array of bitfield names
     const fetchFlags = await user.fetchFlags();
     const userFlags = fetchFlags.toArray();
 
-    // Badges
+    // Convert user flags to emojis corresponding to profile badges. These will be displayed on the profile embed.
     let badges = userFlags.map(f => `<:${f.toLowerCase()}:${badge[f.toLowerCase()]}>`);
+    // If the user is a bot, display the appropriate "Bot" badge
     if (badges.length === 0 && user.bot) badges = "<:bot:703336283577122826>";
 
-    // Status
+    // Translate status names to the current server's language
     const status = {
         "online": client.l10n(message, "user.status.online"),
         "idle": client.l10n(message, "user.status.idle"),
@@ -24,10 +25,14 @@ exports.run = async (client, message) => {
         "offline": client.l10n(message, "user.status.offline")
     };
 
+    // Define the status emoji that will be shown in the profile embed (in the format <:emojiName:emojiID>)
     const statusEmoji = `<:${user.presence.status}:${statusIcon[user.presence.status]}>`;
 
     // Activity
     let activity = "";
+
+    // Convert the current activity type to a user-friendly, localised string
+    // (e.g. "Playing [Activity]", "Listening to [Activity]", etc)
     const friendlyActivity = {
         "PLAYING": client.l10n(message, "user.activity.playing"),
         "STREAMING": client.l10n(message, "user.activity.streaming"),
