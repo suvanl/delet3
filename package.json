@@ -24,7 +24,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "canvas": "^2.7.0",
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "common-tags": "^1.8.0",
     "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
@@ -32,7 +32,7 @@
     "jsonwebtoken": "^8.5.1",
     "klaw": "^3.0.0",
     "moment": "^2.29.1",
-    "mongoose": "^5.12.3",
+    "mongoose": "^5.12.5",
     "mongoose-timestamp": "^0.6.0",
     "node-fetch": "^2.6.1",
     "restify": "^8.5.1",
@@ -40,7 +40,7 @@
     "restify-jwt-community": "^1.1.12"
   },
   "devDependencies": {
-    "eslint": "^7.24.0",
+    "eslint": "^7.25.0",
     "jest": "^26.6.3"
   }
 }
