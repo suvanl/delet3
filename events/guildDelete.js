@@ -2,11 +2,12 @@ const { blue, cyan } = require("chalk");
 const fetch = require("node-fetch");
 
 module.exports = async (client, guild) => {
-    // Delete guild data from database
+    // Request parameters
     const secret = await client.genSecret();
     const url = `${process.env.URL}/guilds/${guild.id}`;
     const meta = { "Authorization": `jwt ${secret.token}` };
     
+    // Delete guild data from DB
     try {
         await fetch(url, {
             method: "delete",

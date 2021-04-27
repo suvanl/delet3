@@ -36,9 +36,12 @@ exports.run = async (client, message) => {
         // User-friendly settings name
         const friendly = friendlySettings[setting];
 
+        // Map object for multi-replace in localised string
+        const mapObj = { "%setting%": friendly.toTitleCase(), "%value%": s[selected] };
+
         // Define message prompt
         const msg = stripIndents`
-            ⚙️ The current value of **${friendly.toTitleCase()}** is \`${s[selected]}\`.
+            ⚙️ ${client.l10n(message, "settings.prompt.currentValue").replace(/%setting%|%value%/g, matched => mapObj[matched])}
             🔄 ${client.l10n(message, "settings.prompt.newValue")} ${client.l10n(message, "settings.exitInfo")}`;
 
         // Prompt for new value

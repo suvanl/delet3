@@ -1,10 +1,8 @@
 const fetch = require("node-fetch");
-const Entities = require("html-entities").AllHtmlEntities;
+const { decode } = require("html-entities");
 const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const { categories } = require("../../core/util/data");
-
-const e = new Entities();
 
 exports.run = async (client, message, args) => {
     // Send list of available categories
@@ -128,9 +126,9 @@ exports.run = async (client, message, args) => {
             .setColor("#6f99ff")
             .setDescription(stripIndents`
                 **${client.l10n(message, "trivia.embed.question")}**
-                ${e.decode(quiz.question)}
+                ${decode(quiz.question)}
 
-                ${e.decode(options)}
+                ${decode(options)}
 
                 **${client.l10n(message, "trivia.embed.catdiff")}**
                 ${quiz.category} | ${quiz.difficulty.toTitleCase()}`)
@@ -158,7 +156,7 @@ exports.run = async (client, message, args) => {
             // The correct answer was [ans].
         const invalid = stripIndents`
             ⚠️ **${client.l10n(message, "trivia.ans.invalid")}**
-            ${client.l10n(message, "trivia.ans").replace(/%ans%/g, e.decode(quiz.correct_answer))}`;
+            ${client.l10n(message, "trivia.ans").replace(/%ans%/g, decode(quiz.correct_answer))}`;
 
         // Send "invalid" message if answer doesn't match one of the valid choices
         if (quiz.type === "multiple" && !choice || quiz.type === "boolean" && !bool.includes(userAns.toTitleCase())) return message.channel.send(invalid);  
@@ -201,7 +199,7 @@ exports.run = async (client, message, args) => {
             // The correct answer was [correct_ans]; you chose [choice]. Don't give up, though - try again!
         else return message.channel.send(stripIndents`
             <:x_:688400118327672843> **${client.l10n(message, "trivia.ans.wrong")}**
-            ${client.l10n(message, "trivia.ans.info").replace(/%ans%/g, e.decode(quiz.correct_answer)).replace(/%choice%/g, choice)}`);
+            ${client.l10n(message, "trivia.ans.info").replace(/%ans%/g, decode(quiz.correct_answer)).replace(/%choice%/g, choice)}`);
     } catch (err) {
         client.logger.err(err.stack);
         return message.channel.send(client.l10n(message, "error"));
