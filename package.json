@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "node index.js",
+    "dev": "nodemon",
+    "prod": "pm2 start delet3",
+    "prod-monit": "pm2 start delet3 && pm2 monit"
   },
   "repository": {
     "type": "git",
