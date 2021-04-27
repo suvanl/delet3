@@ -1,9 +1,7 @@
 const fetch = require("node-fetch");
-const Entities = require("html-entities").AllHtmlEntities;
+const { decode } = require("html-entities");
 const { stripIndents } = require("common-tags");
 const { YOUTUBE_KEY } = process.env;
-
-const e = new Entities();
 
 exports.run = async (client, message, args) => {
     // Define query
@@ -24,7 +22,7 @@ exports.run = async (client, message, args) => {
     
     // Create a list of video titles
     let i = 0;
-    const list = vids.map(v => `**${++i}** | ${e.decode(v.snippet.title)}`).join("\n");
+    const list = vids.map(v => `**${++i}** | ${decode(v.snippet.title)}`).join("\n");
 
     // Define prompt message
     const range = `1-${vids.length}`;
