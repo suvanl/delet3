@@ -102,9 +102,9 @@ const init = async () => {
 
 
     // Cache permLevels
-    const levelCache = client.levelCache = new Map();
+    client.levelCache = new Map();
     client.permLevels.levels.forEach(lev => {
-        levelCache.set(lev.level, lev.name);
+        client.levelCache.set(lev.level, lev.name);
     });
 
     console.log(client.levelCache);
