@@ -1,5 +1,5 @@
 const permLevels = {
-    "superusers": [],
+    superusers: [],
     
     levels: [
         {
