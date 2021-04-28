@@ -4,6 +4,7 @@
  * See LICENSE.md in project root for license info.
  *------------------------------------------------*/
 
+
 // Configure enviroment variables
 require("dotenv").config();
 const { JWT_SECRET, MONGO_STRING, PORT, TOKEN } = process.env;
@@ -101,11 +102,12 @@ const init = async () => {
 
 
     // Cache permLevels
-    client.levelCache = {};
-    for (let i = 0; i < client.permLevels.levels.length; i++) {
-        const thisLevel = client.permLevels.levels[i];
-        client.levelCache[thisLevel.name] = thisLevel.level;
-    }
+    const levelCache = client.levelCache = new Map();
+    client.permLevels.levels.forEach(lev => {
+        levelCache.set(lev.level, lev.name);
+    });
+
+    console.log(client.levelCache);
 
     // Discord login
     client.login(TOKEN);
