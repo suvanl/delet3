@@ -117,7 +117,6 @@ const init = async () => {
         })
         .on("end", () => client.logger.log(`Successfully loaded ${blue(items.length)} commands`));
 
-
     // Cache permLevels:
     // Initialise a new Map object
     client.levelCache = new Map();
@@ -125,7 +124,6 @@ const init = async () => {
         // Add each the level (Number) and name (String) of each permLevel to the Map
         client.levelCache.set(lev.level, lev.name);
     });
-
 
     // Log into Discord
     client.login(TOKEN);
