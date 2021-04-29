@@ -1,6 +1,7 @@
 {
     "channel": "kanal",
     "on_off": "an/aus",
+    "data": "data",
     "error": "Ein Fehler aufgetreten.",
     "point": "Punkt",
     "points": "Punkte",
@@ -134,6 +135,8 @@
     "settings.pointsCooldown": "Punkte System abklingzeit",
     "settings.nickRequestChannel": "Nick Anfrage channel",
     "settings.nickRequestEnabled": "Nick Anfrage System an/aus",
+    "settings.invalidModLogData": "Invalid mod-log data type(s) provided",
+    "settings.invalidModLogData.info": "The valid data types are: %types%.",
     "spotify.notListening": "Du hörst die gerade kein Lied an",
     "spotify.notListening.info": "Bitte stelle sicher, dass du dir einen Song, der mit einem Spotify account mit Discord verbunden ist anhörst.",
     "spotify.trackTitle": "%song% von %artists%",
