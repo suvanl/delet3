@@ -1,6 +1,7 @@
 {
     "channel": "kanaal",
     "on_off": "aan/uit",
+    "data": "data",
     "error": "Er is een fout opgetreden.",
     "point": "point",
     "points": "points",
@@ -134,6 +135,8 @@
     "settings.pointsCooldown": "Points system cooldown",
     "settings.nickRequestChannel": "Nick request channel",
     "settings.nickRequestEnabled": "Nick request system on/off",
+    "settings.invalidModLogData": "Invalid mod-log data type(s) provided",
+    "settings.invalidModLogData.info": "The valid data types are: %types%.",
     "spotify.notListening": "Not listening to a song",
     "spotify.notListening.info": "Please ensure you're listening to a song (on a Spotify account that's connected to Discord).",
     "spotify.trackTitle": "%song% by %artists%",
