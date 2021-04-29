@@ -1,6 +1,7 @@
 {
     "channel": "kanal",
     "on_off": "av/på",
+    "data": "data",
     "error": "Et problem har oppstått.",
     "point": "poeng",
     "points": "poeng",
@@ -134,6 +135,8 @@
     "settings.pointsCooldown": "Poengsystem cooldown",
     "settings.nickRequestChannel": "Nick request channel",
     "settings.nickRequestEnabled": "Nick request system on/off",
+    "settings.invalidModLogData": "Invalid mod-log data type(s) provided",
+    "settings.invalidModLogData.info": "The valid data types are: %types%.",
     "spotify.notListening": "Hører ikke på en sang",
     "spotify.notListening.info": "Forsikre deg om at du hører på en sang (på en Spotify-konto som er koblet til Discord).",
     "spotify.trackTitle": "%song% av %artists%",
