@@ -17,7 +17,7 @@ exports.run = async (client, message) => {
 };
 
 exports.config = {
-    aliases: ["defaults", "restore"],
+    aliases: ["defaults", "restore", "reset"],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Admin"
