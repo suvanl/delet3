@@ -17,6 +17,7 @@ exports.run = async (client, message) => {
 
         👮 **Modlog**
         - Mod-Log Channel: \`${message.settings.modLogChannel}\`
+        - Mod-Log Data: \`${message.settings.modLogData.join(", ")}\`
         - Mod-Log Enabled: \`${message.settings.modLogEnabled}\`
 
         🔢 **Points System** (*pointsys)
