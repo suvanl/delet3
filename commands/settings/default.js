@@ -10,14 +10,19 @@ exports.run = async (client, message) => {
 
     // If reply is "y(es)"
     if (res.toLowerCase() === "y" || res.toLowerCase() === "yes") {
+        // Inform the user that all settings are being reset to default values
         const msg = await message.channel.send(`🔄 ${client.l10n(message, "settings.restoringDefaults")}`);
+
+        // Reset settings
         const reset = await client.resetDefaults(message.guild);
+
+        // If client.resetDefaults() returns a "201 Created" HTTP status code, inform the user that the reset was successful
         if (reset === 201) return msg.edit("<:tick:688400118549970984> Default server settings were successfully restored.");
     }
 };
 
 exports.config = {
-    aliases: ["defaults", "restore"],
+    aliases: ["defaults", "restore", "reset"],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Admin"

@@ -79,6 +79,7 @@ exports.friendlySettings = {
     "autoRoleName": "auto-role name",
     "autoRoleEnabled": "auto-role enabled",
     "modLogChannel": "mod-log channel",
+    "modLogData": "mod-log data",
     "modLogEnabled": "mod-log enabled",
     "nickRequestChannel": "nick request channel",
     "nickRequestEnabled": "nick request enabled",
@@ -104,7 +105,8 @@ exports.roleSettingsKey = {
 // Modlog command
 exports.mlSettingsKey = {
     1: "modLogChannel",
-    2: "modLogEnabled"
+    2: "modLogData",
+    3: "modLogEnabled"
 };
 
 exports.nickSettingsKey = {
