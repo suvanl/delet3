@@ -6,6 +6,7 @@ const { stripIndents } = require("common-tags");
 const { sep } = require("path");
 const { OWM_KEY } = process.env;
 
+// TODO: fix issue where forecast card reverts to day theme after midnight local time
 exports.run = async (client, message, args) => {
     // Define location
     let location = args.join(" ");

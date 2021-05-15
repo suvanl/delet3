@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/8Nn68vR.png" height="110">
+<img src="https://i.imgur.com/USWDXgZ.png" height="110">
 
 ---
 
@@ -6,7 +6,7 @@ This project is still in **alpha**. New features are still being introduced. del
 
 ---
 
-**Branches**
+🌳 **Branches**
 
 - Currently, the main development branch is [localisation](https://github.com/suvanl/delet3/tree/localisation)
 
@@ -17,14 +17,14 @@ This project is still in **alpha**. New features are still being introduced. del
 - The **master** branch is the most stable, whereas the **localisation** branch will have the latest features.
 
 
-**Message Strings**
+💬 **Message Strings**
 - As delet<sup>3</sup> has been set up to be localised, message strings won't directly be visible in code
 
 - In some cases, comments will show what a localised string says in English
 
 - If you'd like to see the content of a message string, you can refer to the `core/locales/en-GB.json` file, which is the base locale file
 
-**Custom Emojis**
+ ⭐️ **Custom Emojis**
 
 Currently, custom emojis are referenced using strings containing the emoji name and ID. However, the ID is server-specific. Therefore, if self-hosting the bot, custom emojis will not be displayed unless their IDs are edited manually. Configuring custom emoji IDs will be made much simpler in a future release.
 
