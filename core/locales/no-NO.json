@@ -35,7 +35,7 @@
     "mod.ban.duration.null.info": "Hvis ingen varighet er angitt, vil utestengelsen være **permanent**.",
     "mod.ban.duration.null.request": "Vil du angri en varighet?",
     "mod.ban.duration.invalid": "Ugyldig varighet verdi/format",
-    "mod.ban.duration.format": "Ugyldig format på varighet er: `X<hours/days>`, f.eks `5hours` eller `7dager`.",
+    "mod.ban.duration.format": "Ugyldig format på varighet er: `X<hours/days>`, f.eks `5hours` eller `7days`.",
     "mod.ban.durationPrompt": "Hvor lenge vil du utestenge **%usr%** for?",
     "mod.ban.durationPrompt.a": "1 time",
     "mod.ban.durationPrompt.b": "1 dag",
