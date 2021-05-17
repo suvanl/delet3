@@ -6,7 +6,6 @@ const { stripIndents } = require("common-tags");
 const { sep } = require("path");
 const { OWM_KEY } = process.env;
 
-// TODO: fix issue where forecast card reverts to day theme after midnight local time
 exports.run = async (client, message, args) => {
     // Define location
     let location = args.join(" ");
@@ -25,15 +24,8 @@ exports.run = async (client, message, args) => {
     // Get two-letter language code for the "lang" parameter in the API request
     const lang = message.settings.language.slice(0, 2) || "en";
 
-    // Function to obtain current weather data (to get lat/lon values)
-    const getCurrent = async () => {
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&units=metric&lang=${lang}&appid=${OWM_KEY}`;
-        const res = await fetch(url);
-        return await res.json();
-    };
-
     // Get lat/lon and location values from current weather data
-    const current = await getCurrent();
+    const current = await getCurrent(loc, lang, OWM_KEY);
 
     // Inform user if 404 occurs
     if (current.cod === "404") return message.channel.send(stripIndents`
@@ -46,23 +38,29 @@ exports.run = async (client, message, args) => {
     const { country } = current.sys;
     const { name } = current;
 
-    // Send GET request to OWM One Call API for forecast data
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely&lang=${lang}&appid=${OWM_KEY}`;
-    const res = await fetch(url);
-    const data = await res.json();
+    // Get forecast data
+    const data = await getForecast(lat, lon, lang, OWM_KEY);
 
     // Function returning a boolean stating whether it is night (past sunset)
     // in the requested area
     const isNight = () => {
+        // Current Unix timestamp for the location location
         const currentTime = data.current.dt + data.timezone_offset;
-        const sunsetTime = data.current.sunset + data.timezone_offset;
-        const nextSunrise = data.daily[1].sunrise + data.timezone_offset;
 
-        if ((currentTime > sunsetTime) && (currentTime < nextSunrise)) return true;
-        else return false;
+        // Sunrise timestamp for the specified location
+        const sunriseTime = data.current.sunrise + data.timezone_offset;
+
+        // Sunset timestamp for the specified location
+        const sunsetTime = data.current.sunset + data.timezone_offset;
+
+        // If the current time is greater than (after) the sunrise time, AND
+        // the current time is less than (before) the sunset time, it must be day.
+        // Else, it must be night.
+        if ((currentTime > sunriseTime) && (currentTime < sunsetTime)) return false;
+        else return true;
     };
 
-    // IMAGE GENERATION
+    // #region IMAGE GENERATION
 
     // Start typing to indicate image is being generated
     message.channel.startTyping();
@@ -209,12 +207,31 @@ exports.run = async (client, message, args) => {
     ctx.fillText(`${Math.round(data.daily[5].temp.min)}°`, 710, 521);
     ctx.fillText(`${Math.round(data.daily[6].temp.min)}°`, 832, 521);
 
+    // #endregion
+
     // Create and send attachment
     const attachment = new MessageAttachment(canvas.toBuffer(), "forecast.png");
     message.channel.send(attachment);
 
     // Stop typing once image has been sent
     message.channel.stopTyping();
+};
+
+
+// Function to obtain current weather data (to get lat/lon values)
+const getCurrent = async (loc, lang, key) => {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&units=metric&lang=${lang}&appid=${key}`;
+    const res = await fetch(url);
+    return await res.json();
+};
+
+
+// Function to get forecast data for the specified location
+const getForecast = async (lat, lon, lang, key) => {
+    // Send GET request to OWM One Call API for forecast data
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely&lang=${lang}&appid=${key}`;
+    const res = await fetch(url);
+    return await res.json();
 };
 
 exports.config = {
