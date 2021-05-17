@@ -41,25 +41,6 @@ exports.run = async (client, message, args) => {
     // Get forecast data
     const data = await getForecast(lat, lon, lang, OWM_KEY);
 
-    // Function returning a boolean stating whether it is night (past sunset)
-    // in the requested area
-    const isNight = () => {
-        // Current Unix timestamp for the location location
-        const currentTime = data.current.dt + data.timezone_offset;
-
-        // Sunrise timestamp for the specified location
-        const sunriseTime = data.current.sunrise + data.timezone_offset;
-
-        // Sunset timestamp for the specified location
-        const sunsetTime = data.current.sunset + data.timezone_offset;
-
-        // If the current time is greater than (after) the sunrise time, AND
-        // the current time is less than (before) the sunset time, it must be day.
-        // Else, it must be night.
-        if ((currentTime > sunriseTime) && (currentTime < sunsetTime)) return false;
-        else return true;
-    };
-
     // #region IMAGE GENERATION
 
     // Start typing to indicate image is being generated
@@ -80,10 +61,10 @@ exports.run = async (client, message, args) => {
     const iconURL = "https://openweathermap.org/img/wn";
 
     // Define day/night main fillStyle
-    const mainFillStyle = isNight() ? "#aaaab2" : "#ffffff";
+    const mainFillStyle = isNight(data) ? "#aaaab2" : "#ffffff";
 
     // Set background image
-    const background = isNight() ? await loadImage(nightBg) : await loadImage(dayBg);
+    const background = isNight(data) ? await loadImage(nightBg) : await loadImage(dayBg);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
     // Register Inter font variants
@@ -92,7 +73,7 @@ exports.run = async (client, message, args) => {
 
     // Heading
     ctx.font = "40px Inter Bold";
-    ctx.fillStyle = isNight() ? "#d2d2d2" : "#ffffff";
+    ctx.fillStyle = isNight(data) ? "#d2d2d2" : "#ffffff";
     ctx.fillText(`${name}, ${country}`, 73, 102);
 
     // Current day and conditions
@@ -110,12 +91,12 @@ exports.run = async (client, message, args) => {
 
     // degrees C
     ctx.font = "30px Inter";
-    ctx.fillStyle = isNight() ? "#8d8d97" : "#d9e7f1";
+    ctx.fillStyle = isNight(data) ? "#8d8d97" : "#d9e7f1";
     ctx.fillText("°C", 229, 253); // alt 239
 
     // Current min temp
     ctx.font = "60px Inter Bold";
-    ctx.fillStyle = isNight() ? "#656569" : "#8eb5d2";
+    ctx.fillStyle = isNight(data) ? "#656569" : "#8eb5d2";
     ctx.fillText(`${("0" + Math.round(data.daily[0].temp.min)).slice(-2)}`, 311, 275);
 
     // degrees C
@@ -198,7 +179,7 @@ exports.run = async (client, message, args) => {
     ctx.fillText(`${Math.round(data.daily[6].temp.max)}°`, 832, 485);
 
     // Daily temperature text (min)
-    ctx.fillStyle = isNight() ? "#656569" : "#accae0";
+    ctx.fillStyle = isNight(data) ? "#656569" : "#accae0";
     ctx.fillText(`${Math.round(data.daily[0].temp.min)}°`, 83, 521);
     ctx.fillText(`${Math.round(data.daily[1].temp.min)}°`, 210, 521);
     ctx.fillText(`${Math.round(data.daily[2].temp.min)}°`, 334, 521);
@@ -217,6 +198,7 @@ exports.run = async (client, message, args) => {
     message.channel.stopTyping();
 };
 
+// #region Helper Functions
 
 // Function to obtain current weather data (to get lat/lon values)
 const getCurrent = async (loc, lang, key) => {
@@ -233,6 +215,27 @@ const getForecast = async (lat, lon, lang, key) => {
     const res = await fetch(url);
     return await res.json();
 };
+
+
+// Function returning a boolean stating whether it is night (past sunset) in the requested area
+const isNight = data => {
+    // Current Unix timestamp for the location location
+    const currentTime = data.current.dt + data.timezone_offset;
+
+    // Sunrise timestamp for the specified location
+    const sunriseTime = data.current.sunrise + data.timezone_offset;
+
+    // Sunset timestamp for the specified location
+    const sunsetTime = data.current.sunset + data.timezone_offset;
+
+    // If the current time is greater than (after) the sunrise time, AND
+    // the current time is less than (before) the sunset time, it must be day.
+    // Else, it must be night.
+    if ((currentTime > sunriseTime) && (currentTime < sunsetTime)) return false;
+    else return true;
+};
+
+// #endregion
 
 exports.config = {
     aliases: [],
