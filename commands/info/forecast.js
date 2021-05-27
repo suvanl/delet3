@@ -15,7 +15,9 @@ exports.run = async (client, message, args) => {
         ℹ️ ${client.l10n(message, "forecast.noLocation")}
         📖 ${client.l10n(message, "forecast.example").replace(/%cmd%/g, `${message.settings.prefix}forecast`)}.`);
 
-    // If location contains apostrophe, ensure it is a valid one
+    // If location contains apostrophe, ensure it is a valid one.
+    // This specific character replacement fixes an issue where the iOS keyboard
+    // autocorrects ' to ‘, resulting in an invalid location being provided to OpenWeatherMap.
     if (location.includes("‘")) location = location.replace(/‘/g, "'");
 
     // Encode location as URI component
