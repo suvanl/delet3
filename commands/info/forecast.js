@@ -221,7 +221,7 @@ const getForecast = async (lat, lon, lang, key) => {
 
 // Function returning a boolean stating whether it is night (past sunset) in the requested area
 const isNight = data => {
-    // Current Unix timestamp for the location location
+    // Current Unix timestamp for the specified location
     const currentTime = data.current.dt + data.timezone_offset;
 
     // Sunrise timestamp for the specified location
