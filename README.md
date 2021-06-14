@@ -42,3 +42,10 @@ Currently, custom emojis are referenced using strings containing the emoji name 
 
 ## Translations
 delet<sup>3</sup> has multi-locale support! To start contributing translations, please follow the [translation guide](https://gist.github.com/suvanl/d349831795a0a70de58ba08791dcb539) to see how to access the Crowdin project.
+
+**Translators**
+
+delet3's wonderful translators:
+- 🇳🇴 Norwegian (Norsk) - [@nitramleo](https://github.com/nitramleo)
+- 🇩🇪 German (Deutsch) - [@Shinwulf](https://github.com/Shinwulf)
+- 🇳🇱 Dutch (Nederlands) - vaelinalsorna

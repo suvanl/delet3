@@ -1,19 +1,21 @@
 const { MessageEmbed, version } = require("discord.js");
 const { stripIndents } = require("common-tags");
-const m = require("moment");
+const moment = require("moment");
 
 const deletVersion = require("../../package.json").version;
 
 exports.run = async (client, message) => {
     const owner = await client.users.fetch(process.env.OWNER_ID);
     const ownerTag = `${owner.username}#${owner.discriminator}`;
+    const uptimeUtc = moment.utc(client.uptime);
+    const uptimeDays = uptimeUtc.format("D") - 1;
 
     const embed = new MessageEmbed()
         .setColor("#56dcff")
         .setAuthor(`delet ${deletVersion} - About`, client.user.displayAvatarURL())
         .setDescription(stripIndents`
-            👥 **Users**: ${client.users.cache.size} | 💬 **Servers**: ${client.guilds.cache.size} | 🕙 **Uptime**: ${m.utc(client.uptime).format("HH:mm:ss")}
-            🧠 **Memory usage**: ~${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed()}MB | 🔑 **Owner**: ${ownerTag}`)
+            👥 **Users**: ${client.users.cache.size} | 💬 **Servers**: ${client.guilds.cache.size} | 🕙 **Uptime**: ${uptimeDays} days, ${uptimeUtc.format("HH:mm:ss")}
+            🧠 **Memory usage**: ~${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed()}MB | 🔑 **Owner**: ${ownerTag} | 🌐 **Translators**: [see list](https://github.com/suvanl/delet3/#translations)`)
         .setFooter(`Made with Discord.js ${version}`, "https://i.imgur.com/RWcHLuz.png")
         .setTimestamp();
 

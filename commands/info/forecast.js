@@ -15,7 +15,9 @@ exports.run = async (client, message, args) => {
         ℹ️ ${client.l10n(message, "forecast.noLocation")}
         📖 ${client.l10n(message, "forecast.example").replace(/%cmd%/g, `${message.settings.prefix}forecast`)}.`);
 
-    // If location contains apostrophe, ensure it is a valid one
+    // If location contains apostrophe, ensure it is a valid one.
+    // This specific character replacement fixes an issue where the iOS keyboard
+    // autocorrects ' to ‘, resulting in an invalid location being provided to OpenWeatherMap.
     if (location.includes("‘")) location = location.replace(/‘/g, "'");
 
     // Encode location as URI component
@@ -219,7 +221,7 @@ const getForecast = async (lat, lon, lang, key) => {
 
 // Function returning a boolean stating whether it is night (past sunset) in the requested area
 const isNight = data => {
-    // Current Unix timestamp for the location location
+    // Current Unix timestamp for the specified location
     const currentTime = data.current.dt + data.timezone_offset;
 
     // Sunrise timestamp for the specified location
