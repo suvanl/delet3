@@ -46,6 +46,6 @@ delet<sup>3</sup> has multi-locale support! To start contributing translations, 
 **Translators**
 
 delet3's wonderful translators:
-- 🇳🇴 Norwegian (Norsk) - [@nitramleo](https://github.com/nitramleo)
-- 🇩🇪 German (Deutsch) - [@Shinwulf](https://github.com/Shinwulf)
 - 🇳🇱 Dutch (Nederlands) - vaelinalsorna
+- 🇩🇪 German (Deutsch) - [@Shinwulf](https://github.com/Shinwulf)
+- 🇳🇴 Norwegian (Norsk) - [@nitramleo](https://github.com/nitramleo)
