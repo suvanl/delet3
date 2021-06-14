@@ -15,7 +15,7 @@ exports.run = async (client, message) => {
         .setAuthor(`delet ${deletVersion} - About`, client.user.displayAvatarURL())
         .setDescription(stripIndents`
             👥 **Users**: ${client.users.cache.size} | 💬 **Servers**: ${client.guilds.cache.size} | 🕙 **Uptime**: ${uptimeDays} days, ${uptimeUtc.format("HH:mm:ss")}
-            🧠 **Memory usage**: ~${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed()}MB | 🔑 **Owner**: ${ownerTag}`)
+            🧠 **Memory usage**: ~${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed()}MB | 🔑 **Owner**: ${ownerTag} 🌐 **Translators**: [see list](https://github.com/suvanl/delet3/#translations)`)
         .setFooter(`Made with Discord.js ${version}`, "https://i.imgur.com/RWcHLuz.png")
         .setTimestamp();
 
