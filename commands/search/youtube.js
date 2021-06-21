@@ -17,6 +17,10 @@ exports.run = async (client, message, args) => {
     const json = await res.json();
     const data = json.items;
 
+    // Inform user if no results are returned:
+    //  ℹ No results found
+    if (!data.length) return message.channel.send(`ℹ ${client.l10n(message, "yt.noResults")}`);
+
     // Filter out results that aren't videos (i.e. channels)
     const vids = data.filter(f => f.id.kind === "youtube#video");
     
