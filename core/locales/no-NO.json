@@ -187,5 +187,6 @@
     "yt.search.results": "YouTube søke resultat",
     "yt.search.number": "Svar med et tall (%range%) for å velge video...",
     "yt.cancel": "Avsluttet prosedyre for valg av video.",
-    "yt.vid": "Her er videoen du forespurte, %user%:"
+    "yt.vid": "Her er videoen du forespurte, %user%:",
+    "yt.noResults": "No results found."
 }

@@ -187,5 +187,6 @@
     "yt.search.results": "YouTube Suchergebnisse",
     "yt.search.number": "Antworte mit einer Nummer (%range%), um ein Video auszusuchen...",
     "yt.cancel": "Der Videoauswahlvorgang wurde beendet.",
-    "yt.vid": "Hier ist dein angefordertes Video, %user%:"
+    "yt.vid": "Hier ist dein angefordertes Video, %user%:",
+    "yt.noResults": "No results found."
 }
