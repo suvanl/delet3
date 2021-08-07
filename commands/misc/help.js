@@ -41,8 +41,8 @@ exports.run = async (client, message, args, level) => {
             // append the command name (with prefix) and description to the output
             out += `\`${message.settings.prefix}${c.help.name}\`: ${c.help.description}.\n`;
         });
-        
 
+        
         // If in a regular text channel...
         if (message.channel.type === "GUILD_TEXT") {
             // inform the user that the help output will be sent to their DMs
