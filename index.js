@@ -15,7 +15,7 @@ const { blue, cyan, green, red, bold, underline } = require("chalk");
 
 const nodeVer = process.version.slice(1);
 const minVer = "16.6.0";
-const recVer = "16.6.0";
+const recVer = "16.6";
 
 const semver = require("semver");
 
