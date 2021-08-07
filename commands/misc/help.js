@@ -43,7 +43,7 @@ exports.run = async (client, message, args, level) => {
         });
 
         // If in a regular text channel...
-        if (message.channel.type === "text") {
+        if (message.channel.type === "GUILD_TEXT") {
             // inform the user that the help output will be sent to their DMs
             const helpConfirm = await message.channel.send(`🏃‍♀️💨 ${client.l10n(message, "help.dmConfirm")}`);
             message.author.send(out, { split: { char: "\u200b" } }).catch(err => {
@@ -56,7 +56,7 @@ exports.run = async (client, message, args, level) => {
                 // log the error that occurs
                 return client.logger.err(err);
             });
-        } else if (message.channel.type === "dm") {
+        } else if (message.channel.type === "DM") {
             // if the command is invoked in a DM channel, send the output 
             return message.channel.send(out, { split: { char: "\u200b" } });
         }

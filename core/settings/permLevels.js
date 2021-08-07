@@ -36,7 +36,7 @@ const permLevels = {
             name: "Server Owner",
             verify: message => {
                 try {
-                    if (message.channel.type === "text")
+                    if (message.channel.type === "GUILD_TEXT")
                         if (message.guild.ownerID === message.author.id) return true;
                 } catch (err) {
                     return false;
