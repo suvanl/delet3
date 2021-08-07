@@ -36,7 +36,7 @@ exports.run = async (client, message) => {
         .setColor("#fed98c")
         .setThumbnail(guild.iconURL({ size: 1024 }))
         .setDescription(stripIndents`
-            **${guild.name}** ${verified} | <:server_boost:703991798015459390> ${client.l10n(message, "server.boost.lvl").replace(/%num%/g, guild.premiumTier)}
+            **${guild.name}** ${verified} | <:server_boost:703991798015459390> ${client.l10n(message, "server.boost.lvl").replace(/%num%/g, guild.premiumTier === "NONE" ? 0 : guild.premiumTier.split("_")[1])}
 
             💥 **${client.l10n(message, "server.created")}**
             ${utc(guild.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
