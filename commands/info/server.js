@@ -9,8 +9,8 @@ exports.run = async (client, message) => {
     const verified = guild.verified ? "<:verified:703993007485091871>" : "";
 
     // Text/voice channel numbers
-    const tChannels = guild.channels.cache.filter(c => c.type === "text").size;
-    const vChannels = guild.channels.cache.filter(c => c.type === "voice").size;
+    const tChannels = guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size;
+    const vChannels = guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size;
 
     // Number of bots in guild
     const bots = guild.members.cache.filter(m => m.user.bot).size;
