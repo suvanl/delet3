@@ -124,7 +124,7 @@ const init = async () => {
     client.levelCache = new Map();
     client.permLevels.levels.forEach(lev => {
         // Add each the level (Number) and name (String) of each permLevel to the Map
-        client.levelCache.set(lev.level, lev.name);
+        client.levelCache.set(lev.name, lev.level);
     });
 
     // Log into Discord
