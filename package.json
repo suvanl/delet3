@@ -36,7 +36,8 @@
     "node-fetch": "^2.6.1",
     "restify": "^8.5.1",
     "restify-errors": "^8.0.2",
-    "restify-jwt-community": "^1.1.12"
+    "restify-jwt-community": "^1.1.12",
+    "semver": "^7.3.5"
   },
   "devDependencies": {
     "chai": "^4.3.4",

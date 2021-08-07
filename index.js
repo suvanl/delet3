@@ -13,11 +13,13 @@ const { JWT_SECRET, MONGO_STRING, PORT, TOKEN } = process.env;
 // Node.js version check
 const { blue, cyan, green, red, bold, underline } = require("chalk");
 
-const nodeVer = process.version.slice(1).split(".")[0];
-const minVer = "12";
-const recVer = "14";
+const nodeVer = process.version.slice(1);
+const minVer = "16.6.0";
+const recVer = "16.6.0";
 
-if (nodeVer < 12) throw new Error(red(`Node.js ${minVer} or higher is required - please update. v${recVer} is recommended.`));
+const semver = require("semver");
+
+if (!semver.satisfies(nodeVer, `>=${minVer}`)) throw new Error(red(`Node.js ${minVer} or higher is required - please update. v${recVer} is recommended.`));
 else console.log(`Node.js version check ${green("passed")} ✔\nmin: ${red(minVer)} | recommended: ${green(recVer)} | current: ${underline.green(nodeVer)}\n`);
 
 
