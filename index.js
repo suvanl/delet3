@@ -36,7 +36,7 @@ const path = require("path");
 // Initialise client with @everyone disabled and with required gateway intents specified
 const client = new Client({
     disableMentions: "everyone",
-    ws: { intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_PRESENCES"] }
+    intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_PRESENCES"]
 });
 
 // Get permission levels
