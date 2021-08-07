@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
     if (!reason) reason = "None";
 
     // Fetch bans
-    const bans = await message.guild.fetchBans();
+    const bans = await message.guild.bans.fetch();
 
     // Check if a ban with the specified user ID exists in the collection
     if (bans.some(u => id === u.user.id)) {
