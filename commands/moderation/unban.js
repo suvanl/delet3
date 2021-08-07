@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
     // and inform user if they do not have the required perm:
         // 🚫 Insufficient permissions
         // You must have the "Ban Members" permission to use this command.
-        if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send(stripIndents`
+        if (!message.member.permissions.has("BAN_MEMBERS")) return message.channel.send(stripIndents`
         🚫 **${client.l10n(message, "perm.insufficient")}**
         ${client.l10n(message, "perm.insufficient.info").replace(/%perm%/g, client.l10n(message, "perm.banMembers"))}`);
 

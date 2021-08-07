@@ -10,7 +10,7 @@ module.exports = async (client, message) => {
     if (message.author.bot) return;
 
     // Return if bot has insufficient perms to send messages
-    if (message.channel.type === "GUILD_TEXT" && !message.guild.me.hasPermission("SEND_MESSAGES")) return;
+    if (message.channel.type === "GUILD_TEXT" && !message.guild.me.permissions.has("SEND_MESSAGES")) return;
 
     // Fetch guild/default settings from REST API
     const settings = message.settings = await client.getSettings(message.guild);
