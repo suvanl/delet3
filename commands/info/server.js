@@ -48,7 +48,7 @@ exports.run = async (client, message) => {
             ${client.l10n(message, "server.users").replace(/%num%/g, guild.memberCount - bots)} • ${client.l10n(message, "server.bots").replace(/%num%/g, bots)}
 
             🔑 **${client.l10n(message, "server.owner")}**
-            ${guild.owner.user.tag}
+            ${client.users.cache.get(message.guild.ownerId).tag}
 
             ✅ **${client.l10n(message, "server.verif")}**
             ${client.l10n(message, "server.verif.lvl")} ${vLevels[guild.verificationLevel]}
