@@ -59,7 +59,7 @@ exports.run = async (client, message) => {
 };
 
 exports.config = {
-    aliases: ["serverinfo"],
+    aliases: ["serverinfo", "guild", "guildinfo"],
     enabled: true,
     guildOnly: true,
     permLevel: "User"
