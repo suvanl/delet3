@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
         ${client.l10n(message, "spotify.notListening.info")}`;
 
     // Message author's current activities
-    const activities = message.author.presence.activities;
+    const activities = message.guild.members.cache.get(message.author.id).presence.activities;
     if (!activities.length) return message.channel.send(notListening);
 
     // Get "Listening to Spotify" activity
@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
     if (!spotifyActivity.length) return message.channel.send(notListening);
 
     // Define Spotify track ID
-    const id = spotifyActivity[0].syncID;
+    const id = spotifyActivity[0].syncId;
 
     // Send GET request to Spotify API for track info
     const trackUrl = `https://api.spotify.com/v1/tracks/${id}?market=GB`;
