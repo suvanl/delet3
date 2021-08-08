@@ -22,7 +22,7 @@
   "homepage": "https://github.com/suvanl/delet3#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "canvas": "^2.7.0",
+    "canvas": "^2.8.0",
     "chalk": "^4.1.1",
     "common-tags": "^1.8.0",
     "discord.js": "^13.0.1",
