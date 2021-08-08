@@ -200,7 +200,7 @@ exports.run = async (client, message, args) => {
 // #region Helper Functions
 
 // Function to obtain current weather data (to get lat/lon values)
-const getCurrent = async (loc, lang, key) => {
+getCurrent = async (loc, lang, key) => {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&units=metric&lang=${lang}&appid=${key}`;
     const res = await fetch(url);
     return await res.json();
@@ -208,7 +208,7 @@ const getCurrent = async (loc, lang, key) => {
 
 
 // Function to get forecast data for the specified location
-const getForecast = async (lat, lon, lang, key) => {
+getForecast = async (lat, lon, lang, key) => {
     // Send GET request to OWM One Call API for forecast data
     const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely&lang=${lang}&appid=${key}`;
     const res = await fetch(url);
@@ -217,7 +217,7 @@ const getForecast = async (lat, lon, lang, key) => {
 
 
 // Function returning a boolean stating whether it is night (past sunset) in the requested area
-const isNight = data => {
+isNight = data => {
     // Current Unix timestamp for the specified location
     const currentTime = data.current.dt + data.timezone_offset;
 
