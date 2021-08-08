@@ -43,10 +43,10 @@ exports.run = async (client, message, args) => {
     // Get forecast data
     const data = await getForecast(lat, lon, lang, OWM_KEY);
 
-    // #region IMAGE GENERATION
+    // Start typing to indicate image is being generated. Typing stops after 10 seconds or when the message is sent.
+    message.channel.sendTyping();
 
-    // Start typing to indicate image is being generated
-    message.channel.startTyping();
+    // #region IMAGE GENERATION
 
     // Create canvas
     const canvas = createCanvas(988, 627);
@@ -195,9 +195,6 @@ exports.run = async (client, message, args) => {
     // Create and send attachment
     const attachment = new MessageAttachment(canvas.toBuffer(), "forecast.png");
     message.channel.send(attachment);
-
-    // Stop typing once image has been sent
-    message.channel.stopTyping();
 };
 
 // #region Helper Functions
