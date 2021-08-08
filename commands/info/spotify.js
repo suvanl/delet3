@@ -55,7 +55,7 @@ exports.run = async (client, message, args) => {
             .setImage(albumArt)
             .setDescription(`${emoji} ${trackTitle}`);
 
-        return message.channel.send(embed);
+        return message.channel.send({ embeds: [embed] });
     }
 
     // Send GET request to Spotify API for audio features (AF)
@@ -97,7 +97,7 @@ exports.run = async (client, message, args) => {
             🔢 ${danceability}: **${Math.round(afData.danceability * 10)}/10** • ${energy}: **${Math.round(afData.energy * 10)}/10** • ${acousticness}: **${Math.round(afData.acousticness * 10)}/10**`)
         .setFooter(`${tData.album.name} • ${client.l10n(message, "spotify.releaseDate").replace(/%date%/g, releaseDate)}`);
 
-    return message.channel.send(embed);
+    return message.channel.send({ embeds: [embed] });
 };
 
 auth = async () => {

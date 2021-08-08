@@ -88,7 +88,7 @@ exports.run = async (client, message, args, level) => {
                     ${cmd.config.aliases.length !== 0 ? cmd.config.aliases.map(a => `\`${a}\``).join(", ") : "`[ none ]`"}`);
 
             // Send the embed
-            message.channel.send(embed);
+            message.channel.send({ embeds: [embed] });
         }
     }
 };

@@ -54,7 +54,7 @@ exports.run = async (client, message, args) => {
                 .setColor(filtered.length === 0 ? "#ff8d6f" : "#6fe1ff")
                 .setDescription(lbMsg);
 
-            message.channel.send(embed);
+            message.channel.send({ embeds: [embed] });
         });
     }
 

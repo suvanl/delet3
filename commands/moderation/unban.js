@@ -86,7 +86,7 @@ exports.run = async (client, message, args) => {
                 .setFooter(client.l10n(message, "mod.embed.issued").replace(/%user%/g, message.author.tag), message.author.displayAvatarURL());
 
             // Send embed
-            return modLog.send(embed);
+            return message.channel.send({ embeds: [embed] });
         }
     } else { 
         // Else, inform the user that the user could not be found in the collection:
