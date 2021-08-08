@@ -60,7 +60,7 @@ exports.run = async (client, message, args) => {
         const vidUrl = `https://youtu.be/${vidId}`;
 
         // Send URL (along with some text to indicate user-requested content)
-        return message.channel.send(`${client.l10n(message, "yt.vid").replace(/%user%/g, message.author)}\n${vidUrl}`);
+        return message.reply(`${client.l10n(message, "yt.vid")}\n${vidUrl}`);
     }
 };
 
