@@ -194,7 +194,7 @@ exports.run = async (client, message, args) => {
 
     // Create and send attachment
     const attachment = new MessageAttachment(canvas.toBuffer(), "forecast.png");
-    message.channel.send(attachment);
+    message.channel.send({ files: [attachment] });
 };
 
 // #region Helper Functions
