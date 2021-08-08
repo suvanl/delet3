@@ -7,10 +7,13 @@ exports.run = async (client, message, args) => {
     // Set user as message author by default
     let member = message.member;
 
-    const user = client.users.cache.get(member.id);
+    let user = client.users.cache.get(member.id);
 
     // If message contains any mentioned users, set the user as the first mention
-    if (message.mentions.users.first()) member = message.mentions.users.first();
+    if (message.mentions.users.first()) {
+        user = message.mentions.users.first();
+        member = message.guild.members.cache.get(user.id);
+    }
     
     // If args have been supplied but no mentions are present, we'll assume the user is trying to reference a user by
     // their username. Therefore, we'll attempt to find a user in this server that has a username matching the value
@@ -39,7 +42,8 @@ exports.run = async (client, message, args) => {
     };
 
     // Define the status emoji that will be shown in the profile embed (in the format <:emojiName:emojiID>)
-    const statusEmoji = `<:${member.presence.status}:${statusIcon[member.presence.status]}>`;
+    const presenceStatus = member.presence ? member.presence.status : "offline";
+    const statusEmoji = `<:${presenceStatus}:${statusIcon[presenceStatus]}>`;
 
     // Activity
     let activity = "";
@@ -54,7 +58,7 @@ exports.run = async (client, message, args) => {
     };
 
     // Get the user's current activity
-    const currentActivity = member.presence.activities[0];
+    const currentActivity = member.presence?.activities[0];
 
     // If user has a current activity
     if (currentActivity) {
@@ -95,10 +99,10 @@ exports.run = async (client, message, args) => {
         .setColor("#8cfed9")
         .setThumbnail(user.displayAvatarURL({ size: 1024 }))
         .setDescription(stripIndents`
-            **${user.tag}** ${badges} | ${statusEmoji} ${member.presence.activities.length === 0 ? status[member.presence.status].toTitleCase() : activity}
+            **${user.tag}** ${badges} | ${statusEmoji} ${member.presence?.activities.length === 0 ? status[member.presence.status].toTitleCase() : activity}
 
             💥 **${client.l10n(message, "user.created")}**
-            ${utc(member.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
+            ${utc(user.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
 
             🏠 **${client.l10n(message, "user.joined")}**
             ${utc(message.guild.members.cache.get(member.id).joinedTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
