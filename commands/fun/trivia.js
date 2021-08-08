@@ -136,7 +136,7 @@ exports.run = async (client, message, args) => {
             .setTimestamp();
         
         // Wait 60 seconds (awaitReply default "limit" property value) for user's answer
-        const userAns = await client.awaitReply(message, embed);
+        const userAns = await client.awaitReply(message, { embeds: [embed] });
 
         // Send "timed out" message:
             // ⏰ Time's up!
