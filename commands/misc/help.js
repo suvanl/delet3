@@ -22,7 +22,7 @@ exports.run = async (client, message, args, level) => {
 
             ⚙️ **\`[]\` denotes optional parameters**\n\u200b`;        
         
-        const sort = Array.from(available.values()).sort((p, c) => p.help.category > c.help.category ? 1
+        const sort = [...available.values()].sort((p, c) => p.help.category > c.help.category ? 1
         : p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1);
 
         // loop through each command that has been sorted by category...
