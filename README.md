@@ -40,7 +40,7 @@ Currently, custom emojis are referenced using strings containing the emoji name 
 3. Run `npm install` to install all required modules. Use the `--production` flag if you want to skip devDependencies.
 4. Run `npm start` to start the bot.
 
-## Translations
+## Translations [![Crowdin](https://badges.crowdin.net/delet/localized.svg)](https://crowdin.com/project/delet)
 delet<sup>3</sup> has multi-locale support! To start contributing translations, please follow the [translation guide](https://gist.github.com/suvanl/d349831795a0a70de58ba08791dcb539) to see how to access the Crowdin project.
 
 **Translators**
