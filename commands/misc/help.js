@@ -6,8 +6,8 @@ exports.run = async (client, message, args, level) => {
     // if no args are provided
     if (!args[0]) {
         // filter all commands available to the user, based on their permLevel and whether they are in a guild or not
-        const available = message.guild ? client.commands.filter(c => client.levelCache[c.config.permLevel] <= level) 
-        : client.commands.filter(c => client.levelCache[c.config.permLevel] <= level && c.config.guildOnly !== true);
+        const available = message.guild ? client.commands.filter(c => client.levelCache.get(c.config.permLevel) <= level) 
+        : client.commands.filter(c => client.levelCache.get(c.config.permLevel) <= level && c.config.guildOnly !== true);
 
         // Initialise variable for the name of the command's category
         let currentCat = "";
@@ -20,9 +20,9 @@ exports.run = async (client, message, args, level) => {
 
             ⚠️ **\`<>\` denotes required parameters**
 
-            ⚙️ **\`[]\` denotes optional parameters**\n\u200b`;
-
-        const sort = available.array().sort((p, c) => p.help.category > c.help.category ? 1
+            ⚙️ **\`[]\` denotes optional parameters**\n\u200b`;        
+        
+        const sort = [...available.values()].sort((p, c) => p.help.category > c.help.category ? 1
         : p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1);
 
         // loop through each command that has been sorted by category...
@@ -42,8 +42,9 @@ exports.run = async (client, message, args, level) => {
             out += `\`${message.settings.prefix}${c.help.name}\`: ${c.help.description}.\n`;
         });
 
+        
         // If in a regular text channel...
-        if (message.channel.type === "text") {
+        if (message.channel.type === "GUILD_TEXT") {
             // inform the user that the help output will be sent to their DMs
             const helpConfirm = await message.channel.send(`🏃‍♀️💨 ${client.l10n(message, "help.dmConfirm")}`);
             message.author.send(out, { split: { char: "\u200b" } }).catch(err => {
@@ -56,7 +57,7 @@ exports.run = async (client, message, args, level) => {
                 // log the error that occurs
                 return client.logger.err(err);
             });
-        } else if (message.channel.type === "dm") {
+        } else if (message.channel.type === "DM") {
             // if the command is invoked in a DM channel, send the output 
             return message.channel.send(out, { split: { char: "\u200b" } });
         }
@@ -87,7 +88,7 @@ exports.run = async (client, message, args, level) => {
                     ${cmd.config.aliases.length !== 0 ? cmd.config.aliases.map(a => `\`${a}\``).join(", ") : "`[ none ]`"}`);
 
             // Send the embed
-            message.channel.send(embed);
+            message.channel.send({ embeds: [embed] });
         }
     }
 };

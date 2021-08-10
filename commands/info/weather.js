@@ -96,7 +96,7 @@ exports.run = async (client, message, args) => {
             🌇 ${client.l10n(message, "weather.sunset")}: **${sunset}**`)
         .setFooter(client.l10n(message, "weather.footer"), "https://i.imgur.com/OodcJh8.jpg");
     
-    message.channel.send(embed);
+    message.channel.send({ embeds: [embed] });
 };
 
 // Function to set embed colour based on temperature value

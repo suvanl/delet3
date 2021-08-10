@@ -8,7 +8,7 @@ module.exports = client => {
 
         try {
             // call awaitMessages with a maximum of 1 message to collect, which times out after the specified time limit (60 sec by default)
-            const collected = await msg.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
+            const collected = await msg.channel.awaitMessages({ filter, max: 1, time: limit, errors: ["time"] });
 
             // return the contents of the user's response
             return collected.first().content;

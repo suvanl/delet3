@@ -1,5 +1,5 @@
 exports.run = async (client, message) => {
-    const msg = "⚠️ Are you sure you want to restore defaults? (`Y`/`N`)\nReply with `cancel` to exit.";
+    const msg = "⚠️ **Are you sure you want to restore defaults?** (`Y`/`N`)\nThis will also reset moderation case numbers.\nReply with `cancel` to exit.";
 
     // Prompt user
     const res = await client.awaitReply(message, msg);

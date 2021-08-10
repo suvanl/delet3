@@ -31,7 +31,7 @@ Currently, custom emojis are referenced using strings containing the emoji name 
 ## Installing delet<sup>3</sup>
 
 **Prerequisites:**
-- [Node.js](https://nodejs.org/en/) (v14 LTS is recommended)
+- [Node.js](https://nodejs.org/en/) (minimum required version: v16.6)
 
 
 **Instructions:**

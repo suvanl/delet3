@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
         ${client.l10n(message, "spotify.notListening.info")}`;
 
     // Message author's current activities
-    const activities = message.author.presence.activities;
+    const activities = message.guild.members.cache.get(message.author.id).presence.activities;
     if (!activities.length) return message.channel.send(notListening);
 
     // Get "Listening to Spotify" activity
@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
     if (!spotifyActivity.length) return message.channel.send(notListening);
 
     // Define Spotify track ID
-    const id = spotifyActivity[0].syncID;
+    const id = spotifyActivity[0].syncId;
 
     // Send GET request to Spotify API for track info
     const trackUrl = `https://api.spotify.com/v1/tracks/${id}?market=GB`;
@@ -55,7 +55,7 @@ exports.run = async (client, message, args) => {
             .setImage(albumArt)
             .setDescription(`${emoji} ${trackTitle}`);
 
-        return message.channel.send(embed);
+        return message.channel.send({ embeds: [embed] });
     }
 
     // Send GET request to Spotify API for audio features (AF)
@@ -97,7 +97,7 @@ exports.run = async (client, message, args) => {
             🔢 ${danceability}: **${Math.round(afData.danceability * 10)}/10** • ${energy}: **${Math.round(afData.energy * 10)}/10** • ${acousticness}: **${Math.round(afData.acousticness * 10)}/10**`)
         .setFooter(`${tData.album.name} • ${client.l10n(message, "spotify.releaseDate").replace(/%date%/g, releaseDate)}`);
 
-    return message.channel.send(embed);
+    return message.channel.send({ embeds: [embed] });
 };
 
 auth = async () => {

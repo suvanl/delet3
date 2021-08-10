@@ -4,13 +4,13 @@ const { stripIndents } = require("common-tags");
 
 module.exports = async (client, message) => {
     // Return if guild is unavailable (due to server outage)
-    if (message.channel.type !== "dm" && !message.guild.available) return;
+    if (message.channel.type !== "DM" && !message.guild.available) return;
 
     // Ignore messages from other bot accounts
     if (message.author.bot) return;
 
     // Return if bot has insufficient perms to send messages
-    if (message.channel.type === "text" && !message.guild.me.hasPermission("SEND_MESSAGES")) return;
+    if (message.channel.type === "GUILD_TEXT" && !message.guild.me.permissions.has("SEND_MESSAGES")) return;
 
     // Fetch guild/default settings from REST API
     const settings = message.settings = await client.getSettings(message.guild);
