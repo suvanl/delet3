@@ -105,12 +105,12 @@ const init = async () => {
 
     // Load slash commands:
     // Read the contents of the "commands/slash" directory
-    const slashCmds = await readdir("./interactions/slash");
+    const slashCmds = await readdir("./interactions/commands");
     client.logger.log(`Loading ${blue(slashCmds.length)} slash commands:`);
     // For each slash command file...
     slashCmds.forEach(file => {
         // Require (import) the slash command file
-        const slashCmd = require(`./interactions/slash/${file}`);
+        const slashCmd = require(`./interactions/commands/${file}`);
         // Remove the file extension from the filename
         const name = file.split(".")[0];
         client.logger.log(`✔ "${blue(name)}"`);
