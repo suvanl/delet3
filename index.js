@@ -77,13 +77,15 @@ db.once("open", () => {
 });
 
 
-// Save commands and aliases to collections
+// Save commands, command aliases and slash commands to collections
 client.commands = new Collection();
 client.aliases = new Collection();
+client.slashCommands = new Collection();
 
 // Bot initialisation
 const init = async () => {
     console.log(`Initialising ${bold("delet³")}...\n`);
+
 
     // Load events:
     // Read contents of "events" directory
@@ -99,6 +101,23 @@ const init = async () => {
         // Bind each event to the client
         client.on(name, event.bind(null, client));
     });
+
+
+    // Load slash commands:
+    // Read the contents of the "commands/slash" directory
+    const slashCmds = await readdir("./interactions/slash");
+    client.logger.log(`Loading ${blue(slashCmds.length)} slash commands:`);
+    // For each slash command file...
+    slashCmds.forEach(file => {
+        // Require (import) the slash command file
+        const slashCmd = require(`./interactions/slash/${file}`);
+        // Remove the file extension from the filename
+        const name = file.split(".")[0];
+        client.logger.log(`✔ "${blue(name)}"`);
+        // Set the commands for this application/guild
+        client.slashCommands.set(slashCmd.data.name, slashCmd);
+    });
+
 
     // Load commands:
     // Read the contents of the "commands" directory
@@ -119,6 +138,8 @@ const init = async () => {
             if (!res) client.logger.err(res);
         })
         .on("end", () => client.logger.log(`Successfully loaded ${blue(items.length)} commands`));
+
+    
 
     // Cache permLevels:
     // Initialise a new Map object
