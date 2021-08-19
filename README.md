@@ -31,7 +31,7 @@ Currently, custom emojis are referenced using strings containing the emoji name 
 ## Installing delet<sup>3</sup>
 
 **Prerequisites:**
-- [Node.js](https://nodejs.org/en/) (v14 LTS is recommended)
+- [Node.js](https://nodejs.org/en/) (minimum required version: v16.6)
 
 
 **Instructions:**
@@ -40,12 +40,12 @@ Currently, custom emojis are referenced using strings containing the emoji name 
 3. Run `npm install` to install all required modules. Use the `--production` flag if you want to skip devDependencies.
 4. Run `npm start` to start the bot.
 
-## Translations
+## Translations [![Crowdin](https://badges.crowdin.net/delet/localized.svg)](https://crowdin.com/project/delet)
 delet<sup>3</sup> has multi-locale support! To start contributing translations, please follow the [translation guide](https://gist.github.com/suvanl/d349831795a0a70de58ba08791dcb539) to see how to access the Crowdin project.
 
 **Translators**
 
 delet3's wonderful translators:
-- 🇳🇴 Norwegian (Norsk) - [@nitramleo](https://github.com/nitramleo)
-- 🇩🇪 German (Deutsch) - [@Shinwulf](https://github.com/Shinwulf)
 - 🇳🇱 Dutch (Nederlands) - vaelinalsorna
+- 🇩🇪 German (Deutsch) - [@Shinwulf](https://github.com/Shinwulf)
+- 🇳🇴 Norwegian (Norsk) - [@nitramleo](https://github.com/nitramleo)

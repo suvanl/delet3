@@ -13,11 +13,13 @@ const { JWT_SECRET, MONGO_STRING, PORT, TOKEN } = process.env;
 // Node.js version check
 const { blue, cyan, green, red, bold, underline } = require("chalk");
 
-const nodeVer = process.version.slice(1).split(".")[0];
-const minVer = "12";
-const recVer = "14";
+const nodeVer = process.version.slice(1);
+const minVer = "16.6.0";
+const recVer = "16.6";
 
-if (nodeVer < 12) throw new Error(red(`Node.js ${minVer} or higher is required - please update. v${recVer} is recommended.`));
+const semver = require("semver");
+
+if (!semver.satisfies(nodeVer, `>=${minVer}`)) throw new Error(red(`Node.js ${minVer} or higher is required - please update. v${recVer} is recommended.`));
 else console.log(`Node.js version check ${green("passed")} ✔\nmin: ${red(minVer)} | recommended: ${green(recVer)} | current: ${underline.green(nodeVer)}\n`);
 
 
@@ -34,7 +36,8 @@ const path = require("path");
 // Initialise client with @everyone disabled and with required gateway intents specified
 const client = new Client({
     disableMentions: "everyone",
-    ws: { intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_PRESENCES"] }
+    intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_PRESENCES"],
+    partials: ["CHANNEL"]
 });
 
 // Get permission levels
@@ -122,7 +125,7 @@ const init = async () => {
     client.levelCache = new Map();
     client.permLevels.levels.forEach(lev => {
         // Add each the level (Number) and name (String) of each permLevel to the Map
-        client.levelCache.set(lev.level, lev.name);
+        client.levelCache.set(lev.name, lev.level);
     });
 
     // Log into Discord

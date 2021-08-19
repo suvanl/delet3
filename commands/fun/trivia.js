@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
     }
 
     // Let user know how many points they have
-    if (message.channel.type === "text") {
+    if (message.channel.type === "GUILD_TEXT") {
         const userData = await client.getUser(message.guild, message.author);
         const currentPoints = userData.triviaPoints;
         if (args[0] && args[0].toLowerCase() === "points") return message.reply(client.l10n(message, "trivia.points").replace(/%num%/g, currentPoints));
@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
     const lbAliases = ["leaderboard", "lb"];
     if (lbAliases.includes(args[0] && args[0].toLowerCase())) {
         // Return if leaderboard/lb arg is used in DMs
-        if (message.channel.type !== "text") return message.channel.send(`🚫 ${client.l10n(message, "trivia.dmlb")}`);
+        if (message.channel.type !== "GUILD_TEXT") return message.channel.send(`🚫 ${client.l10n(message, "trivia.dmlb")}`);
 
         // Fetch all users
         const all = await client.getUsers();
@@ -54,7 +54,7 @@ exports.run = async (client, message, args) => {
                 .setColor(filtered.length === 0 ? "#ff8d6f" : "#6fe1ff")
                 .setDescription(lbMsg);
 
-            message.channel.send(embed);
+            message.channel.send({ embeds: [embed] });
         });
     }
 
@@ -136,7 +136,7 @@ exports.run = async (client, message, args) => {
             .setTimestamp();
         
         // Wait 60 seconds (awaitReply default "limit" property value) for user's answer
-        const userAns = await client.awaitReply(message, embed);
+        const userAns = await client.awaitReply(message, { embeds: [embed] });
 
         // Send "timed out" message:
             // ⏰ Time's up!
@@ -171,7 +171,7 @@ exports.run = async (client, message, args) => {
                 ${client.l10n(message, "trivia.ans.gg")}`;
 
             // Add points (if in a guild text channel)
-            if (message.channel.type === "text") {
+            if (message.channel.type === "GUILD_TEXT") {
                 const dif = d.toLowerCase();
                 const points = { "easy": 1, "medium": 2, "hard": 3 };
 

@@ -5,20 +5,24 @@ const { YOUTUBE_KEY } = process.env;
 
 exports.run = async (client, message, args) => {
     // Define query
-    const q = args.join(" ");
-    if (!q) return message.channel.send(`ℹ ${client.l10n(message, "yt.noQuery")}`);
+    const query = args.join(" ");
+    if (!query) return message.channel.send(`ℹ ${client.l10n(message, "yt.noQuery")}`);
 
     // YouTube API base URL
     const baseUrl = "https://www.googleapis.com/youtube/v3/search";
 
     // Send GET request to API & parse res as json
-    const url = `${baseUrl}?part=snippet&q=${encodeURIComponent(q)}&maxResults=9&key=${YOUTUBE_KEY}`;
+    const url = `${baseUrl}?part=snippet&q=${encodeURIComponent(query)}&maxResults=9&key=${YOUTUBE_KEY}`;
     const res = await fetch(url);
     const json = await res.json();
     const data = json.items;
 
     // Filter out results that aren't videos (i.e. channels)
     const vids = data.filter(f => f.id.kind === "youtube#video");
+
+    // Inform user if no results are returned:
+    //  ℹ No results found
+    if (!vids.length) return message.channel.send(`ℹ ${client.l10n(message, "yt.noResults")}`);
     
     // Create a list of video titles
     let i = 0;
@@ -56,7 +60,7 @@ exports.run = async (client, message, args) => {
         const vidUrl = `https://youtu.be/${vidId}`;
 
         // Send URL (along with some text to indicate user-requested content)
-        return message.channel.send(`${client.l10n(message, "yt.vid").replace(/%user%/g, message.author)}\n${vidUrl}`);
+        return message.reply(`${client.l10n(message, "yt.vid")}\n${vidUrl}`);
     }
 };
 

@@ -9,8 +9,8 @@ exports.run = async (client, message) => {
     const verified = guild.verified ? "<:verified:703993007485091871>" : "";
 
     // Text/voice channel numbers
-    const tChannels = guild.channels.cache.filter(c => c.type === "text").size;
-    const vChannels = guild.channels.cache.filter(c => c.type === "voice").size;
+    const tChannels = guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size;
+    const vChannels = guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size;
 
     // Number of bots in guild
     const bots = guild.members.cache.filter(m => m.user.bot).size;
@@ -36,7 +36,7 @@ exports.run = async (client, message) => {
         .setColor("#fed98c")
         .setThumbnail(guild.iconURL({ size: 1024 }))
         .setDescription(stripIndents`
-            **${guild.name}** ${verified} | <:server_boost:703991798015459390> ${client.l10n(message, "server.boost.lvl").replace(/%num%/g, guild.premiumTier)}
+            **${guild.name}** ${verified} | <:server_boost:703991798015459390> ${client.l10n(message, "server.boost.lvl").replace(/%num%/g, guild.premiumTier === "NONE" ? 0 : guild.premiumTier.split("_")[1])}
 
             💥 **${client.l10n(message, "server.created")}**
             ${utc(guild.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
@@ -48,18 +48,18 @@ exports.run = async (client, message) => {
             ${client.l10n(message, "server.users").replace(/%num%/g, guild.memberCount - bots)} • ${client.l10n(message, "server.bots").replace(/%num%/g, bots)}
 
             🔑 **${client.l10n(message, "server.owner")}**
-            ${guild.owner.user.tag}
+            ${client.users.cache.get(message.guild.ownerId).tag}
 
             ✅ **${client.l10n(message, "server.verif")}**
             ${client.l10n(message, "server.verif.lvl")} ${vLevels[guild.verificationLevel]}
             ${client.l10n(message, "server.cFilter.lvl")} ${cFilter[guild.explicitContentFilter]}`)
         .setFooter(`${client.l10n(message, "server.id").replace(/%id%/g, guild.id)} | ${client.l10n(message, "utc")}`);
 
-    message.channel.send(embed);
+    message.channel.send({ embeds: [embed] });
 };
 
 exports.config = {
-    aliases: ["serverinfo"],
+    aliases: ["serverinfo", "guild", "guildinfo"],
     enabled: true,
     guildOnly: true,
     permLevel: "User"

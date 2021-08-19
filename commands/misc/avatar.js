@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
             🔗 **[${client.l10n(message, "avatar.url")}](${url})**`)
         .setImage(url);
 
-    message.channel.send(embed);
+    message.channel.send({ embeds: [embed] });
 };
 
 exports.config = {

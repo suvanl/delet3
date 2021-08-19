@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
     // and inform user if they do not have the required perm:
         // 🚫 Insufficient permissions
         // You must have the "Ban Members" permission to use this command.
-        if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send(stripIndents`
+        if (!message.member.permissions.has("BAN_MEMBERS")) return message.channel.send(stripIndents`
         🚫 **${client.l10n(message, "perm.insufficient")}**
         ${client.l10n(message, "perm.insufficient.info").replace(/%perm%/g, client.l10n(message, "perm.banMembers"))}`);
 
@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
     if (!reason) reason = "None";
 
     // Fetch bans
-    const bans = await message.guild.fetchBans();
+    const bans = await message.guild.bans.fetch();
 
     // Check if a ban with the specified user ID exists in the collection
     if (bans.some(u => id === u.user.id)) {
@@ -86,7 +86,7 @@ exports.run = async (client, message, args) => {
                 .setFooter(client.l10n(message, "mod.embed.issued").replace(/%user%/g, message.author.tag), message.author.displayAvatarURL());
 
             // Send embed
-            return modLog.send(embed);
+            return modLog.send({ embeds: [embed] });
         }
     } else { 
         // Else, inform the user that the user could not be found in the collection:
