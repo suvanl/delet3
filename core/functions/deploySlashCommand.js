@@ -13,7 +13,8 @@ module.exports = client => {
 
 
         // Push each guild-only slash command's data object to the guildCommands array
-        client.slashCommands.forEach(cmd => {
+        const guild = client.slashCommands.filter(c => !c.global);
+        guild.forEach(cmd => {
             guildCommands.push(cmd.data);
         });
 
