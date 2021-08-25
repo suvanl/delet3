@@ -72,7 +72,7 @@ exports.run = async (client, message, args, level) => {
             cmd = client.commands.get(cmd);
 
             // if the user has insufficient perms to use this command, return
-            if (level < client.levelCache[cmd.config.permLevel]) return;
+            if (level < client.levelCache.get(cmd.config.permLevel)) return;
 
             // Create embed containing the command's description, usage and aliases
             const embed = new MessageEmbed()
