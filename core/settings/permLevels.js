@@ -12,8 +12,8 @@ const permLevels = {
             name: "Server Moderator",
             verify: message => {
                 try {
-                    const modRole = message.guild.roles.find(r => r.name === message.settings.modRole);
-                    if (modRole && message.member.roles.has(modRole.id)) return true;
+                    const modRole = message.guild.roles.cache.find(r => r.name === message.settings.modRole);
+                    if (modRole && message.member.roles.cache.has(modRole.id)) return true;
                 } catch (err) {
                     return false;
                 }
@@ -24,8 +24,8 @@ const permLevels = {
             name: "Server Admin",
             verify: message => {
                 try {
-                    const adminRole = message.guild.roles.find(r => r.name === message.settings.adminRole);
-                    if (adminRole && message.member.roles.has(adminRole.id)) return true;
+                    const adminRole = message.guild.roles.cache.find(r => r.name === message.settings.adminRole);
+                    if (adminRole && message.member.roles.cache.has(adminRole.id)) return true;
                 } catch (err) {
                     return false;
                 }
@@ -37,7 +37,7 @@ const permLevels = {
             verify: message => {
                 try {
                     if (message.channel.type === "GUILD_TEXT")
-                        if (message.guild.ownerId === message.author.id) return true;
+                        if (message.guild.ownerId === (message.author?.id || message.user?.id)) return true;
                 } catch (err) {
                     return false;
                 }
@@ -46,16 +46,14 @@ const permLevels = {
         {
             level: 6,
             name: "Superuser",
-            verify: message => {
-                permLevels.superusers.includes(message.author.id);
-            }
+            verify: message => permLevels.superusers?.includes(message.author?.id || message.user?.id)
         },
         {
             level: 9,
             name: "Bot Owner",
             verify: message => {
                 try {
-                    if (process.env.OWNER_ID === message.author.id) return true;
+                    if (process.env.OWNER_ID === (message.author?.id || message.user?.id)) return true;
                 } catch (err) {
                     return false;
                 }
