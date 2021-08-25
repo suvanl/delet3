@@ -1,3 +1,5 @@
+const { magenta: mag } = require("chalk");
+
 module.exports = async (client, interaction) => {
     // Return if the interaction is not a CommandInteraction
     // More info: https://discord.js.org/#/docs/main/stable/class/CommandInteraction
@@ -13,18 +15,25 @@ module.exports = async (client, interaction) => {
     // Fetch guild/default settings from REST API
     interaction.settings = await client.getSettings(interaction.guild);
 
-    // Run the slash command
+    // Get user/member's permLevel
+    const level = client.permLevel(interaction);
+
     try {
+        // Run the slash command
         await slashCmd.run(client, interaction);
+
+        // Log use of the slash command
+        const log = `${client.permLevels.levels.find(l => l.level === level).name} ${mag(interaction.user.tag)} (${interaction.user.id}) ran ApplicationCommand ${mag(slashCmd.data.name)}`;
+        client.logger.app(log);
     } catch (err) {
         // Log the error
-        client.logger.err(err);
+        client.logger.err(err.stack);
 
         // If the interaction has already been replied to, send a follow-up message informing the user that an error occurred
         // TODO: localise the `content` string
-        if (interaction.replied) interaction.followUp({ content: `An error occurred:\n${err.message}`, ephemeral: true });
+        if (interaction.replied) interaction.followUp({ content: `An error occurred: ${err.message}`, ephemeral: true });
         
         // Otherwise, send a reply
-        else interaction.reply({ content: `An error occurred:\n${err.message}`, ephemeral: true });
+        else interaction.reply({ content: `An error occurred: ${err.message}`, ephemeral: true });
     }
 };

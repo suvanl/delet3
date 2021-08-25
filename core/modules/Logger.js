@@ -1,4 +1,4 @@
-const { bgBlue, bgRed, bgYellow, blue, green, grey, yellow } = require("chalk");
+const { bgBlue, bgRed, bgYellow, blue, green, grey, magenta, yellow } = require("chalk");
 const moment = require("moment");
 
 exports.log = (content, type = "log") => {
@@ -9,6 +9,9 @@ exports.log = (content, type = "log") => {
     switch (type) {
         case "cmd": {
             return console.log(`${timestamp} ${blue(type.toUpperCase())} » ${content}`);
+        }
+        case "app": {
+            return console.log(`${timestamp} ${magenta(type.toUpperCase())} » ${content}`);
         }
         case "dbg": {
             return console.log(`${timestamp} ${yellow(type.toUpperCase())} » ${content}`);
@@ -33,6 +36,7 @@ exports.log = (content, type = "log") => {
 };
 
 exports.cmd = (...args) => this.log(...args, "cmd");
+exports.app = (...args) => this.log(...args, "app");
 exports.dbg = (...args) => this.log(...args, "dbg");
 exports.err = (...args) => this.log(...args, "err");
 exports.inf = (...args) => this.log(...args, "inf");
