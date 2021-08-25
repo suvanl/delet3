@@ -11,7 +11,7 @@ const { JWT_SECRET, MONGO_STRING, PORT, TOKEN } = process.env;
 
 
 // Node.js version check
-const { blue, cyan, green, red, bold, underline } = require("chalk");
+const { blue, cyan, green, magenta: mag, red, bold, underline } = require("chalk");
 
 const nodeVer = process.version.slice(1);
 const minVer = "16.6.0";
@@ -106,14 +106,14 @@ const init = async () => {
     // Load slash commands:
     // Read the contents of the "commands/slash" directory
     const slashCmds = await readdir("./interactions/commands");
-    client.logger.log(`Loading ${blue(slashCmds.length)} slash commands:`);
+    client.logger.log(`Loading ${mag(slashCmds.length)} slash commands:`);
     // For each slash command file...
     slashCmds.forEach(file => {
         // Require (import) the slash command file
         const slashCmd = require(`./interactions/commands/${file}`);
         // Remove the file extension from the filename
         const name = file.split(".")[0];
-        client.logger.log(`✔ "${blue(name)}"`);
+        client.logger.log(`✔ "${mag(name)}"`);
         // Set the commands for this application/guild
         client.slashCommands.set(slashCmd.data.name, slashCmd);
     });
