@@ -30,10 +30,9 @@ module.exports = async (client, interaction) => {
         client.logger.err(err.stack);
 
         // If the interaction has already been replied to, send a follow-up message informing the user that an error occurred
-        // TODO: localise the `content` string
-        if (interaction.replied) interaction.followUp({ content: `An error occurred: ${err.message}`, ephemeral: true });
+        if (interaction.replied) interaction.followUp({ content: `${client.l10n(interaction, "error")} ${err.message}`, ephemeral: true });
         
         // Otherwise, send a reply
-        else interaction.reply({ content: `An error occurred: ${err.message}`, ephemeral: true });
+        else interaction.reply({ content: `${client.l10n(interaction, "error")} ${err.message}`, ephemeral: true });
     }
 };
