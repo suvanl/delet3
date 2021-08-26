@@ -20,7 +20,7 @@ module.exports = async (client, interaction) => {
 
     try {
         // Run the slash command
-        await slashCmd.run(client, interaction);
+        await slashCmd.run(client, interaction, level);
 
         // Log use of the slash command
         const log = `${client.permLevels.levels.find(l => l.level === level).name} ${mag(interaction.user.tag)} (${interaction.user.id}) ran ApplicationCommand ${mag(slashCmd.data.name)}`;
