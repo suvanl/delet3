@@ -57,10 +57,10 @@ module.exports = async (client, message) => {
     if (cmd && !message.guild && cmd.config.guildOnly) return message.channel.send(`🚫 ${client.l10n(message, "dm.unavailable")}`);
     
     // permLevel check + response
-    if (level < client.levelCache[cmd.config.permLevel]) return message.channel.send(stripIndents`
+    if (level < client.levelCache.get(cmd.config.permLevel)) return message.channel.send(stripIndents`
         ⛔ You don't have permission to use this command.
-        Your permission level is: \`${level}\` (**${client.permLevels.levels.find(l => l.level === level).name}**);
-        The required level is: \`${client.levelCache[cmd.config.permLevel]}\` (**${cmd.config.permLevel}**).`);
+        Your permission level is: \`${level}\` (**${client.permLevels.levels.find(l => l.level === level).name}**).
+        The required level is: \`${client.levelCache.get(cmd.config.permLevel)}\` (**${cmd.config.permLevel}**).`);
 
     // Change author's permLevel from being on `member` to `level`
     message.author.permLevel = level;

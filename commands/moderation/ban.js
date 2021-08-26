@@ -288,5 +288,5 @@ exports.help = {
     name: "ban",
     description: "bans the specified user",
     category: "moderation",
-    usage: "ban <@user|userID> <duration> <reason>"
+    usage: "ban <@user|userID> [duration] [reason]"
 };

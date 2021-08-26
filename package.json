@@ -6,7 +6,9 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node index.js",
+    "start-deploy": "node index.js --deploy",
     "dev": "nodemon",
+    "dev-deploy": "nodemon index.js --deploy",
     "prod": "pm2 start delet3",
     "prod-monit": "pm2 start delet3 && pm2 monit"
   },
@@ -21,10 +23,12 @@
   },
   "homepage": "https://github.com/suvanl/delet3#readme",
   "dependencies": {
+    "@discordjs/rest": "^0.1.0-canary.0",
     "bcryptjs": "^2.4.3",
     "canvas": "^2.8.0",
     "chalk": "^4.1.1",
     "common-tags": "^1.8.0",
+    "discord-api-types": "^0.22.0",
     "discord.js": "^13.0.1",
     "dotenv": "^10.0.0",
     "html-entities": "^2.3.2",

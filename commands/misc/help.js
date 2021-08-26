@@ -72,7 +72,7 @@ exports.run = async (client, message, args, level) => {
             cmd = client.commands.get(cmd);
 
             // if the user has insufficient perms to use this command, return
-            if (level < client.levelCache[cmd.config.permLevel]) return;
+            if (level < client.levelCache.get(cmd.config.permLevel)) return;
 
             // Create embed containing the command's description, usage and aliases
             const embed = new MessageEmbed()
@@ -85,7 +85,8 @@ exports.run = async (client, message, args, level) => {
                     \`${message.settings.prefix}${cmd.help.usage}\`
 
                     **aliases**
-                    ${cmd.config.aliases.length !== 0 ? cmd.config.aliases.map(a => `\`${a}\``).join(", ") : "`[ none ]`"}`);
+                    ${cmd.config.aliases.length !== 0 ? cmd.config.aliases.map(a => `\`${a}\``).join(", ") : "`[ none ]`"}`)   
+                .setFooter("< > = required parameter \u2022 [ ] = optional parameter");
 
             // Send the embed
             message.channel.send({ embeds: [embed] });
