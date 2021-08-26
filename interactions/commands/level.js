@@ -2,9 +2,11 @@ const { stripIndents } = require("common-tags");
 
 exports.run = async (client, interaction, level) => {
     const lvlName = client.permLevels.levels.find(l => l.level === level).name;
-    interaction.reply(stripIndents`
+    const content = stripIndents`
         ${client.l10n(interaction, "level.lvl").replace(/%lvl%/g, `\`${level}\` (**${lvlName}**)`)}
-        ${client.l10n(interaction, "level.info").replace(/%cmd%/g, `\`${interaction.settings.prefix}help\``)}`);
+        ${client.l10n(interaction, "level.info").replace(/%cmd%/g, `\`${interaction.settings.prefix}help\``)}`;
+
+    return interaction.reply({ content, ephemeral: true });
 };
 
 exports.data = {
