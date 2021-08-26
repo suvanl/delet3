@@ -10,6 +10,7 @@
     "dev": "nodemon",
     "dev-deploy": "nodemon index.js --deploy",
     "prod": "pm2 start delet3",
+    "prod-create": "pm2 start index.js --name \"delet3\" -- --color && pm2 monit",
     "prod-monit": "pm2 start delet3 && pm2 monit"
   },
   "repository": {
