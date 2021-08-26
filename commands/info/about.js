@@ -19,7 +19,7 @@ exports.run = async (client, message) => {
         .setFooter(`Made with Discord.js ${version}`, "https://i.imgur.com/RWcHLuz.png")
         .setTimestamp();
 
-    message.channel.send({ embeds: [embed] });
+    return message.reply({ embeds: [embed], ephemeral: true });
 };
 
 exports.config = {
