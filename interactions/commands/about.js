@@ -1,6 +1,6 @@
 exports.run = async (client, interaction) => {
     // Get the "about" command from the client.commands collection and call its run() function
-    client.commands.get("about").run(client, interaction);
+    await client.commands.get("about").run(client, interaction);
 };
 
 exports.data = {
