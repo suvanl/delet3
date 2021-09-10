@@ -36,12 +36,12 @@
     "jsonwebtoken": "^8.5.1",
     "klaw": "^3.0.0",
     "moment": "^2.29.1",
-    "mongoose": "^5.12.5",
+    "mongoose": "^5.13.9",
     "mongoose-timestamp": "^0.6.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.2",
     "restify": "^8.5.1",
     "restify-errors": "^8.0.2",
-    "restify-jwt-community": "^1.1.12",
+    "restify-jwt-community": "^1.1.17",
     "semver": "^7.3.5"
   },
   "devDependencies": {
