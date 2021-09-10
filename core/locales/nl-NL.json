@@ -63,7 +63,7 @@
     "user.joined": "Joined this server",
     "user.points.regular": "Regular",
     "user.roles": "Roles",
-    "user.roles.more": "and %num% others...",
+    "user.roles.more": "and %num% others",
     "user.time.at": "at",
     "user.id": "User ID",
     "server.verif.none": "none",
