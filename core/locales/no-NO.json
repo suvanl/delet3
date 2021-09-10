@@ -63,7 +63,7 @@
     "user.joined": "Har blitt med på serveren",
     "user.points.regular": "Normal",
     "user.roles": "Roller",
-    "user.roles.more": "og %num% andre...",
+    "user.roles.more": "and %num% others",
     "user.time.at": "klokken",
     "user.id": "Bruker ID",
     "server.verif.none": "ingen",
