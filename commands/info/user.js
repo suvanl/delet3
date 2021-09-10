@@ -62,7 +62,7 @@ exports.run = async (client, message, args) => {
 
     // If user has a current activity
     if (currentActivity) {
-        if (currentActivity.type === "CUSTOM_STATUS") {
+        if (currentActivity.type === "CUSTOM") {
             // display their activity in the following format: [Emoji (if present)] [Status Message (if present)]
             activity = `${currentActivity.emoji ? currentActivity.emoji : "\u200b"} **${currentActivity.state ? currentActivity.state.truncate(24) : currentActivity.name}**`;
         } else {
