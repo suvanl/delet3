@@ -62,7 +62,7 @@ exports.run = async (client, message, args) => {
 
     // If user has a current activity
     if (currentActivity) {
-        if (currentActivity.type === "CUSTOM_STATUS") {
+        if (currentActivity.type === "CUSTOM") {
             // display their activity in the following format: [Emoji (if present)] [Status Message (if present)]
             activity = `${currentActivity.emoji ? currentActivity.emoji : "\u200b"} **${currentActivity.state ? currentActivity.state.truncate(24) : currentActivity.name}**`;
         } else {
@@ -93,7 +93,6 @@ exports.run = async (client, message, args) => {
     // If the user has no roles, display "None"
     if (roles.length === 0) roles = ["None"];
 
-
     // Create and send embed
     const embed = new MessageEmbed()
         .setColor("#8cfed9")
@@ -102,17 +101,17 @@ exports.run = async (client, message, args) => {
             **${user.tag}** ${badges} | ${statusEmoji} ${member.presence?.activities.length === 0 ? status[member.presence.status].toTitleCase() : activity}
 
             💥 **${client.l10n(message, "user.created")}**
-            ${utc(user.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
+            <t:${utc(user.createdTimestamp).unix()}>
 
             🏠 **${client.l10n(message, "user.joined")}**
-            ${utc(message.guild.members.cache.get(member.id).joinedTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
+            <t:${utc(message.guild.members.cache.get(member.id).joinedTimestamp).unix()}>
 
             🧮 **${client.l10n(message, "points").toTitleCase()}**
             Trivia: ${data.triviaPoints} • ${client.l10n(message, "user.points.regular")}: ${data.points}
 
             📋 **${client.l10n(message, "user.roles")}**
             ${roles.slice(0, 3).join(", ")} ${roles.length >= 4 ? client.l10n(message, "user.roles.more").replace(/%num%/g, roles.length - 3) : ""}`)
-        .setFooter(`${client.l10n(message, "user.id")}: ${member.id} | ${client.l10n(message, "utc")}`);
+        .setFooter(`${client.l10n(message, "user.id")}: ${member.id}`);
     
     message.channel.send({ embeds: [embed] });
 };
