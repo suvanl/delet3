@@ -5,8 +5,8 @@ const moment = require("moment");
 const deletVersion = require("../../package.json").version;
 
 exports.run = async (client, message) => {
-    const owner = await client.users.fetch(process.env.OWNER_ID);
-    const ownerTag = `${owner.username}#${owner.discriminator}`;
+    const app = await message.client.application.fetch();
+    const ownerTag = `${app.owner.username}#${app.owner.discriminator}`;
     const uptimeUtc = moment.utc(client.uptime);
     const uptimeDays = uptimeUtc.format("D") - 1;
 
