@@ -8,6 +8,13 @@
 5. Copy your token and paste it into the `.env` file.
 
 
+## Dev/base guild ID
+This is the ID of the development/testing/base/hub (whatever you want to call it, really) guild for delet3.
+Guild-only ApplicationCommands (slash commands) will be deployed to this guild.
+
+Guild-only slash commands are used for testing slash commands before deploying them publicly.
+
+
 ## MongoDB
 1. Sign into [MongoDB Cloud](https://www.mongodb.com/cloud)
 2. Create a new cluster
