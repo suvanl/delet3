@@ -8,12 +8,11 @@
 5. Copy your token and paste it into the `.env` file.
 
 
-## Bot owner ID
-This should be your Discord user ID. **Do not set this as anyone else's Discord user ID**.
-1. Click on the settings (cog) icon on Discord
-2. Go to "Appearance", under App Settings
-3. Scroll down to the Advanced section and enable Developer Mode
-4. Right click on your username (e.g. in the Member List in a server), and select "Copy ID".
+## Dev/base guild ID
+This is the ID of the development/testing/base/hub (whatever you want to call it, really) guild for delet3.
+Guild-only ApplicationCommands (slash commands) will be deployed to this guild.
+
+Guild-only slash commands are used for testing slash commands before deploying them publicly.
 
 
 ## MongoDB

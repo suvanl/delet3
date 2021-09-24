@@ -51,9 +51,10 @@ const permLevels = {
         {
             level: 9,
             name: "Bot Owner",
-            verify: message => {
+            verify: async message => {
                 try {
-                    if (process.env.OWNER_ID === (message.author?.id || message.user?.id)) return true;
+                    const app = await message.client.application.fetch();
+                    if (app.owner.id === (message.author?.id || message.user?.id)) return true;
                 } catch (err) {
                     return false;
                 }
