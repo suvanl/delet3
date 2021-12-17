@@ -36,7 +36,7 @@
     "jsonwebtoken": "^8.5.1",
     "klaw": "^4.0.1",
     "moment": "^2.29.1",
-    "mongoose": "^6.0.7",
+    "mongoose": "^5.13.9",
     "mongoose-timestamp": "^0.6.0",
     "node-fetch": "^2.6.2",
     "restify": "^8.5.1",
