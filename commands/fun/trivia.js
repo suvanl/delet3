@@ -122,7 +122,7 @@ exports.run = async (client, message, args) => {
             // Category & Difficulty
             // cat | diff
         const embed = new MessageEmbed()
-            .setAuthor("Trivia", "https://i.imgur.com/Z20hATC.png")
+            .setAuthor({ name: "Trivia", iconURL: "https://i.imgur.com/Z20hATC.png" })
             .setColor("#6f99ff")
             .setDescription(stripIndents`
                 **${client.l10n(message, "trivia.embed.question")}**

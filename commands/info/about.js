@@ -12,7 +12,7 @@ exports.run = async (client, message) => {
 
     const embed = new MessageEmbed()
         .setColor("#56dcff")
-        .setAuthor(`delet ${deletVersion} - About`, client.user.displayAvatarURL())
+        .setAuthor({ name: `delet ${deletVersion} - About`, iconURL: client.user.displayAvatarURL() })
         .setDescription(stripIndents`
             👥 **Users**: ${client.users.cache.size} | 💬 **Servers**: ${client.guilds.cache.size} | 🕙 **Uptime**: ${uptimeDays} days, ${uptimeUtc.format("HH:mm:ss")}
             🧠 **Memory usage**: ~${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed()}MB | 🔑 **Owner**: ${ownerTag} | 🌐 **Translators**: [see list](https://github.com/suvanl/delet3/#translations)`)
