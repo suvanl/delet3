@@ -111,7 +111,7 @@ exports.run = async (client, message, args) => {
 
             📋 **${client.l10n(message, "user.roles")}**
             ${roles.slice(0, 3).join(", ")} ${roles.length >= 4 ? client.l10n(message, "user.roles.more").replace(/%num%/g, roles.length - 3) : ""}`)
-        .setFooter(`${client.l10n(message, "user.id")}: ${member.id}`);
+        .setFooter({ text: `${client.l10n(message, "user.id")}: ${member.id}` });
     
     message.channel.send({ embeds: [embed] });
 };

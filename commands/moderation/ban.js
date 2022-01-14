@@ -244,7 +244,7 @@ exports.run = async (client, message, args) => {
                 #️⃣ ${client.l10n(message, "mod.embed.userID").replace(/%id%/g, `**${user.id}**`)}
                 ⌛ ${client.l10n(message, "mod.embed.duration").replace(/%dur%/g, `**${relative}**`)}
                 ❔ ${client.l10n(message, "mod.embed.reason").replace(/%rsn%/g, `**${reason ? reason : client.l10n(message, "mod.ban.reason.null")}**`)}`)
-            .setFooter(`${issuedBy} • ${caseNumber}`, message.author.displayAvatarURL());
+            .setFooter({ text: `${issuedBy} • ${caseNumber}`, iconURL: message.author.displayAvatarURL() });
 
         return modLog.send({ embeds: [embed] });
     }

@@ -132,7 +132,7 @@ exports.run = async (client, message, args) => {
 
                 **${client.l10n(message, "trivia.embed.catdiff")}**
                 ${quiz.category} | ${quiz.difficulty.toTitleCase()}`)
-            .setFooter(client.l10n(message, "trivia.embed.footer"), message.author.displayAvatarURL())
+            .setFooter({ text: client.l10n(message, "trivia.embed.footer"), iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
         
         // Wait 60 seconds (awaitReply default "limit" property value) for user's answer

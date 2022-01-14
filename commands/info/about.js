@@ -16,7 +16,7 @@ exports.run = async (client, message) => {
         .setDescription(stripIndents`
             👥 **Users**: ${client.users.cache.size} | 💬 **Servers**: ${client.guilds.cache.size} | 🕙 **Uptime**: ${uptimeDays} days, ${uptimeUtc.format("HH:mm:ss")}
             🧠 **Memory usage**: ~${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed()}MB | 🔑 **Owner**: ${ownerTag} | 🌐 **Translators**: [see list](https://github.com/suvanl/delet3/#translations)`)
-        .setFooter(`Made with Discord.js ${version}`, "https://i.imgur.com/RWcHLuz.png")
+        .setFooter({ text: `Made with Discord.js ${version}`, iconURL: "https://i.imgur.com/RWcHLuz.png"})
         .setTimestamp();
 
     return message.reply({ embeds: [embed], ephemeral: true });
