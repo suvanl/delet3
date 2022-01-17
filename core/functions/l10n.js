@@ -2,6 +2,18 @@ const { readdirSync } = require("fs");
 const { sep } = require("path");
 const localeDir = `${process.cwd()}${sep}core${sep}locales`;
 
+// Locales with regional variants in Discord's locale list
+// Source: https://discord.com/developers/docs/dispatch/field-values#predefined-field-values-accepted-locales
+const regional = [
+    "en-US",
+    "en-GB",
+    "zh-CN",
+    "zh-TW",
+    "pt-BR",
+    "es-ES",
+    "sv-SE"
+];
+
 module.exports = client => {
     // Localisation (l10n)
     // Language tag list: https://w.wiki/Lsd
@@ -10,13 +22,41 @@ module.exports = client => {
         const localeFiles = readdirSync(localeDir);
         const lf = localeFiles.map(file => file.split(".")[0]);
 
-        // If a locale file matching the value of the "locale" parameter can't be found, return an error message
-        if (!lf.includes(locale)) return client.logger.err(`Missing locale file: "${locale}"`);
+        // If the type of message is not an application command (assuming it is of type 'DEFAULT')...
+        if (message.type !== "APPLICATION_COMMAND") {
+            // If a locale file matching the value of the "locale" parameter can't be found, return an error message
+            if (!lf.includes(locale)) return client.logger.err(`Missing locale file: "${locale}"`);
 
-        // Define the locale file path
-        let locFile = require(`${localeDir}${sep}${locale}.json`);
+            // Define the locale file path
+            let locFile = require(`${localeDir}${sep}${locale}.json`);
 
-        // If a file does not exist at the specified path, fall back to English (UK) [en-GB]
+            // If the requested string key doesn't exist in the file, fall back to English (UK) [en-GB]
+            if (!locFile[str]) locFile = require(`${localeDir}${sep}en-GB.json`);
+
+            // Return the value of the specified key
+            return locFile[str];
+        }
+
+        // If the command is indeed an application command...
+        // Set the default locale to message.locale (docs: CommandInteraction.locale)
+        locale = message.locale;
+
+        let locFile;
+        
+        // If the interaction locale doesn't have a locale file associated with it...
+        if (!lf.find(loc => loc.startsWith(locale))) {
+            // Fall back to en-GB
+            locFile = require(`${localeDir}${sep}en-GB.json`);
+        } else if (regional.includes(locale)) {
+            // If the interaction locale is in long-form (i.e., with a region tag), require the locale file
+            locFile = require(`${localeDir}${sep}${locale}.json`);
+        } else {
+            // If the interaction locale is in short-form (e.g., 'de'), find the first locale file name
+            // that starts with the short-form locale string
+            locFile = require(`${localeDir}${sep}${lf.find(loc => loc.startsWith(locale))}.json`);
+        }
+
+        // If the requested string key doesn't exist in the file, fall back to English (UK) [en-GB]
         if (!locFile[str]) locFile = require(`${localeDir}${sep}en-GB.json`);
 
         // Return the value of the specified key

@@ -53,7 +53,7 @@ exports.run = async (client, message) => {
             ✅ **${client.l10n(message, "server.verif")}**
             ${client.l10n(message, "server.verif.lvl")} ${vLevels[guild.verificationLevel]}
             ${client.l10n(message, "server.cFilter.lvl")} ${cFilter[guild.explicitContentFilter]}`)
-        .setFooter(`${client.l10n(message, "server.id").replace(/%id%/g, guild.id)} | ${client.l10n(message, "utc")}`);
+        .setFooter({ text: `${client.l10n(message, "server.id").replace(/%id%/g, guild.id)} | ${client.l10n(message, "utc")}` });
 
     message.channel.send({ embeds: [embed] });
 };

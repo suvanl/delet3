@@ -122,7 +122,7 @@ exports.run = async (client, message, args) => {
             // Category & Difficulty
             // cat | diff
         const embed = new MessageEmbed()
-            .setAuthor("Trivia", "https://i.imgur.com/Z20hATC.png")
+            .setAuthor({ name: "Trivia", iconURL: "https://i.imgur.com/Z20hATC.png" })
             .setColor("#6f99ff")
             .setDescription(stripIndents`
                 **${client.l10n(message, "trivia.embed.question")}**
@@ -132,7 +132,7 @@ exports.run = async (client, message, args) => {
 
                 **${client.l10n(message, "trivia.embed.catdiff")}**
                 ${quiz.category} | ${quiz.difficulty.toTitleCase()}`)
-            .setFooter(client.l10n(message, "trivia.embed.footer"), message.author.displayAvatarURL())
+            .setFooter({ text: client.l10n(message, "trivia.embed.footer"), iconURL: message.author.displayAvatarURL() })
             .setTimestamp();
         
         // Wait 60 seconds (awaitReply default "limit" property value) for user's answer

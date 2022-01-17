@@ -86,7 +86,7 @@ exports.run = async (client, message, args, level) => {
 
                     **aliases**
                     ${cmd.config.aliases.length !== 0 ? cmd.config.aliases.map(a => `\`${a}\``).join(", ") : "`[ none ]`"}`)   
-                .setFooter("< > = required parameter \u2022 [ ] = optional parameter");
+                .setFooter({ text: "< > = required parameter \u2022 [ ] = optional parameter" });
 
             // Send the embed
             message.channel.send({ embeds: [embed] });

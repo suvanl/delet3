@@ -83,7 +83,7 @@ exports.run = async (client, message, args) => {
                     👤 ${client.l10n(message, "mod.embed.member").replace(/%user%/g, `**${unban.tag}**`)}
                     #️⃣ ${client.l10n(message, "mod.embed.userID").replace(/%id%/g, `**${unban.id}**`)}
                     ❔ ${client.l10n(message, "mod.embed.reason").replace(/%rsn%/g, `**${reason}**`)}`)
-                .setFooter(client.l10n(message, "mod.embed.issued").replace(/%user%/g, message.author.tag), message.author.displayAvatarURL());
+                .setFooter({ text: client.l10n(message, "mod.embed.issued").replace(/%user%/g, message.author.tag), iconURL: message.author.displayAvatarURL() });
 
             // Send embed
             return modLog.send({ embeds: [embed] });
