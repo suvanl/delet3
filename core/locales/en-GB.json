@@ -80,6 +80,8 @@
     "server.verif.none": "none",
     "server.verif.low": "low",
     "server.verif.medium": "medium",
+    "server.verif.high": "high",
+    "server.verif.veryHigh": "very high",
     "server.cFilter.disabled": "disabled",
     "server.cFilter.noRole": "scan content from members without a role",
     "server.cFilter.all": "scan content from all members",
