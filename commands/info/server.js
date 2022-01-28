@@ -20,8 +20,8 @@ exports.run = async (client, message) => {
         "NONE": client.l10n(message, "server.verif.none"),
         "LOW": client.l10n(message, "server.verif.low"),
         "MEDIUM": client.l10n(message, "server.verif.medium"),
-        "HIGH": "(╯°□°）╯︵ ┻━┻",
-        "VERY_HIGH": "┻━┻ ﾐヽ(ಠ益ಠ)ノ彡┻━┻"
+        "HIGH": client.l10n(message, "server.verif.high"),
+        "VERY_HIGH": client.l10n(message, "server.verif.veryHigh")
     };
 
     // Content filter names
