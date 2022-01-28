@@ -9,7 +9,7 @@ exports.run = async (client, message, args) => {
     let location = args.join(" ");
 
     // If no location is provided, return & inform user
-    if (!location) return message.channel.send(stripIndents`
+    if (!location) return message.reply(stripIndents`
         ℹ️ ${client.l10n(message, "weather.noLocation")}
         📖 ${client.l10n(message, "weather.example").replace(/%cmd%/g, `${message.settings.prefix}weather`)}.`);
 
@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
     const data = await res.json();
 
     // Inform user if 404 occurs
-    if (data.cod === "404") return message.channel.send(stripIndents`
+    if (data.cod === "404") return message.reply(stripIndents`
         ⚠️ **${client.l10n(message, "weather.404.error").replace(/%err%/g, `${data.cod} ${data.message}`)}**
 
         ➡️ ${client.l10n(message, "weather.404.valid")}
@@ -96,7 +96,7 @@ exports.run = async (client, message, args) => {
             🌇 ${client.l10n(message, "weather.sunset")}: **${sunset}**`)
         .setFooter({ text: client.l10n(message, "weather.footer"), iconURL: "https://i.imgur.com/OodcJh8.jpg" });
     
-    message.channel.send({ embeds: [embed] });
+    message.reply({ embeds: [embed] });
 };
 
 // Function to set embed colour based on temperature value
