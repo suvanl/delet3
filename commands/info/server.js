@@ -20,8 +20,8 @@ exports.run = async (client, message) => {
         "NONE": client.l10n(message, "server.verif.none"),
         "LOW": client.l10n(message, "server.verif.low"),
         "MEDIUM": client.l10n(message, "server.verif.medium"),
-        "HIGH": "(╯°□°）╯︵ ┻━┻",
-        "VERY_HIGH": "┻━┻ ﾐヽ(ಠ益ಠ)ノ彡┻━┻"
+        "HIGH": client.l10n(message, "server.verif.high"),
+        "VERY_HIGH": client.l10n(message, "server.verif.veryHigh")
     };
 
     // Content filter names
@@ -42,7 +42,7 @@ exports.run = async (client, message) => {
             ${utc(guild.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
 
             💬 **${client.l10n(message, "server.channels")}**
-            ${client.l10n(message, "server.channels.txt").replace(/%num%/g, tChannels)} • ${client.l10n(message, "server.channels.voice").replace(/%num%/g, vChannels)} (\`${guild.region}\`)
+            ${client.l10n(message, "server.channels.txt").replace(/%num%/g, tChannels)} • ${client.l10n(message, "server.channels.voice").replace(/%num%/g, vChannels)}
 
             👥 **${client.l10n(message, "server.members")}**
             ${client.l10n(message, "server.users").replace(/%num%/g, guild.memberCount - bots)} • ${client.l10n(message, "server.bots").replace(/%num%/g, bots)}
@@ -55,7 +55,7 @@ exports.run = async (client, message) => {
             ${client.l10n(message, "server.cFilter.lvl")} ${cFilter[guild.explicitContentFilter]}`)
         .setFooter({ text: `${client.l10n(message, "server.id").replace(/%id%/g, guild.id)} | ${client.l10n(message, "utc")}` });
 
-    message.channel.send({ embeds: [embed] });
+    message.reply({ embeds: [embed], ephemeral: true });
 };
 
 exports.config = {
