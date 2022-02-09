@@ -69,6 +69,8 @@
     "server.verif.none": "ingen",
     "server.verif.low": "lav",
     "server.verif.medium": "medium",
+    "server.verif.high": "high",
+    "server.verif.veryHigh": "very high",
     "server.cFilter.disabled": "av",
     "server.cFilter.noRole": "scan innholdet fra medlemmer uten en rolle",
     "server.cFilter.all": "scan innhold fra alle medlemmer",

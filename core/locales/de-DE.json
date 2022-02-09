@@ -69,6 +69,8 @@
     "server.verif.none": "Keine",
     "server.verif.low": "Leicht",
     "server.verif.medium": "Mittel",
+    "server.verif.high": "high",
+    "server.verif.veryHigh": "very high",
     "server.cFilter.disabled": "Deaktiviert",
     "server.cFilter.noRole": "Inhalte scannen von Mitgliedern ohne einer Rolle",
     "server.cFilter.all": "Inhalte scannen von allen Mitgliedern",
