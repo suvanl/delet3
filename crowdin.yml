@@ -1,3 +1,6 @@
+commit_message: 'New translations (%original_file_name% -> %language%)'
+append_commit_message: false
+
 files:
   - source: /core/locales/en-GB.json
     translation: /core/locales/%locale%.%file_extension%
