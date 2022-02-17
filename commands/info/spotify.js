@@ -6,6 +6,11 @@ const { keys } = require("../../core/util/data");
 const { SPOTIFY_ID: ID, SPOTIFY_SECRET: SECRET } = process.env;
 
 exports.run = async (client, message, args) => {
+    // Define author based on command type
+    let author;
+    if (message.type !== "APPLICATION_COMMAND") author = message.author;
+    else author = message.user;
+
     // Define "not listening" message:
         // ℹ Not listening to a song
         // Please ensure you're listening to a song (on a Spotify account that's connected to Discord)
@@ -14,12 +19,12 @@ exports.run = async (client, message, args) => {
         ${client.l10n(message, "spotify.notListening.info")}`;
 
     // Message author's current activities
-    const activities = message.guild.members.cache.get(message.author.id).presence.activities;
-    if (!activities.length) return message.channel.send(notListening);
+    const activities = message.guild.members.cache.get(author.id).presence.activities;
+    if (!activities.length) return message.reply(notListening);
 
     // Get "Listening to Spotify" activity
     const spotifyActivity = activities.filter(a => a.name === "Spotify" && a.type === "LISTENING");
-    if (!spotifyActivity.length) return message.channel.send(notListening);
+    if (!spotifyActivity.length) return message.reply(notListening);
 
     // Define Spotify track ID
     const id = spotifyActivity[0].syncId;
@@ -47,7 +52,7 @@ exports.run = async (client, message, args) => {
     const emoji = "<:spotify:704771723232542900>";
 
     // If user only requests album art
-    const artArgs = ["art", "cover"];
+    const artArgs = ["art", "cover", "true"];
 
     if (args[0] && artArgs.includes(args[0])) {
         const embed = new MessageEmbed()
@@ -55,7 +60,7 @@ exports.run = async (client, message, args) => {
             .setImage(albumArt)
             .setDescription(`${emoji} ${trackTitle}`);
 
-        return message.channel.send({ embeds: [embed] });
+        return message.reply({ embeds: [embed] });
     }
 
     // Send GET request to Spotify API for audio features (AF)
@@ -97,7 +102,7 @@ exports.run = async (client, message, args) => {
             🔢 ${danceability}: **${Math.round(afData.danceability * 10)}/10** • ${energy}: **${Math.round(afData.energy * 10)}/10** • ${acousticness}: **${Math.round(afData.acousticness * 10)}/10**`)
         .setFooter({ text: `${tData.album.name} • ${client.l10n(message, "spotify.releaseDate").replace(/%date%/g, releaseDate)}` });
 
-    return message.channel.send({ embeds: [embed] });
+    return message.reply({ embeds: [embed] });
 };
 
 auth = async () => {
