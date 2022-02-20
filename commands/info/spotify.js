@@ -77,7 +77,10 @@ exports.run = async (client, message, args) => {
     const releaseDate = moment(tData.album.release_date, "YYYY-MM-DD").format("DD/MM/YYYY");
     
     let key = keys[afData.key];
-    if (afData.mode === 0 && key.includes("/")) key = `${key.substring(0, key.length - 3)}m`;
+    if (afData.mode === 0) {
+        if (key.includes("/")) key = `${key.substring(0, key.length - 3)}m`;
+        else key += "m";
+    }
 
     // First row
     const keyTxt = client.l10n(message, "spotify.key");
