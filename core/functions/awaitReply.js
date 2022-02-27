@@ -4,7 +4,7 @@ module.exports = client => {
         const filter = m => m.author.id === msg.author.id;
 
         // send the prompt/question message
-        await msg.channel.send(question);
+        await msg.reply(question);
 
         try {
             // call awaitMessages with a maximum of 1 message to collect, which times out after the specified time limit (60 sec by default)
