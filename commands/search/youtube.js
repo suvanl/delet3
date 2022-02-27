@@ -6,7 +6,7 @@ const { YOUTUBE_KEY } = process.env;
 exports.run = async (client, message, args) => {
     // Define query
     const query = args.join(" ");
-    if (!query) return message.channel.send(`ℹ ${client.l10n(message, "yt.noQuery")}`);
+    if (!query) return message.reply(`ℹ ${client.l10n(message, "yt.noQuery")}`);
 
     // YouTube API base URL
     const baseUrl = "https://www.googleapis.com/youtube/v3/search";
@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
 
     // Inform user if no results are returned:
     //  ℹ No results found
-    if (!vids.length) return message.channel.send(`ℹ ${client.l10n(message, "yt.noResults")}`);
+    if (!vids.length) return message.reply(`ℹ ${client.l10n(message, "yt.noResults")}`);
     
     // Create a list of video titles
     let i = 0;
@@ -41,7 +41,7 @@ exports.run = async (client, message, args) => {
     const selected = await client.awaitReply(message, msg, 30000);
 
     // If 30s is up, or if user replies with "cancel"
-    if (!selected || selected.toLowerCase() === "cancel") return message.channel.send(`🚪 ${client.l10n(message, "yt.cancel")}`);
+    if (!selected || selected.toLowerCase() === "cancel") return message.reply(`🚪 ${client.l10n(message, "yt.cancel")}`);
 
     // Valid answers
     const num = Array.from({ length: vids.length }, (v, k) => k + 1);
@@ -50,7 +50,7 @@ exports.run = async (client, message, args) => {
     const selectedInt = parseInt(selected);
 
     // If user doesn't reply with value in range
-    if (!num.includes(selectedInt)) return message.channel.send(client.l10n(message, "settings.invalidNum").replace(/%range%/g, range));
+    if (!num.includes(selectedInt)) return message.reply(client.l10n(message, "settings.invalidNum").replace(/%range%/g, range));
     else {
         // Else, if they have replied with a valid value...
         // Get video ID (array index = selected - 1, because array indexes start at 0)
@@ -59,8 +59,8 @@ exports.run = async (client, message, args) => {
         // Create youtu.be URL using the video ID
         const vidUrl = `https://youtu.be/${vidId}`;
 
-        // Send URL (along with some text to indicate user-requested content)
-        return message.reply(`${client.l10n(message, "yt.vid")}\n${vidUrl}`);
+        // Send URL (along with some text to indicate that the link being sent is user-requested content)
+        return message.reply(`🎥 ${client.l10n(message, "yt.vid")}\n${vidUrl}`);
     }
 };
 
