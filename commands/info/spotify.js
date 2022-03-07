@@ -20,11 +20,11 @@ exports.run = async (client, message, args) => {
 
     // Message author's current activities
     const activities = message.guild.members.cache.get(author.id).presence.activities;
-    if (!activities.length) return message.reply(notListening);
+    if (!activities.length) return message.reply({ content: notListening, ephemeral: true });
 
     // Get "Listening to Spotify" activity
     const spotifyActivity = activities.filter(a => a.name === "Spotify" && a.type === "LISTENING");
-    if (!spotifyActivity.length) return message.reply(notListening);
+    if (!spotifyActivity.length) return message.reply({ content: notListening, ephemeral: true });
 
     // Define Spotify track ID
     const id = spotifyActivity[0].syncId;
