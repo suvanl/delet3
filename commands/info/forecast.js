@@ -11,7 +11,7 @@ exports.run = async (client, message, args) => {
     let location = args.join(" ");
 
     // If no location is provided, return & inform user
-    if (!location) return message.channel.send(stripIndents`
+    if (!location) return message.reply(stripIndents`
         ℹ️ ${client.l10n(message, "forecast.noLocation")}
         📖 ${client.l10n(message, "forecast.example").replace(/%cmd%/g, `${message.settings.prefix}forecast`)}.`);
 
@@ -29,12 +29,15 @@ exports.run = async (client, message, args) => {
     // Get lat/lon and location values from current weather data
     const current = await getCurrent(loc, lang, OWM_KEY);
 
-    // Inform user if 404 occurs
-    if (current.cod === "404") return message.channel.send(stripIndents`
+    // Define error message template
+    const errMsg = stripIndents`
         ⚠️ **${client.l10n(message, "weather.404.error").replace(/%err%/g, `${current.cod} ${current.message}`)}**
 
         ➡️ ${client.l10n(message, "weather.404.valid")}
-        ℹ️ ${client.l10n(message, "weather.404.help").replace(/%cmd%/g, `${message.settings.prefix}help forecast`)}`);
+        ℹ️ ${client.l10n(message, "weather.404.help").replace(/%cmd%/g, `${message.settings.prefix}help forecast`)}`;
+
+    // Inform user if 404 occurs
+    if (current.cod === "404") return message.reply({ content: errMsg, ephemeral: true });
 
     const { lat, lon } = current.coord;
     const { country } = current.sys;
@@ -43,8 +46,13 @@ exports.run = async (client, message, args) => {
     // Get forecast data
     const data = await getForecast(lat, lon, lang, OWM_KEY);
 
-    // Start typing to indicate image is being generated. Typing stops after 10 seconds or when the message is sent.
-    message.channel.sendTyping();
+    // If using a regular command, start typing to indicate image is being generated.
+    // Typing stops after 10 seconds, or once the message has been sent.
+    if (message.type !== "APPLICATION_COMMAND")
+        message.channel.sendTyping();
+    // If using an application command, defer the response
+    else
+        await message.deferReply();
 
     // #region IMAGE GENERATION
 
@@ -194,7 +202,12 @@ exports.run = async (client, message, args) => {
 
     // Create and send attachment
     const attachment = new MessageAttachment(canvas.toBuffer(), "forecast.png");
-    message.channel.send({ files: [attachment] });
+    const filesObj = { files: [attachment] };
+    
+    if (message.type !== "APPLICATION_COMMAND")
+        message.reply(filesObj);
+    else
+        message.editReply(filesObj);
 };
 
 // #region Helper Functions
