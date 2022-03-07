@@ -16,4 +16,4 @@ exports.data = {
     defaultPermission: true
 };
 
-exports.global = false;
+exports.global = true;
