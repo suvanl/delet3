@@ -22,8 +22,9 @@ exports.run = async (client, message, args, level) => {
 
             ⚙️ **\`[]\` denotes optional parameters**\n\u200b`;        
         
-        const sort = [...available.values()].sort((p, c) => p.help.category > c.help.category ? 1
-        : p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1);
+        // This ternary if statement addiction is not healthy...
+        const sort = [...available.values()].sort((p, c) => (p.help.category > c.help.category ? 1
+        : p.help.name > c.help.name && p.help.category === c.help.category) ? 1 : -1);
 
         // loop through each command that has been sorted by category...
         sort.forEach(c => {
@@ -45,21 +46,38 @@ exports.run = async (client, message, args, level) => {
         
         // If in a regular text channel...
         if (message.channel.type === "GUILD_TEXT") {
-            // inform the user that the help output will be sent to their DMs
-            const helpConfirm = await message.channel.send(`🏃‍♀️💨 ${client.l10n(message, "help.dmConfirm")}`);
-            message.author.send(out, { split: { char: "\u200b" } }).catch(err => {
-                // if an error occurs in sending a DM to the message author, edit the help confirmation message to inform
-                // them of this fact
-                helpConfirm.edit(stripIndents`
-                    <:x_:688400118327672843> ${client.l10n(message, "help.dmError").replace(/%user%/g, message.author)}
-                    ${client.l10n(message, "help.dmErrorInfo")}`);
+            const helpConfirmTxt = `🏃‍♀️💨 ${client.l10n(message, "help.dmConfirm")}`;
 
-                // log the error that occurs
-                return client.logger.err(err);
-            });
+            // if applicationcommand
+            if (message.type === "APPLICATION_COMMAND") {
+                await message.reply(helpConfirmTxt);
+                message.user.send(out)
+                    .catch(err => {
+                        message.followUp(stripIndents`
+                            <:x_:688400118327672843> ${client.l10n(message, "help.dmError").replace(/%user%/g, message.author)}
+                            ${client.l10n(message, "help.dmErrorInfo")}`);
+
+                        // log the error that occurs
+                        return client.logger.err(err);
+                    });
+            } else {
+                // inform the user that the help output will be sent to their DMs
+                const helpConfirm = await message.reply(helpConfirmTxt);
+                message.author.send(out, { split: { char: "\u200b" } })
+                    .catch(err => {
+                        // if an error occurs in sending a DM to the message author,
+                        // edit the help confirmation message to inform them of this
+                        helpConfirm.edit(stripIndents`
+                            <:x_:688400118327672843> ${client.l10n(message, "help.dmError").replace(/%user%/g, message.author)}
+                            ${client.l10n(message, "help.dmErrorInfo")}`);
+
+                        // log the error that occurs
+                        return client.logger.err(err);
+                    });
+            }
         } else if (message.channel.type === "DM") {
             // if the command is invoked in a DM channel, send the output 
-            return message.channel.send(out, { split: { char: "\u200b" } });
+            return message.reply(out, { split: { char: "\u200b" } });
         }
     } else {
         // Command-specific help
@@ -89,7 +107,7 @@ exports.run = async (client, message, args, level) => {
                 .setFooter({ text: "< > = required parameter \u2022 [ ] = optional parameter" });
 
             // Send the embed
-            message.channel.send({ embeds: [embed] });
+            message.reply({ embeds: [embed] });
         }
     }
 };
