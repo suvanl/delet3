@@ -38,7 +38,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.13.9",
     "mongoose-timestamp": "^0.6.0",
-    "node-fetch": "^2.6.6",
+    "node-fetch": "^3.1.1",
     "restify": "^8.6.0",
     "restify-errors": "^8.0.2",
     "restify-jwt-community": "^1.1.21",
