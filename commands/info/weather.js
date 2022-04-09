@@ -20,7 +20,7 @@ exports.run = async (client, message, args) => {
     const loc = encodeURIComponent(location);
 
     // Get two-letter language code for the "lang" parameter in the API request
-    const lang = message.settings.language.slice(0, 2) || "en";
+    const lang = message.type !== "APPLICATION_COMMAND" ? message.settings.language.slice(0, 2) || "en" : message.locale.substring(0, 2);
 
     // Send GET request to OpenWeatherMap API for weather data
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&units=metric&lang=${lang}&appid=${OWM_KEY}`;

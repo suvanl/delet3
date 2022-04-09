@@ -1,8 +1,10 @@
 /*-------------------------------------------------
  * delet³ for Discord
- * Copyright (c) 2021 suvanl. All rights reserved.
+ * Copyright (c) 2022 suvanl. All rights reserved.
  * See LICENSE.md in project root for license info.
  *------------------------------------------------*/
+
+// TODO: refactor
 
 
 // Configure enviroment variables
@@ -12,21 +14,26 @@ const { JWT_SECRET, MONGO_STRING, PORT, TOKEN } = process.env;
 
 // Node.js version check
 const { blue, cyan, green, magenta: mag, red, bold, underline } = require("chalk");
+const { stripIndents } = require("common-tags");
 
 const nodeVer = process.version.slice(1);
 const minVer = "16.6.0";
 const recVer = "16.6";
 
 const semver = require("semver");
-
-if (!semver.satisfies(nodeVer, `>=${minVer}`)) throw new Error(red(`Node.js ${minVer} or higher is required - please update. v${recVer} is recommended.`));
-else console.log(`Node.js version check ${green("passed")} ✔\nmin: ${red(minVer)} | recommended: ${green(recVer)} | current: ${underline.green(nodeVer)}\n`);
-
+    
+if (!semver.satisfies(nodeVer, `>=${minVer}`))
+    throw new Error(red(`Node.js ${minVer} or higher is required - please update. v${recVer} is recommended.`));
+else
+   console.log(stripIndents`
+        Node.js version check ${green("passed")} ✔
+        min: ${red(minVer)} | recommended: ${green(recVer)} | current: ${underline.green(nodeVer)}\n`);
 
 // Require modules needed for bot initialisation
 const { Client, Collection } = require("discord.js");
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
+const { sep } = require("path");
 const restify = require("restify");
 const mongoose = require("mongoose");
 const rjwt = require("restify-jwt-community");
@@ -86,11 +93,9 @@ client.slashCommands = new Collection();
 const init = async () => {
     console.log(`Initialising ${bold("delet³")}...\n`);
 
-
     // Load events:
     // Read contents of "events" directory
     const events = await readdir("./events/");
-    client.logger.log(`Loading ${cyan(events.length)} events:`);
     // For each event file...
     events.forEach(file => {
         // Remove the file extension from the filename
@@ -101,43 +106,44 @@ const init = async () => {
         // Bind each event to the client
         client.on(name, event.bind(null, client));
     });
+    client.logger.log(`Successfully loaded ${cyan(events.length)} events`);
 
 
-    // Load slash commands:
-    // Read the contents of the "commands/slash" directory
-    const slashCmds = await readdir("./interactions/commands");
-    client.logger.log(`Loading ${mag(slashCmds.length)} slash commands:`);
-    // For each slash command file...
-    slashCmds.forEach(file => {
-        // Require (import) the slash command file
-        const slashCmd = require(`./interactions/commands/${file}`);
-        // Remove the file extension from the filename
-        const name = file.split(".")[0];
-        client.logger.log(`✔ "${mag(name)}"`);
-        // Set the commands for this application/guild
-        client.slashCommands.set(slashCmd.data.name, slashCmd);
-    });
+    // Load ApplicationCommands:
+    // Initialise empty array for ApplicationCommand names
+    const appCmdArr = [];
+    klaw("./interactions/commands")
+        .on("data", item => {
+            const file = path.parse(item.path);
+            if (!file.ext || file.ext !== ".js") return;
+
+            appCmdArr.push(item.path);
+
+            const props = require(`${file.dir}${sep}${file.name}`);
+            if (props.init) props.init(client);
+            client.slashCommands.set(props.data.name, props);
+            client.logger.log(`✔ "${mag(file.name)}"`);
+        })
+        .on("end", () => client.logger.log(`Successfully loaded ${mag(appCmdArr.length)} ApplicationCommands`));
 
 
     // Load commands:
-    // Read the contents of the "commands" directory
-    client.logger.log("Loading commands:");
     // Initialise an empty array for command names
-    const items = [];
+    const cmdArr = [];
     klaw("./commands")
         .on("data", item => {
             // Parse the path of each file in the commands directory (incl. sub-directories)
             const file = path.parse(item.path);
             // Return if the file doesn't have a ".js" extension
             if (!file.ext || file.ext !== ".js") return;
-            // Add command names to the "items" array so that the total amount of commands can be determined
-            items.push(item.path);
+            // Add command names to the "cmdArr" array so that the total amount of commands can be determined
+            cmdArr.push(item.path);
             // Load each command that's found
             const res = client.loadCommand(file.dir, file.name);
             // If the loadCommand function is unsuccessful, log the error
             if (!res) client.logger.err(res);
         })
-        .on("end", () => client.logger.log(`Successfully loaded ${blue(items.length)} commands`));
+        .on("end", () => client.logger.log(`Successfully loaded ${blue(cmdArr.length)} commands`));
 
     
 
