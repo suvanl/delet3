@@ -35,7 +35,7 @@
     "html-entities": "^2.3.2",
     "jsonwebtoken": "^8.5.1",
     "klaw": "^4.0.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mongoose": "^5.13.9",
     "mongoose-timestamp": "^0.6.0",
     "node-fetch": "^3.1.1",
