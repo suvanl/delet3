@@ -37,11 +37,12 @@ import mongoose from "mongoose";
 import rjwt from "restify-jwt-community";
 import klaw from "klaw";
 import path from "path";
-import os from "os";
 
 import permLevels from "./core/settings/permLevels.js";
 import * as logger from "./core/modules/logger.js";
-import bindEvents from "./events/helpers/bindEvents.js";
+import functions from "./core/functions";
+import startup from "./startup";
+
 
 // Set up REST API server
 const server = restify.createServer();
@@ -81,17 +82,8 @@ const init = async () => {
     // Require custom misc functions
     import("./core/functions/misc.js");
 
-    // Require custom core functions
-    klaw("./core/functions").on("data", async item => {
-        const file = path.parse(item.path);
-        if (!file.ext || file.ext !== ".js") return;
-        if (file.name === "misc") return;
-
-        const filePath = `${os.platform() == "win32" ? "file://" : ""}${file.dir}${path.sep}${file.base}`;
-        await import(filePath).then(file => {
-            file(client);
-        });
-    });
+    // Set up custom core functions - call each one, passing the client as an argument
+    Object.values(functions).forEach(fn => fn(client));
 
     // Save commands, command aliases and slash commands to collections
     client.commands = new Collection();
@@ -99,7 +91,7 @@ const init = async () => {
     client.slashCommands = new Collection();
 
     // Load events
-    bindEvents(client);
+    startup.bindEvents(client);
     client.logger.log("Successfully loaded events");
 
     // Load ApplicationCommands:
