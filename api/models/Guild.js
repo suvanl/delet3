@@ -109,5 +109,4 @@ const GuildSchema = new mongoose.Schema({
 
 GuildSchema.plugin(timestamp);
 
-const Guild = mongoose.model("Guild", GuildSchema);
-export default Guild;
+export const Guild = mongoose.model("Guild", GuildSchema);

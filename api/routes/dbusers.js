@@ -1,7 +1,7 @@
 import errors from "restify-errors";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import * as DBUser from "../models/DBUser";
+import { DBUser } from "../models/DBUser";
 import * as auth from "../auth/auth";
 
 const { JWT_SECRET } = process.env;

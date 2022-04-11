@@ -1,5 +1,5 @@
 import errors from "restify-errors";
-import * as User from "../models/User";
+import { User } from "../models/User";
 
 export default server => {
     // Get users

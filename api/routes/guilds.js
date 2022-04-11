@@ -1,5 +1,5 @@
 import errors from "restify-errors";
-import * as Guild from "../models/Guild";
+import { Guild } from "../models/Guild";
 
 export default server => {
     // Get guilds

@@ -12,5 +12,4 @@ const DBUserSchema = new mongoose.Schema({
     }
 });
 
-const DBUser = mongoose.model("DBUser", DBUserSchema);
-export default DBUser;
+export const DBUser = mongoose.model("DBUser", DBUserSchema);
