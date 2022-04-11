@@ -58,8 +58,7 @@ const db = mongoose.connection;
 db.on("error", err => console.log(err));
 db.once("open", () => {
     Object.values(routes).forEach(route => route(server));
-    //client.logger.log(`REST API server started on port ${chalk.green(PORT)}`, "rdy");  // TODO: actually use client.logger
-    console.log(`REST API server started on port ${chalk.green(PORT)}`);
+    logger.log(`REST API server started on port ${chalk.green(PORT)}`, "rdy");
 });
 
 // Bot initialisation
@@ -76,7 +75,7 @@ const init = async () => {
     // Get permission levels
     client.permLevels = permLevels;
 
-    // Load in custom console logger
+    // Attach custom console logger as a property on the client object
     client.logger = logger;
 
     // Require custom misc functions
@@ -116,7 +115,7 @@ const init = async () => {
     // Initialise an empty array for command names
     const cmdArr = [];
     klaw("./commands")
-        .on("data", item => {
+        .on("data", async item => {
             // Parse the path of each file in the commands directory (incl. sub-directories)
             const file = path.parse(item.path);
             // Return if the file doesn't have a ".js" extension
@@ -124,9 +123,9 @@ const init = async () => {
             // Add command names to the "cmdArr" array so that the total amount of commands can be determined
             cmdArr.push(item.path);
             // Load each command that's found
-            const res = client.loadCommand(file.dir, file.name);
+            const res = await client.loadCommand(file.dir, file.name);
             // If the loadCommand function is unsuccessful, log the error
-            if (!res) client.logger.err(res);
+            if (res !== true) client.logger.err(res);
         })
         .on("end", () => client.logger.log(`Successfully loaded ${chalk.blue(cmdArr.length)} commands`));
 

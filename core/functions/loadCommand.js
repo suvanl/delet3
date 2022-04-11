@@ -1,10 +1,11 @@
 import chalk from "chalk";
+import os from "os";
 import { sep } from "path";
 
 export default client => {
-    client.loadCommand = (cmdPath, name) => {
+    client.loadCommand = async (cmdPath, name) => {
         try {
-            const props = require(`${cmdPath}${sep}${name}`);
+            const props = await import(`${os.platform() === "win32" ? "file://" : ""}${cmdPath}${sep}${name}`);
             props.config.location = cmdPath;
             if (props.init) props.init(client);
             client.commands.set(props.help.name, props);
