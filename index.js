@@ -98,13 +98,13 @@ const init = async () => {
     // Initialise empty array for ApplicationCommand names
     const appCmdArr = [];
     klaw("./interactions/commands")
-        .on("data", item => {
+        .on("data", async item => {
             const file = path.parse(item.path);
             if (!file.ext || file.ext !== ".js") return;
 
             appCmdArr.push(item.path);
 
-            const props = require(`${file.dir}${sep}${file.name}`);
+            const props = await import(`file://${file.dir}${sep}${file.name}`); // TODO: only use "file://" on win32
             if (props.init) props.init(client);
             client.slashCommands.set(props.data.name, props);
             client.logger.log(`✔ "${chalk.magenta(file.name)}"`);

@@ -1,6 +1,6 @@
-const { stripIndents } = require("common-tags");
+import { stripIndents } from "common-tags";
 
-exports.run = async (client, interaction, level) => {
+export const run = async (client, interaction, level) => {
     const lvlName = client.permLevels.levels.find(l => l.level === level).name;
     const content = stripIndents`
         ${client.l10n(interaction, "level.lvl").replace(/%lvl%/g, `\`${level}\` (**${lvlName}**)`)}
@@ -9,11 +9,11 @@ exports.run = async (client, interaction, level) => {
     return interaction.reply({ content, ephemeral: true });
 };
 
-exports.data = {
+export const data = {
     name: "level",
     description: "Shows your permission level on the current server",
     options: [],
     defaultPermission: true
 };
 
-exports.global = true;
+export const global = true;
