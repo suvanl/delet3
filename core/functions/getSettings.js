@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
-module.exports = client => {
+export default client => {
     // Send GET request to API for guild-specific settings
     client.getSettings = async guild => {
         const url = `${process.env.URL}/guilds/${guild ? guild.id : "1234567890"}`;

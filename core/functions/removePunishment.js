@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
-module.exports = client => {
+export default client => {
     // Remove a punishment from the activePunishments object within the Guild object
     client.removePunishment = async (type, guild, userID) => {
         // Define request parameters

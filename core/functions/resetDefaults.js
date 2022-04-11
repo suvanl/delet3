@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
-module.exports = client => {
+export default client => {
     // Send GET request to API for guild-specific settings
     client.resetDefaults = async guild => {
         const secret = await client.genSecret();

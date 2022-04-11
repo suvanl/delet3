@@ -1,4 +1,4 @@
-module.exports = client => {
+export default client => {
     client.permLevel = message => {
         let prmLvl = 0;
 

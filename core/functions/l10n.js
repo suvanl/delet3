@@ -1,5 +1,7 @@
-const { readdirSync } = require("fs");
-const { sep } = require("path");
+import { readdirSync } from "fs";
+import { sep } from "path";
+
+// Locale file directory
 const localeDir = `${process.cwd()}${sep}core${sep}locales`;
 
 // Locales with regional variants in Discord's locale list
@@ -14,7 +16,7 @@ const regional = [
     "sv-SE"
 ];
 
-module.exports = client => {
+export default client => {
     // Localisation (l10n)
     // Language tag list: https://w.wiki/Lsd
     client.l10n = (message, str, locale = message.settings.language) => {

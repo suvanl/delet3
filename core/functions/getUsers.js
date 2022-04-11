@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
-module.exports = client => {
+export default client => {
     // Send GET request to API to fetch all users
     client.getUsers = async () => {
         const url = `${process.env.URL}/users`;
