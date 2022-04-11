@@ -31,7 +31,6 @@ else
 
 // Import modules needed for bot initialisation
 import { Client, Collection } from "discord.js";
-import { promisify } from "util";
 import { sep } from "path";
 import restify from "restify";
 import mongoose from "mongoose";
@@ -39,11 +38,10 @@ import rjwt from "restify-jwt-community";
 import klaw from "klaw";
 import path from "path";
 import os from "os";
-import fs from "fs";
-const readdir = promisify(fs.readdir);
 
 import permLevels from "./core/settings/permLevels.js";
 import * as logger from "./core/modules/logger.js";
+import bindEvents from "./events/helpers/bindEvents.js";
 
 // Set up REST API server
 const server = restify.createServer();
@@ -100,24 +98,9 @@ const init = async () => {
     client.aliases = new Collection();
     client.slashCommands = new Collection();
 
-    // Load events:
-    // Read contents of "events" directory
-    const events = await readdir("./events/");
-    // For each event file...
-    events.forEach(async file => {
-        // Remove the file extension from the filename
-        const name = file.split(".")[0];
-        client.logger.log(`✔ "${chalk.cyan(name)}"`);
-
-        // Require each event file
-        const event = await import(`./events/${file}`);
-
-        // Bind each event to the client
-        client.on(name, event.bind(null, client));
-    });
-
-    client.logger.log(`Successfully loaded ${chalk.cyan(events.length)} events`); // !
-
+    // Load events
+    bindEvents(client);
+    client.logger.log("Successfully loaded events");
 
     // Load ApplicationCommands:
     // Initialise empty array for ApplicationCommand names
@@ -155,7 +138,7 @@ const init = async () => {
         })
         .on("end", () => client.logger.log(`Successfully loaded ${chalk.blue(cmdArr.length)} commands`));
 
-        
+
     // Cache permLevels:
     // Initialise a new Map object
     client.levelCache = new Map();
