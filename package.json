@@ -14,6 +14,9 @@
     "prod-create": "pm2 start index.js --name \"delet3\" -- --color && pm2 monit",
     "prod-monit": "pm2 start delet3 && pm2 monit"
   },
+  "engines": {
+    "node": ">=16.6.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/suvanl/delet3.git"
