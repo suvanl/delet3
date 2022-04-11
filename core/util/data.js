@@ -1,5 +1,5 @@
 // Spotify command
-exports.keys = {
+export const keys = {
     0: "C",
     1: "C♯/D♭",
     2: "D",
@@ -15,7 +15,7 @@ exports.keys = {
 };
 
 // User command
-exports.badge = {
+export const badge = {
     "discord_employee": "703323189891039383",
     "partnered_server_owner": "703323189815673014",
     "hypesquad_events": "703323189467545711",
@@ -31,7 +31,7 @@ exports.badge = {
     "early_verified_bot_developer": "703326057683746958"
 };
 
-exports.statusIcon = {
+export const statusIcon = {
     "online": "703331782216515695",
     "idle": "703331782103269518",
     "dnd": "703331782124372119",
@@ -39,7 +39,7 @@ exports.statusIcon = {
 };
 
 // Help command
-exports.emoji = {
+export const emoji = {
     "fun": "🎮",
     "info": "ℹ️",
     "misc": "💬",
@@ -48,7 +48,7 @@ exports.emoji = {
     "settings": "⚙️"
 };
 
-exports.colour = {
+export const colour = {
     "fun": "#fcec62",
     "info": "#62bffc",
     "misc": "#04d1bb",
@@ -58,14 +58,14 @@ exports.colour = {
 };
 
 // Language command
-exports.langName = {
+export const langName = {
     "de-DE": "🇩🇪 Deutsch",
     "en-GB": "🇬🇧 English",
     "nl-NL": "🇳🇱 Nederlands",
     "no-NO": "🇳🇴 Norsk"
 };
 
-exports.validLangs = [
+export const validLangs = [
     "de-DE",
     "en-GB",
     "nl-NL",
@@ -73,7 +73,7 @@ exports.validLangs = [
 ];
 
 // SETTINGS COMMANDS
-exports.friendlySettings = {
+export const friendlySettings = {
     "adminRole": "admin role",
     "modRole": "mod role",
     "autoRoleName": "auto-role name",
@@ -90,12 +90,12 @@ exports.friendlySettings = {
     "welcomeEnabled": "welcome enabled"
 };
 
-exports.langNameText = {
+export const langNameText = {
     "en-GB": "English (UK)"
 };
 
 // Role command
-exports.roleSettingsKey = {
+export const roleSettingsKey = {
     1: "adminRole",
     2: "modRole",
     3: "autoRoleName",
@@ -103,38 +103,38 @@ exports.roleSettingsKey = {
 };
 
 // Modlog command
-exports.mlSettingsKey = {
+export const mlSettingsKey = {
     1: "modLogChannel",
     2: "modLogData",
     3: "modLogEnabled"
 };
 
-exports.nickSettingsKey = {
+export const nickSettingsKey = {
     1: "nickRequestChannel",
     2: "nickRequestEnabled"
 };
 
 // Points command
-exports.ptsSettingsKey = {
+export const ptsSettingsKey = {
     1: "pointsCooldown",
     2: "pointsEnabled"
 };
 
 // Welcome command
-exports.welcSettingsKey = {
+export const welcSettingsKey = {
     1: "welcomeChannel",
     2: "welcomeMessage",
     3: "welcomeEnabled"
 };
 
 // Trivia command
-exports.medals = {
+export const medals = {
     1: "🥇",
     2: "🥈",
     3: "🥉"
 };
 
-exports.categories = {
+export const categories = {
     "General Knowledge": 9,
     "Books": 10,
     "Film": 11,
