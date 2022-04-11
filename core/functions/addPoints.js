@@ -1,7 +1,7 @@
-const fetch = require("node-fetch");
-const moment = require("moment");
+import fetch from "node-fetch";
+import moment from "moment";
 
-module.exports = client => {
+export default client => {
     // Add points to a user object (can be of type "triviaPoints" or "points")
     client.addPoints = async (guild, user, type, amount) => {
         // Fetch all users

@@ -1,11 +1,12 @@
-const fetch = require("node-fetch");
-const moment = require("moment");
-const { MessageEmbed } = require("discord.js");
-const { stripIndents } = require("common-tags");
-const { keys } = require("../../core/util/data");
+import fetch from "node-fetch";
+import moment from "moment";
+import { MessageEmbed } from "discord.js";
+import { stripIndents } from "common-tags";
+import { keys } from "../../core/util/data";
+
 const { SPOTIFY_ID: ID, SPOTIFY_SECRET: SECRET } = process.env;
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // Define author based on command type
     let author;
     if (message.type !== "APPLICATION_COMMAND") author = message.author;
@@ -108,8 +109,8 @@ exports.run = async (client, message, args) => {
     return message.reply({ embeds: [embed] });
 };
 
-auth = async () => {
-    // Function to encode string as base64
+const auth = async () => {
+    // Encodes a string as base64
     const base64 = str => Buffer.from(str).toString("base64");
 
     // Parameters for request to Spotify API for access token
@@ -129,14 +130,14 @@ auth = async () => {
     return data.access_token;
 };
 
-exports.config = {
+export const config = {
     aliases: [],
     enabled: true,
     guildOnly: false,
     permLevel: "User"
 };
 
-exports.help = {
+export const help = {
     name: "spotify",
     description: "sends info about the track you're currently listening to on Spotify",
     category: "info",

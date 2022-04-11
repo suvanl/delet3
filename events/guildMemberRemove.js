@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
-module.exports = async (client, member) => {
+export default async (client, member) => {
     // Delete guildMember's data from DB
     const secret = await client.genSecret();
     const meta = { "Authorization": `jwt ${secret.token}` };

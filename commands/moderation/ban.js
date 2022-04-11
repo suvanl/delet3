@@ -1,8 +1,8 @@
-const { MessageEmbed } = require("discord.js");
-const { stripIndents } = require("common-tags");
-const moment = require("moment");
+import { MessageEmbed } from "discord.js";
+import { stripIndents } from "common-tags";
+import moment from "moment";
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // Only run if message author has the BAN_MEMBERS permission
     // and inform user if they do not have the required perm:
         // 🚫 Insufficient permissions
@@ -251,11 +251,11 @@ exports.run = async (client, message, args) => {
 };
 
 // Converts a duration string to time in seconds, which will be passed to the addPunishment core function
-durationToSeconds = async lowerCaseStr => {
+const durationToSeconds = async lowerCaseStr => {
     // extract numbers from string
     // h = 3600s
     // d = 86400s
-    // do: <number> * <d/h>
+    // do: <number> * <d|h>
     // e.g. if custom value is 6d, do: 6 * d
     //                               = 6 * 86400
     // which gives us the duration in seconds
@@ -277,14 +277,14 @@ durationToSeconds = async lowerCaseStr => {
     return duration;
 };
 
-exports.config = {
+export const config = {
     aliases: [],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Moderator"
 };
 
-exports.help = {
+export const help = {
     name: "ban",
     description: "bans the specified user",
     category: "moderation",

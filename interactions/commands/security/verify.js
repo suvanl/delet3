@@ -1,6 +1,6 @@
-const { MessageActionRow, MessageButton } = require("discord.js");
+import { MessageActionRow, MessageButton } from "discord.js";
 
-exports.run = async (client, interaction) => {    
+export const run = async (client, interaction) => {    
     const verifyButton = new MessageButton()
         .setCustomId("verify")
         .setLabel("Verify")
@@ -34,11 +34,11 @@ exports.run = async (client, interaction) => {
     });
 };
 
-exports.data = {
+export const data = {
     name: "verify",
     description: "Verify yourself to gain access to more channels on this server",
     options: [],
     defaultPermission: true
 };
 
-exports.global = false;
+export const global = false;

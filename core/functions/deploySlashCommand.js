@@ -1,9 +1,10 @@
-const { REST } = require("@discordjs/rest");
-const { Routes } = require("discord-api-types/v9");
-const { blue } = require("chalk");
+import { REST } from "@discordjs/rest";
+import { Routes } from "discord-api-types/v9";
+import chalk from "chalk";
+
 const { TOKEN, DEV_GUILD_ID } = process.env;
 
-module.exports = client => {
+export default client => {
     client.deploySlashCommand = async client => {
         // Initialise an empty array for non-global slash command data
         const guildCommands = [];
@@ -38,7 +39,7 @@ module.exports = client => {
                 // Deploy global slash commands
                 await rest.put(Routes.applicationCommands(client.user.id), { body: globalCommands });
 
-                client.logger.inf(`Successfully reloaded ApplicationCommands: ${blue(guildCommands.length)} guild-only; ${blue(globalCommands.length)} global.`);
+                client.logger.inf(`Successfully reloaded ApplicationCommands: ${chalk.blue(guildCommands.length)} guild-only; ${chalk.blue(globalCommands.length)} global.`);
             } catch (err) {
                 client.logger.err(err.stack);
             }

@@ -1,9 +1,9 @@
-const { utc } = require("moment");
-const { MessageEmbed } = require("discord.js");
-const { stripIndents } = require("common-tags");
-const { badge, statusIcon } = require("../../core/util/data");
+import moment from "moment";
+import { MessageEmbed } from "discord.js";
+import { stripIndents } from "common-tags";
+import { badge, statusIcon } from "../../core/util/data";
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // Set user as message author by default
     let member = message.member;
 
@@ -101,10 +101,10 @@ exports.run = async (client, message, args) => {
             **${user.tag}** ${badges} | ${statusEmoji} ${member.presence?.activities.length === 0 ? status[member.presence.status].toTitleCase() : activity}
 
             💥 **${client.l10n(message, "user.created")}**
-            <t:${utc(user.createdTimestamp).unix()}>
+            <t:${moment.utc(user.createdTimestamp).unix()}>
 
             🏠 **${client.l10n(message, "user.joined")}**
-            <t:${utc(message.guild.members.cache.get(member.id).joinedTimestamp).unix()}>
+            <t:${moment.utc(message.guild.members.cache.get(member.id).joinedTimestamp).unix()}>
 
             🧮 **${client.l10n(message, "points").toTitleCase()}**
             Trivia: ${data.triviaPoints} • ${client.l10n(message, "user.points.regular")}: ${data.points}
@@ -116,8 +116,8 @@ exports.run = async (client, message, args) => {
     message.channel.send({ embeds: [embed] });
 };
 
-// Function to move an element to the start of an array
-moveElementToStart = (array, element) => {
+// Moves an element to the start of an array
+const moveElementToStart = (array, element) => {
     // Remove the element from the array
     array = array.filter(f => f !== element);
 
@@ -128,14 +128,14 @@ moveElementToStart = (array, element) => {
     return array;
 };
 
-exports.config = {
+export const config = {
     aliases: ["userinfo"],
     enabled: true,
     guildOnly: false,
     permLevel: "User"
 };
 
-exports.help = {
+export const help = {
     name: "user",
     description: "sends info about a user's account",
     category: "info",

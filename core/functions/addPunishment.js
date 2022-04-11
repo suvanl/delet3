@@ -1,7 +1,7 @@
-const fetch = require("node-fetch");
-const moment = require("moment");
+import fetch from "node-fetch";
+import moment from "moment";
 
-module.exports = client => {
+export default client => {
     // Add a punishment to the activePunishments object within the Guild object
     client.addPunishment = async (type, guild, userID, issuerID, reason, duration) => {
         // Define request parameters

@@ -1,7 +1,7 @@
-const { stripIndents } = require("common-tags");
-const { ptsSettingsKey, friendlySettings } = require("../../core/util/data");
+import { stripIndents } from "common-tags";
+import { ptsSettingsKey, friendlySettings } from "../../core/util/data";
 
-exports.run = async (client, message) => {
+export const run = async (client, message) => {
     const cat = "points";
     const msg = stripIndents`
         ⚙️ ${client.l10n(message, "settings.prompt.cat").replace(/%category%/g, cat)}
@@ -59,14 +59,14 @@ exports.run = async (client, message) => {
     }
 };
 
-exports.config = {
+export const config = {
     aliases: [],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Admin"
 };
 
-exports.help = {
+export const help = {
     name: "pointsys",
     description: "changes points-related settings",
     category: "settings",

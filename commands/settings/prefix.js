@@ -1,6 +1,6 @@
-const { stripIndents } = require("common-tags");
+import { stripIndents } from "common-tags";
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     const msg = stripIndents`
         ⚙️ The current prefix is \`${message.settings.prefix}\`.
         🔄 Please enter the new prefix. Reply with \`cancel\` to exit.`;
@@ -17,14 +17,14 @@ exports.run = async (client, message, args) => {
     }
 };
 
-exports.config = {
+export const config = {
     aliases: [],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Admin"
 };
 
-exports.help = {
+export const help = {
     name: "prefix",
     description: "changes delet's prefix on the current server",
     category: "settings",

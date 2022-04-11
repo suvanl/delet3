@@ -1,8 +1,9 @@
-const bcrypt = require("bcryptjs");
-const mongoose = require("mongoose");
+import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
+
 const DBUser = mongoose.model("DBUser");
 
-exports.authenticate = (email, password) => {
+export const authenticate = (email, password) => {
     return new Promise(async (resolve, reject) => { // eslint-disable-line no-async-promise-executor
         try {
             // Get database user by email

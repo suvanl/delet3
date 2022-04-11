@@ -1,9 +1,10 @@
-const fetch = require("node-fetch");
-const { decode } = require("html-entities");
-const { stripIndents } = require("common-tags");
+import fetch from "node-fetch";
+import { decode } from "html-entities";
+import { stripIndents } from "common-tags";
+
 const { YOUTUBE_KEY } = process.env;
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // Define query
     const query = args.join(" ");
     if (!query) return message.reply(`ℹ ${client.l10n(message, "yt.noQuery")}`);
@@ -64,14 +65,14 @@ exports.run = async (client, message, args) => {
     }
 };
 
-exports.config = {
+export const config = {
     aliases: ["yt"],
     enabled: true,
     guildOnly: false,
     permLevel: "User"
 };
 
-exports.help = {
+export const help = {
     name: "youtube",
     description: "searches YouTube for the specified search query",
     category: "search",

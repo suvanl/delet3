@@ -62,4 +62,4 @@ const permLevels = {
     ]
 };
 
-module.exports = permLevels;
+export default permLevels;

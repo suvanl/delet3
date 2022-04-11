@@ -1,10 +1,10 @@
-exports.run = async (client, interaction) => {
+export const run = async (client, interaction) => {
     const city = interaction.options.getString("city");
     const args = city.split(" ");
     await client.commands.get("forecast").run(client, interaction, args);
 };
 
-exports.data = {
+export const data = {
     name: "forecast",
     description: "Sends the weather forecast for the specified area",
     options: [{ 
@@ -16,4 +16,4 @@ exports.data = {
     defaultPermission: true
 };
 
-exports.global = true;
+export const global = true;

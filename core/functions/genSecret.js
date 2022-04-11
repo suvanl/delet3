@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
-module.exports = client => {
+export default client => {
     // Generate secret
     client.genSecret = async () => {
         try {

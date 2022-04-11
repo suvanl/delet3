@@ -1,4 +1,4 @@
-exports.run = async (client, message) => {
+export const run = async (client, message) => {
     const msg = "⚠️ **Are you sure you want to restore defaults?** (`Y`/`N`)\nThis will also reset moderation case numbers.\nReply with `cancel` to exit.";
 
     // Prompt user
@@ -21,14 +21,14 @@ exports.run = async (client, message) => {
     }
 };
 
-exports.config = {
+export const config = {
     aliases: ["defaults", "restore", "reset"],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Admin"
 };
 
-exports.help = {
+export const help = {
     name: "default",
     description: "resets default server settings",
     category: "settings",

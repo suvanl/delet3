@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
-module.exports = client => {
+export default client => {
     // Send PUT request to API to update moderation case number
     client.updateCaseNumber = async guild => {
         // Request params

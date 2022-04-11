@@ -1,20 +1,21 @@
-const { blue, red } = require("chalk");
-const { sep } = require("path");
+import chalk from "chalk";
+import os from "os";
+import { sep } from "path";
 
-module.exports = client => {
-    client.loadCommand = (cmdPath, name) => {
+export default client => {
+    client.loadCommand = async (cmdPath, name) => {
         try {
-            const props = require(`${cmdPath}${sep}${name}`);
+            const props = await import(`${os.platform() === "win32" ? "file://" : ""}${cmdPath}${sep}${name}`);
             props.config.location = cmdPath;
             if (props.init) props.init(client);
             client.commands.set(props.help.name, props);
             props.config.aliases.forEach(alias => {
                 client.aliases.set(alias, props.help.name);
             });
-            client.logger.log(`✔ "${blue(name)}"`);
+            client.logger.log(`✔ "${chalk.blue(name)}"`);
             return true;
         } catch (error) {
-            return `Unable to load command ${red(name)}: ${error}`;
+            return `Unable to load command ${chalk.red(name)}: ${error}`;
         }
     };
 };

@@ -1,7 +1,7 @@
-const { blue, cyan } = require("chalk");
-const fetch = require("node-fetch");
+import chalk from "chalk";
+import fetch from "node-fetch";
 
-module.exports = async (client, guild) => {
+export default async (client, guild) => {
     // Request parameters
     const secret = await client.genSecret();
     const url = `${process.env.URL}/guilds/${guild.id}`;
@@ -38,5 +38,5 @@ module.exports = async (client, guild) => {
     });
     
     // Log name/ID of guild
-    client.logger.inf(`${blue("guildDelete")}: "${cyan(guild.name)}" (${guild.id})`);
+    client.logger.inf(`${chalk.blue("guildDelete")}: "${chalk.cyan(guild.name)}" (${guild.id})`);
 };

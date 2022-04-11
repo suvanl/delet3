@@ -1,7 +1,7 @@
-const { stripIndents } = require("common-tags");
-const { langName, validLangs } = require("../../core/util/data");
+import { stripIndents } from "common-tags";
+import { langName, validLangs } from "../../core/util/data";
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // This command has been left in English (delet's default language) in case a user accidentally switches to a different
     // language and needs to switch back to the default language.
 
@@ -45,14 +45,14 @@ exports.run = async (client, message, args) => {
     }
 };
 
-exports.config = {
+export const config = {
     aliases: ["lang", "locale"],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Admin"
 };
 
-exports.help = {
+export const help = {
     name: "language",
     description: "changes delet's language on the current server",
     category: "settings",

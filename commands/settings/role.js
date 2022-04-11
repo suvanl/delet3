@@ -1,7 +1,7 @@
-const { stripIndents } = require("common-tags");
-const { roleSettingsKey, friendlySettings } = require("../../core/util/data");
+import { stripIndents } from "common-tags";
+import { roleSettingsKey, friendlySettings } from "../../core/util/data";
 
-exports.run = async (client, message) => {
+export const run = async (client, message) => {
     const cat = "role";
     const msg = stripIndents`
         ⚙️ ${client.l10n(message, "settings.prompt.cat").replace(/%category%/g, cat)}
@@ -69,14 +69,14 @@ exports.run = async (client, message) => {
     }
 };
 
-exports.config = {
+export const config = {
     aliases: [],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Admin"
 };
 
-exports.help = {
+export const help = {
     name: "role",
     description: "changes role-related settings",
     category: "settings",

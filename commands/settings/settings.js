@@ -1,7 +1,7 @@
-const { stripIndents } = require("common-tags");
-const { langNameText } = require("../../core/util/data");
+import { stripIndents } from "common-tags";
+import { langNameText } from "../../core/util/data";
 
-exports.run = async (client, message) => {
+export const run = async (client, message) => {
     message.channel.send(stripIndents`
         __**Server Settings**__
 
@@ -34,14 +34,14 @@ exports.run = async (client, message) => {
         - Language: \`${langNameText[message.settings.language]}\``);
 };
 
-exports.config = {
+export const config = {
     aliases: ["set"],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Admin"
 };
 
-exports.help = {
+export const help = {
     name: "settings",
     description: "displays the current server's settings",
     category: "settings",

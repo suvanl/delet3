@@ -1,4 +1,4 @@
-module.exports = client => {
+export default client => {
     // Send GET request to API for a single user's data
     client.getUser = async (guild, user) => {
         // Fetch all users

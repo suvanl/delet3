@@ -1,4 +1,4 @@
-module.exports = client => {
+export default client => {
     client.awaitReply = async (msg, question, limit = 60000) =>  {
         // await messages from the message author only
         const filter = m => m.author.id === msg.author.id;
