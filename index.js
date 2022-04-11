@@ -37,6 +37,7 @@ import mongoose from "mongoose";
 import rjwt from "restify-jwt-community";
 import klaw from "klaw";
 import path from "path";
+import os from "os";
 
 import permLevels from "./core/settings/permLevels.js";
 import * as logger from "./core/modules/logger.js";
@@ -103,7 +104,7 @@ const init = async () => {
 
             appCmdArr.push(item.path);
 
-            const props = await import(`file://${file.dir}${sep}${file.name}`); // TODO: only use "file://" on win32
+            const props = await import(`${os.platform() === "win32" ? "file://" : ""}${file.dir}${sep}${file.name}`);
             if (props.init) props.init(client);
             client.slashCommands.set(props.data.name, props);
             client.logger.log(`✔ "${chalk.magenta(file.name)}"`);
