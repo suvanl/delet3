@@ -49,8 +49,8 @@ import routes from "./api/routes";
 const server = restify.createServer();
 server.use(restify.plugins.bodyParser());
 server.use(rjwt({ secret: JWT_SECRET }).unless({ path: ["/auth"] }));
-server.listen(PORT, () => {
-    mongoose.connect(MONGO_STRING);
+server.listen(PORT, async () => {
+    await mongoose.connect(MONGO_STRING);
 });
 
 // Create connection to MongoDB database via REST API
