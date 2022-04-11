@@ -1,10 +1,11 @@
-const fetch = require("node-fetch");
-const moment = require("moment");
-const { stripIndents } = require("common-tags");
-const { MessageEmbed } = require("discord.js");
+import fetch from "node-fetch";
+import moment from "moment";
+import { stripIndents } from "common-tags";
+import { MessageEmbed } from "discord.js";
+
 const { OWM_KEY } = process.env;
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // Define location
     let location = args.join(" ");
 
@@ -99,12 +100,12 @@ exports.run = async (client, message, args) => {
     message.reply({ embeds: [embed] });
 };
 
-// Function to set embed colour based on temperature value
+// Sets embed colour based on temperature value
 // Ranges are partially based on those on the BBC Weather website (https://bbc.co.uk/weather)
 // Gradients used: 
 // - https://www.colorhexa.com/adfdcd-to-fc6272 (Reverse HSV)
 // - https://www.colorhexa.com/62bffc-to-adfdcd (RGB)
-tempColour = x => {
+const tempColour = x => {
     let colour;
     switch (true) {
         case x < -15:
@@ -186,14 +187,14 @@ tempColour = x => {
     return colour;
 };
 
-exports.config = {
+export const config = {
     aliases: [],
     enabled: true,
     guildOnly: false,
     permLevel: "User"
 };
 
-exports.help = {
+export const help = {
     name: "weather",
     description: "sends weather info for the specified area",
     category: "info",

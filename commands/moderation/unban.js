@@ -1,7 +1,7 @@
-const { MessageEmbed } = require("discord.js");
-const { stripIndents } = require("common-tags");
+import { MessageEmbed } from "discord.js";
+import { stripIndents } from "common-tags";
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // Only run if message author has the BAN_MEMBERS permission
     // and inform user if they do not have the required perm:
         // 🚫 Insufficient permissions
@@ -95,14 +95,14 @@ exports.run = async (client, message, args) => {
     }
 };
 
-exports.config = {
+export const config = {
     aliases: [],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Moderator"
 };
 
-exports.help = {
+export const help = {
     name: "unban",
     description: "unbans the specified user",
     category: "moderation",

@@ -1,7 +1,7 @@
-const { stripIndents } = require("common-tags");
-const { nickSettingsKey, friendlySettings } = require("../../core/util/data");
+import { stripIndents } from "common-tags";
+import { nickSettingsKey, friendlySettings } from "../../core/util/data";
 
-exports.run = async (client, message) => {
+export const run = async (client, message) => {
     const cat = "nick";
     const msg = stripIndents`
         ⚙️ ${client.l10n(message, "settings.prompt.cat").replace(/%category%/g, cat)}
@@ -59,14 +59,14 @@ exports.run = async (client, message) => {
     }
 };
 
-exports.config = {
+export const config = {
     aliases: ["nickreq"],
     enabled: true,
     guildOnly: true,
     permLevel: "Server Admin"
 };
 
-exports.help = {
+export const help = {
     name: "nickrequest",
     description: "changes nick request system settings",
     category: "settings",

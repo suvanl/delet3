@@ -1,12 +1,14 @@
-const fetch = require("node-fetch");
-const moment = require("moment");
-const { createCanvas, loadImage, registerFont } = require("canvas");
-const { MessageAttachment } = require("discord.js");
-const { stripIndents } = require("common-tags");
-const { sep } = require("path");
+import fetch from "node-fetch";
+import moment from "moment";
+import Canvas from "canvas";
+//import { createCanvas, loadImage, registerFont } from "canvas";
+import { MessageAttachment } from "discord.js";
+import { stripIndents } from "common-tags";
+import { sep } from "path";
+
 const { OWM_KEY } = process.env;
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // Define location
     let location = args.join(" ");
 
@@ -57,7 +59,7 @@ exports.run = async (client, message, args) => {
     // #region IMAGE GENERATION
 
     // Create canvas
-    const canvas = createCanvas(988, 627);
+    const canvas = Canvas.createCanvas(988, 627);
     const ctx = canvas.getContext("2d");
 
     // Locate assets directory
@@ -74,12 +76,12 @@ exports.run = async (client, message, args) => {
     const mainFillStyle = isNight(data) ? "#aaaab2" : "#ffffff";
 
     // Set background image
-    const background = isNight(data) ? await loadImage(nightBg) : await loadImage(dayBg);
+    const background = isNight(data) ? await Canvas.loadImage(nightBg) : await Canvas.loadImage(dayBg);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
     // Register Inter font variants
-    registerFont(`${assetsDir}${sep}fonts${sep}Inter-Regular-slnt=0.ttf`, { family: "Inter" });
-    registerFont(`${assetsDir}${sep}fonts${sep}Inter-Bold-slnt=0.ttf`, { family: "Inter Bold" });
+    Canvas.registerFont(`${assetsDir}${sep}fonts${sep}Inter-Regular-slnt=0.ttf`, { family: "Inter" });
+    Canvas.registerFont(`${assetsDir}${sep}fonts${sep}Inter-Bold-slnt=0.ttf`, { family: "Inter Bold" });
 
     // Heading
     ctx.font = "40px Inter Bold";
@@ -92,7 +94,7 @@ exports.run = async (client, message, args) => {
     ctx.fillText(`${moment.utc(moment.unix(data.current.dt + data.timezone_offset)).format("dddd")}, ${data.current.weather[0].description}`, 73, 200);
 
     // Icon
-    const currentIcon = await loadImage(`${iconURL}/${data.current.weather[0].icon}@2x.png`);
+    const currentIcon = await Canvas.loadImage(`${iconURL}/${data.current.weather[0].icon}@2x.png`);
     ctx.drawImage(currentIcon, 47, 202, 100, 100);
 
     // Current max temp
@@ -126,11 +128,11 @@ exports.run = async (client, message, args) => {
     ctx.fillText(moment.utc(moment.unix(data.hourly[5].dt + data.timezone_offset)).format("HH:mm"), 808, 228);
 
     // Hourly icons
-    const hour1 = await loadImage(`${iconURL}/${data.hourly[1].weather[0].icon}.png`);
-    const hour2 = await loadImage(`${iconURL}/${data.hourly[2].weather[0].icon}.png`);
-    const hour3 = await loadImage(`${iconURL}/${data.hourly[3].weather[0].icon}.png`);
-    const hour4 = await loadImage(`${iconURL}/${data.hourly[4].weather[0].icon}.png`);
-    const hour5 = await loadImage(`${iconURL}/${data.hourly[5].weather[0].icon}.png`);
+    const hour1 = await Canvas.loadImage(`${iconURL}/${data.hourly[1].weather[0].icon}.png`);
+    const hour2 = await Canvas.loadImage(`${iconURL}/${data.hourly[2].weather[0].icon}.png`);
+    const hour3 = await Canvas.loadImage(`${iconURL}/${data.hourly[3].weather[0].icon}.png`);
+    const hour4 = await Canvas.loadImage(`${iconURL}/${data.hourly[4].weather[0].icon}.png`);
+    const hour5 = await Canvas.loadImage(`${iconURL}/${data.hourly[5].weather[0].icon}.png`);
 
     // Position icons
     ctx.drawImage(hour1, 526.5, 221, 50, 50);
@@ -161,13 +163,13 @@ exports.run = async (client, message, args) => {
     ctx.fillText(moment.utc(moment.unix(data.daily[6].dt + data.timezone_offset)).format("ddd"), 825, 370);
 
     // Daily icons
-    const day0 = await loadImage(`${iconURL}/${data.daily[0].weather[0].icon}@2x.png`);
-    const day1 = await loadImage(`${iconURL}/${data.daily[1].weather[0].icon}@2x.png`);
-    const day2 = await loadImage(`${iconURL}/${data.daily[2].weather[0].icon}@2x.png`);
-    const day3 = await loadImage(`${iconURL}/${data.daily[3].weather[0].icon}@2x.png`);
-    const day4 = await loadImage(`${iconURL}/${data.daily[4].weather[0].icon}@2x.png`);
-    const day5 = await loadImage(`${iconURL}/${data.daily[5].weather[0].icon}@2x.png`);
-    const day6 = await loadImage(`${iconURL}/${data.daily[6].weather[0].icon}@2x.png`);
+    const day0 = await Canvas.loadImage(`${iconURL}/${data.daily[0].weather[0].icon}@2x.png`);
+    const day1 = await Canvas.loadImage(`${iconURL}/${data.daily[1].weather[0].icon}@2x.png`);
+    const day2 = await Canvas.loadImage(`${iconURL}/${data.daily[2].weather[0].icon}@2x.png`);
+    const day3 = await Canvas.loadImage(`${iconURL}/${data.daily[3].weather[0].icon}@2x.png`);
+    const day4 = await Canvas.loadImage(`${iconURL}/${data.daily[4].weather[0].icon}@2x.png`);
+    const day5 = await Canvas.loadImage(`${iconURL}/${data.daily[5].weather[0].icon}@2x.png`);
+    const day6 = await Canvas.loadImage(`${iconURL}/${data.daily[6].weather[0].icon}@2x.png`);
 
     // Position icons
     ctx.drawImage(day0, 60, 370, 100, 100);
@@ -212,16 +214,16 @@ exports.run = async (client, message, args) => {
 
 // #region Helper Functions
 
-// Function to obtain current weather data (to get lat/lon values)
-getCurrent = async (loc, lang, key) => {
+// Obtains current weather data (to get lat/lon values)
+const getCurrent = async (loc, lang, key) => {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&units=metric&lang=${lang}&appid=${key}`;
     const res = await fetch(url);
     return await res.json();
 };
 
 
-// Function to get forecast data for the specified location
-getForecast = async (lat, lon, lang, key) => {
+// Fetches forecast data for the specified location
+const getForecast = async (lat, lon, lang, key) => {
     // Send GET request to OWM One Call API for forecast data
     const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely&lang=${lang}&appid=${key}`;
     const res = await fetch(url);
@@ -230,7 +232,7 @@ getForecast = async (lat, lon, lang, key) => {
 
 
 // Function returning a boolean stating whether it is night (past sunset) in the requested area
-isNight = data => {
+const isNight = data => {
     // Current Unix timestamp for the specified location
     const currentTime = data.current.dt + data.timezone_offset;
 
@@ -249,14 +251,14 @@ isNight = data => {
 
 // #endregion
 
-exports.config = {
+export const config = {
     aliases: [],
     enabled: true,
     guildOnly: false,
     permLevel: "User"
 };
 
-exports.help = {
+export const help = {
     name: "forecast",
     description: "sends the weather forecast for the specified area",
     category: "info",

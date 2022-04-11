@@ -1,6 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // Get user's current amount of points
     const userData = await client.getUser(message.guild, message.author);
     const points = userData.points;
@@ -42,16 +42,16 @@ exports.run = async (client, message, args) => {
     return message.reply(client.l10n(message, "points.points").replace(/%num%/g, points));
 };
 
-exports.config = {
+export const config = {
     aliases: ["pts"],
     enabled: true,
     guildOnly: true,
     permLevel: "User"
 };
 
-exports.help = {
+export const help = {
     name: "points",
     description: "view your current number of points, or the server's points leaderboard",
     category: "misc",
-    usage: "points"
+    usage: "points [leaderboard]"
 };

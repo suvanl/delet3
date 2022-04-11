@@ -1,16 +1,16 @@
-const { MessageEmbed } = require("discord.js");
-const { stripIndents } = require("common-tags");
+import { MessageEmbed } from "discord.js";
+import { stripIndents } from "common-tags";
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // Get avatar by mentioning user
-    let user = message.mentions.users.first() || message.author;
+    const user = message.mentions.users.first() || message.author;
     let url = user.displayAvatarURL({ size: 1024 });
     let tag = user.tag;
 
     // Get avatar by providing GuildMember's username
-    if (args[0] && !args[0].startsWith("<@!")) {
-        user = member = message.guild.members.cache.find(m => m.user.username === args[0]);
-        if (!user) return message.channel.send(client.l10n(message, "avatar.user.invalid"));
+    if (args[0] && !args[0].startsWith("<@")) {
+        const member = message.guild.members.cache.find(m => m.user.username === args[0]);
+        if (!member) return message.channel.send(client.l10n(message, "avatar.user.invalid"));
         url = member.user.displayAvatarURL({ size: 1024 });
         tag = member.user.tag;
     }
@@ -26,14 +26,14 @@ exports.run = async (client, message, args) => {
     message.channel.send({ embeds: [embed] });
 };
 
-exports.config = {
+export const config = {
     aliases: [],
     enabled: true,
     guildOnly: false,
     permLevel: "User"
 };
 
-exports.help = {
+export const help = {
     name: "avatar",
     description: "sends the specified user's avatar (or yours, if no one is specified)",
     category: "misc",

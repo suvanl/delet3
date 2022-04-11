@@ -1,8 +1,8 @@
-const { utc } = require("moment");
-const { MessageEmbed } = require("discord.js");
-const { stripIndents } = require("common-tags");
+import moment from "moment";
+import { MessageEmbed } from "discord.js";
+import { stripIndents } from "common-tags";
 
-exports.run = async (client, message) => {
+export const run = async (client, message) => {
     const guild = message.guild;
 
     // Whether to display verified icon or not
@@ -39,7 +39,7 @@ exports.run = async (client, message) => {
             **${guild.name}** ${verified} | <:server_boost:703991798015459390> ${client.l10n(message, "server.boost.lvl").replace(/%num%/g, guild.premiumTier === "NONE" ? 0 : guild.premiumTier.split("_")[1])}
 
             💥 **${client.l10n(message, "server.created")}**
-            ${utc(guild.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
+            ${moment.utc(guild.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
 
             💬 **${client.l10n(message, "server.channels")}**
             ${client.l10n(message, "server.channels.txt").replace(/%num%/g, tChannels)} • ${client.l10n(message, "server.channels.voice").replace(/%num%/g, vChannels)}
@@ -58,14 +58,14 @@ exports.run = async (client, message) => {
     message.reply({ embeds: [embed], ephemeral: true });
 };
 
-exports.config = {
+export const config = {
     aliases: ["serverinfo", "guild", "guildinfo"],
     enabled: true,
     guildOnly: true,
     permLevel: "User"
 };
 
-exports.help = {
+export const help = {
     name: "server",
     description: "sends info about the current server",
     category: "info",

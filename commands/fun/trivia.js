@@ -1,10 +1,10 @@
-const fetch = require("node-fetch");
-const { decode } = require("html-entities");
-const { MessageEmbed } = require("discord.js");
-const { stripIndents } = require("common-tags");
-const { categories } = require("../../core/util/data");
+import fetch from "node-fetch";
+import { decode } from "html-entities";
+import { MessageEmbed } from "discord.js";
+import { stripIndents } from "common-tags";
+import { categories } from "../../core/util/data";
 
-exports.run = async (client, message, args) => {
+export const run = async (client, message, args) => {
     // Send list of available categories
     if (args[0] && args[0].toLowerCase() === "categories") {
         const catArr = Array.from(Object.keys(categories));
@@ -206,14 +206,14 @@ exports.run = async (client, message, args) => {
     }
 };
 
-exports.config = {
+export const config = {
     aliases: ["quiz"],
     enabled: true,
     guildOnly: false,
     permLevel: "User"
 };
 
-exports.help = {
+export const help = {
     name: "trivia",
     description: "tests your knowledge on a topic of your choice",
     category: "fun",

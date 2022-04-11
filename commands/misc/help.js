@@ -1,8 +1,8 @@
-const { stripIndents } = require("common-tags");
-const { MessageEmbed } = require("discord.js");
-const { emoji, colour } = require("../../core/util/data");
+import { MessageEmbed } from "discord.js";
+import { stripIndents } from "common-tags";
+import { emoji, colour } from "../../core/util/data";
 
-exports.run = async (client, message, args, level) => {
+export const run = async (client, message, args, level) => {
     // if no args are provided
     if (!args[0]) {
         // filter all commands available to the user, based on their permLevel and whether they are in a guild or not
@@ -112,14 +112,14 @@ exports.run = async (client, message, args, level) => {
     }
 };
 
-exports.config = {
+export const config = {
     aliases: [],
     enabled: true,
     guildOnly: false,
     permLevel: "User"
 };
 
-exports.help = {
+export const help = {
     name: "help",
     description: "sends a list of commands available to your permission level",
     category: "misc",
