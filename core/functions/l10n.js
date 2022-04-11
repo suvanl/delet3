@@ -1,3 +1,4 @@
+import locales from "../locales";
 import { readdirSync } from "fs";
 import { sep } from "path";
 
@@ -30,10 +31,10 @@ export default client => {
             if (!lf.includes(locale)) return client.logger.err(`Missing locale file: "${locale}"`);
 
             // Define the locale file path
-            let locFile = require(`${localeDir}${sep}${locale}.json`);
+            let locFile = locales[locale];
 
             // If the requested string key doesn't exist in the file, fall back to English (UK) [en-GB]
-            if (!locFile[str]) locFile = require(`${localeDir}${sep}en-GB.json`);
+            if (!locFile[str]) locFile = locales["en-GB"];
 
             // Return the value of the specified key
             return locFile[str];
@@ -48,18 +49,18 @@ export default client => {
         // If the interaction locale doesn't have a locale file associated with it...
         if (!lf.find(loc => loc.startsWith(locale))) {
             // Fall back to en-GB
-            locFile = require(`${localeDir}${sep}en-GB.json`);
+            locFile = locFile = locales["en-GB"];
         } else if (regional.includes(locale)) {
             // If the interaction locale is in long-form (i.e., with a region tag), require the locale file
-            locFile = require(`${localeDir}${sep}${locale}.json`);
+            locFile = locales[locale];
         } else {
             // If the interaction locale is in short-form (e.g., 'de'), find the first locale file name
             // that starts with the short-form locale string
-            locFile = require(`${localeDir}${sep}${lf.find(loc => loc.startsWith(locale))}.json`);
+            locFile = locales[lf.find(loc => loc.startsWith(locale))];
         }
 
         // If the requested string key doesn't exist in the file, fall back to English (UK) [en-GB]
-        if (!locFile[str]) locFile = require(`${localeDir}${sep}en-GB.json`);
+        if (!locFile[str]) locFile = locales["en-GB"];
 
         // Return the value of the specified key
         return locFile[str];
