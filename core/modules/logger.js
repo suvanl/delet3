@@ -26,7 +26,7 @@ export const log = (content, type = "log") => {
             return console.log(`${timestamp} ${chalk.grey(type.toUpperCase())} » ${content}`);
         }
         case "rdy": {
-            return console.log(`${timestamp} ${chalk.blue(type.toUpperCase())} » ${content}`);
+            return console.log(`${timestamp} ${chalk.green(type.toUpperCase())} » ${content}`);
         }
         case "wrn": {
             return console.log(`${timestamp} ${chalk.bgYellow(type.toUpperCase())} » ${content}`);
