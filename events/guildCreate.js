@@ -1,7 +1,7 @@
-const { blue, cyan } = require("chalk");
-const fetch = require("node-fetch");
+import chalk from "chalk";
+import fetch from "node-fetch";
 
-module.exports = async (client, guild) => {
+export default async (client, guild) => {
     const secret = await client.genSecret();
 
     // Store guild data with default settings in database
@@ -39,5 +39,5 @@ module.exports = async (client, guild) => {
     });
 
     // Log guild name/ID and owner tag/ID
-    client.logger.inf(`${blue("guildCreate")}: "${cyan(guild.name)}" (${guild.id}) | owner: ${cyan(guild.owner.user.tag)} (${guild.owner.user.id})`);
+    client.logger.inf(`${chalk.blue("guildCreate")}: "${chalk.cyan(guild.name)}" (${guild.id}) | owner: ${chalk.cyan(guild.owner.user.tag)} (${guild.owner.user.id})`);
 };

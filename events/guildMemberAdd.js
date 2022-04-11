@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
-module.exports = async (client, member) => {
+export default async (client, member) => {
     // Save new guildMember to DB
     const secret = await client.genSecret();
 

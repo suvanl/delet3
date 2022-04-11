@@ -1,8 +1,8 @@
-const moment = require("moment");
-const { blue } = require("chalk");
-const { stripIndents } = require("common-tags");
+import moment from "moment";
+import chalk from "chalk";
+import { stripIndents } from "common-tags";
 
-module.exports = async (client, message) => {
+export default async (client, message) => {
     // Return if guild is unavailable (due to server outage)
     if (message.channel.type !== "DM" && !message.guild.available) return;
 
@@ -72,7 +72,7 @@ module.exports = async (client, message) => {
     }
 
     // Run (& log use of) command
-    const log = `${client.permLevels.levels.find(l => l.level === level).name} ${blue(message.author.tag)} (${message.author.id}) ran command ${blue(cmd.help.name)}`;
+    const log = `${client.permLevels.levels.find(l => l.level === level).name} ${chalk.blue(message.author.tag)} (${message.author.id}) ran command ${chalk.blue(cmd.help.name)}`;
 
     client.logger.cmd(log);
     cmd.run(client, message, args, level);

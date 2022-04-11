@@ -1,6 +1,6 @@
-const { magenta: mag } = require("chalk");
+import chalk from "chalk";
 
-module.exports = async (client, interaction) => {
+export default async (client, interaction) => {
     // Return if the interaction is not a CommandInteraction
     // More info: https://discord.js.org/#/docs/main/stable/class/CommandInteraction
     if (!interaction.isCommand()) return;
@@ -17,13 +17,13 @@ module.exports = async (client, interaction) => {
 
     // Get user/member's permLevel
     const level = client.permLevel(interaction);
-
+    
     try {
         // Run the slash command
         await slashCmd.run(client, interaction, level);
 
         // Log use of the slash command
-        const log = `${client.permLevels.levels.find(l => l.level === level).name} ${mag(interaction.user.tag)} (${interaction.user.id}) ran ApplicationCommand ${mag(slashCmd.data.name)}`;
+        const log = `${client.permLevels.levels.find(l => l.level === level).name} ${chalk.magenta(interaction.user.tag)} (${interaction.user.id}) ran ApplicationCommand ${chalk.magenta(slashCmd.data.name)}`;
         client.logger.app(log);
     } catch (err) {
         // Log the error
