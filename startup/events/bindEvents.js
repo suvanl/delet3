@@ -9,4 +9,5 @@ export default async client => {
     client.on("interactionCreate", events.interactionCreate.bind(null, client));
     client.on("messageCreate", events.messageCreate.bind(null, client));
     client.on("ready", events.ready.bind(null, client));
+    return Object.keys(events).length;
 };
