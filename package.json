@@ -6,12 +6,12 @@
   "type": "module",
   "scripts": {
     "lint": "eslint .",
-    "start": "node index.js",
-    "start-deploy": "node index.js --deploy",
-    "dev": "nodemon",
-    "dev-deploy": "nodemon index.js --deploy",
-    "prod": "pm2 start delet3",
-    "prod-create": "pm2 start index.js --name \"delet3\" -- --color && pm2 monit",
+    "start": "node --experimental-specifier-resolution=node index.js",
+    "start-deploy": "node --experimental-specifier-resolution=node index.js --deploy",
+    "dev": "nodemon --experimental-specifier-resolution=node",
+    "dev-deploy": "nodemon --experimental-specifier-resolution=node index.js --deploy",
+    "prod": "pm2 start delet3", 
+    "prod-create": "pm2 start --node-args=\"--experimental-specifier-resolution=node\" index.js --name \"delet3\" -- --color && pm2 monit",
     "prod-monit": "pm2 start delet3 && pm2 monit"
   },
   "engines": {
