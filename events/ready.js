@@ -1,5 +1,7 @@
 import chalk from "chalk";
-const ver = import("../package.json").then(pkg => pkg.version);
+import pkg from "../package.json";
+
+const { version: ver } = pkg;
 const { NODE_ENV: env } = process.env;
 
 export default async client => {
