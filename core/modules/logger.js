@@ -35,9 +35,9 @@ export const log = (content, type = "log") => {
     }
 };
 
-export const cmd = (...args) => this.log(...args, "cmd");
-export const app = (...args) => this.log(...args, "app");
-export const dbg = (...args) => this.log(...args, "dbg");
-export const err = (...args) => this.log(...args, "err");
-export const inf = (...args) => this.log(...args, "inf");
-export const wrn = (...args) => this.log(...args, "wrn");
+export const cmd = (...args) => log(...args, "cmd");
+export const app = (...args) => log(...args, "app");
+export const dbg = (...args) => log(...args, "dbg");
+export const err = (...args) => log(...args, "err");
+export const inf = (...args) => log(...args, "inf");
+export const wrn = (...args) => log(...args, "wrn");

@@ -1,7 +1,7 @@
-const errors = require("restify-errors");
-const User = require("../models/User");
+import errors from "restify-errors";
+import * as User from "../models/User";
 
-module.exports = server => {
+export default server => {
     // Get users
     server.get("/users", async (req, res, next) => {
         try {

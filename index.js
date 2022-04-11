@@ -42,6 +42,7 @@ import permLevels from "./core/settings/permLevels.js";
 import * as logger from "./core/modules/logger.js";
 import functions from "./core/functions";
 import startup from "./startup";
+import routes from "./api/routes";
 
 
 // Set up REST API server
@@ -56,10 +57,9 @@ server.listen(PORT, () => {
 const db = mongoose.connection;
 db.on("error", err => console.log(err));
 db.once("open", () => {
-    require("./api/routes/users")(server);
-    require("./api/routes/guilds")(server);
-    require("./api/routes/dbusers")(server);
-    client.logger.log(`REST API server started on port ${chalk.green(PORT)}`, "rdy");
+    Object.values(routes).forEach(route => route(server));
+    //client.logger.log(`REST API server started on port ${chalk.green(PORT)}`, "rdy");  // TODO: actually use client.logger
+    console.log(`REST API server started on port ${chalk.green(PORT)}`);
 });
 
 // Bot initialisation

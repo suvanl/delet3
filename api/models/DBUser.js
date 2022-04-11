@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const DBUserSchema = new mongoose.Schema({
     email: {
@@ -13,4 +13,4 @@ const DBUserSchema = new mongoose.Schema({
 });
 
 const DBUser = mongoose.model("DBUser", DBUserSchema);
-module.exports = DBUser;
+export default DBUser;

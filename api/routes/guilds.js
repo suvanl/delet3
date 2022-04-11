@@ -1,7 +1,7 @@
-const errors = require("restify-errors");
-const Guild = require("../models/Guild");
+import errors from "restify-errors";
+import * as Guild from "../models/Guild";
 
-module.exports = server => {
+export default server => {
     // Get guilds
     server.get("/guilds", async (req, res, next) => {
         try {

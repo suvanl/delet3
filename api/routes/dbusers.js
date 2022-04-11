@@ -1,12 +1,12 @@
-const errors = require("restify-errors");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const DBUser = require("../models/DBUser");
-const auth = require("../auth/auth");
+import errors from "restify-errors";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import * as DBUser from "../models/DBUser";
+import * as auth from "../auth/auth";
 
 const { JWT_SECRET } = process.env;
 
-module.exports = server => {
+export default server => {
     // Register database user
     server.post("/register", (req, res, next) => {
         const { email, password } = req.body;

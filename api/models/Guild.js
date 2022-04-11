@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const timestamp = require("mongoose-timestamp");
+import mongoose from "mongoose";
+import timestamp from "mongoose-timestamp";
 
 const GuildSchema = new mongoose.Schema({
     guildID: {
@@ -110,4 +110,4 @@ const GuildSchema = new mongoose.Schema({
 GuildSchema.plugin(timestamp);
 
 const Guild = mongoose.model("Guild", GuildSchema);
-module.exports = Guild;
+export default Guild;
