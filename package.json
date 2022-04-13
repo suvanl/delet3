@@ -15,7 +15,7 @@
     "prod-monit": "pm2 start delet3 && pm2 monit"
   },
   "engines": {
-    "node": ">=16.6.0"
+    "node": ">=16.9.0"
   },
   "repository": {
     "type": "git",
