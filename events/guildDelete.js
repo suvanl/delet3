@@ -38,5 +38,5 @@ export default async (client, guild) => {
     });
     
     // Log name/ID of guild
-    client.logger.inf(`${chalk.blue("guildDelete")}: "${chalk.cyan(guild.name)}" (${guild.id})`);
+    client.logger.info(`${chalk.blue("guildDelete")}: "${chalk.cyan(guild.name)}" (${guild.id})`);
 };

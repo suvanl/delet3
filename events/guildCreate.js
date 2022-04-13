@@ -39,5 +39,5 @@ export default async (client, guild) => {
     });
 
     // Log guild name/ID and owner tag/ID
-    client.logger.inf(`${chalk.blue("guildCreate")}: "${chalk.cyan(guild.name)}" (${guild.id}) | owner: ${chalk.cyan(guild.owner.user.tag)} (${guild.owner.user.id})`);
+    client.logger.info(`${chalk.blue("guildCreate")}: "${chalk.cyan(guild.name)}" (${guild.id}) | owner: ${chalk.cyan(guild.owner.user.tag)} (${guild.owner.user.id})`);
 };

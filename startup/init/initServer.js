@@ -20,6 +20,6 @@ export default () => {
     db.on("error", err => console.log(err));
     db.once("open", () => {
         Object.values(routes).forEach(route => route(server));
-        logger.log(`REST API server started on port ${chalk.green(process.env.PORT)}`, "rdy");
+        logger.log(`REST API server started on port ${chalk.green(process.env.PORT)}`, "ready");
     });
 };
