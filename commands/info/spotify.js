@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { MessageEmbed } from "discord.js";
 import { stripIndents } from "common-tags";
 import { keys } from "../../core/util/data";
@@ -74,9 +74,11 @@ export const run = async (client, message, args) => {
     // Parse audio features data as JSON
     const afData = await afInfo.json();
 
-    // Predefined data for embed
-    const releaseDate = moment(tData.album.release_date, "YYYY-MM-DD").format("DD/MM/YYYY");
+    // Predefine data for embed:
+    // Release date
+    const releaseDate = DateTime.fromISO(tData.album.release_date).toFormat("dd/MM/y");
     
+    // Key
     let key = keys[afData.key];
     if (afData.mode === 0) {
         if (key.includes("/")) key = `${key.substring(0, key.length - 3)}m`;

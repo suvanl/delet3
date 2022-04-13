@@ -1,7 +1,6 @@
 import fetch from "node-fetch";
-import moment from "moment";
 import Canvas from "canvas";
-//import { createCanvas, loadImage, registerFont } from "canvas";
+import { DateTime } from "luxon";
 import { MessageAttachment } from "discord.js";
 import { stripIndents } from "common-tags";
 import { sep } from "path";
@@ -89,9 +88,10 @@ export const run = async (client, message, args) => {
     ctx.fillText(`${name}, ${country}`, 73, 102);
 
     // Current day and conditions
+
     ctx.font = "30px Inter Bold";
     ctx.fillStyle = mainFillStyle;
-    ctx.fillText(`${moment.utc(moment.unix(data.current.dt + data.timezone_offset)).format("dddd")}, ${data.current.weather[0].description}`, 73, 200);
+    ctx.fillText(`${DateTime.fromSeconds(data.current.dt + data.timezone_offset).toUTC().toFormat("cccc")}, ${data.current.weather[0].description}`, 73, 200);
 
     // Icon
     const currentIcon = await Canvas.loadImage(`${iconURL}/${data.current.weather[0].icon}@2x.png`);
@@ -121,11 +121,11 @@ export const run = async (client, message, args) => {
     ctx.fillStyle = mainFillStyle;
 
     // Hours
-    ctx.fillText(moment.utc(moment.unix(data.hourly[1].dt + data.timezone_offset)).format("HH:mm"), 528, 228);
-    ctx.fillText(moment.utc(moment.unix(data.hourly[2].dt + data.timezone_offset)).format("HH:mm"), 598, 228);
-    ctx.fillText(moment.utc(moment.unix(data.hourly[3].dt + data.timezone_offset)).format("HH:mm"), 668, 228);
-    ctx.fillText(moment.utc(moment.unix(data.hourly[4].dt + data.timezone_offset)).format("HH:mm"), 738, 228);
-    ctx.fillText(moment.utc(moment.unix(data.hourly[5].dt + data.timezone_offset)).format("HH:mm"), 808, 228);
+    ctx.fillText(DateTime.fromSeconds(data.hourly[1].dt + data.timezone_offset).toUTC().toFormat("HH:mm"), 528, 228);
+    ctx.fillText(DateTime.fromSeconds(data.hourly[2].dt + data.timezone_offset).toUTC().toFormat("HH:mm"), 598, 228);
+    ctx.fillText(DateTime.fromSeconds(data.hourly[3].dt + data.timezone_offset).toUTC().toFormat("HH:mm"), 668, 228);
+    ctx.fillText(DateTime.fromSeconds(data.hourly[4].dt + data.timezone_offset).toUTC().toFormat("HH:mm"), 738, 228);
+    ctx.fillText(DateTime.fromSeconds(data.hourly[5].dt + data.timezone_offset).toUTC().toFormat("HH:mm"), 808, 228);
 
     // Hourly icons
     const hour1 = await Canvas.loadImage(`${iconURL}/${data.hourly[1].weather[0].icon}.png`);
@@ -153,14 +153,14 @@ export const run = async (client, message, args) => {
     // D a i l y    f o r e c a s t
 
     // Day names
-    ctx.font = "30px Inter Bold";
-    ctx.fillText(moment.utc(moment.unix(data.daily[0].dt + data.timezone_offset)).format("ddd"), 73, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[1].dt + data.timezone_offset)).format("ddd"), 203, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[2].dt + data.timezone_offset)).format("ddd"), 330, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[3].dt + data.timezone_offset)).format("ddd"), 450, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[4].dt + data.timezone_offset)).format("ddd"), 578, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[5].dt + data.timezone_offset)).format("ddd"), 700, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[6].dt + data.timezone_offset)).format("ddd"), 825, 370);
+    ctx.font = "30px Inter Bold";    
+    ctx.fillText(DateTime.fromSeconds(data.daily[0].dt + data.timezone_offset).toUTC().toFormat("ccc"), 73, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[1].dt + data.timezone_offset).toUTC().toFormat("ccc"), 203, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[2].dt + data.timezone_offset).toUTC().toFormat("ccc"), 330, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[3].dt + data.timezone_offset).toUTC().toFormat("ccc"), 450, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[4].dt + data.timezone_offset).toUTC().toFormat("ccc"), 578, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[5].dt + data.timezone_offset).toUTC().toFormat("ccc"), 700, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[6].dt + data.timezone_offset).toUTC().toFormat("ccc"), 825, 370);
 
     // Daily icons
     const day0 = await Canvas.loadImage(`${iconURL}/${data.daily[0].weather[0].icon}@2x.png`);

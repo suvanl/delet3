@@ -10,7 +10,7 @@
     "start-deploy": "node --experimental-specifier-resolution=node index.js --deploy",
     "dev": "nodemon --experimental-specifier-resolution=node",
     "dev-deploy": "nodemon --experimental-specifier-resolution=node index.js --deploy",
-    "prod": "pm2 start delet3", 
+    "prod": "pm2 start delet3",
     "prod-create": "pm2 start --node-args=\"--experimental-specifier-resolution=node\" index.js --name \"delet3\" -- --color && pm2 monit",
     "prod-monit": "pm2 start delet3 && pm2 monit"
   },
@@ -39,7 +39,7 @@
     "html-entities": "^2.3.2",
     "jsonwebtoken": "^8.5.1",
     "klaw": "^4.0.1",
-    "moment": "^2.29.2",
+    "luxon": "^2.3.1",
     "mongoose": "^6.2.10",
     "mongoose-timestamp": "^0.6.0",
     "node-fetch": "^3.1.1",

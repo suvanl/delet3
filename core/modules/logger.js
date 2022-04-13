@@ -1,10 +1,9 @@
 import chalk from "chalk";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export const log = (content, type = "log") => {
-    const z = moment().format("Z");
-    const tz = !z.includes(":30") ? z.replace(/0|:/g, "") : z;
-    const timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")} ${z === "+00:00" ? "UTC" : `UTC${tz}`} |`;
+    const offset = DateTime.now().toFormat("Z");  // narrow offset
+    const timestamp = `${DateTime.now().toFormat("y-MM-dd HH:mm:ss")} UTC${offset} |`;
 
     switch (type) {
         case "cmd": {

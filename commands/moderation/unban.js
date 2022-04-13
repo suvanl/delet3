@@ -55,7 +55,7 @@ export const run = async (client, message, args) => {
         // The Array.prototype.findIndex() function returns -1 if an index cannot be found.
         if (dbBans.findIndex(obj => obj.userID === id) !== -1) {
             // If a ban does exist, remove it
-            await client.removePunishment("bans", message.guild, "337216913585209345");
+            await client.removePunishment("bans", message.guild, id);
         }
 
         // Map object for replacing both %usr% and %id% (using a function as the second arg in String.prototype.replace)

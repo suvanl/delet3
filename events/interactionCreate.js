@@ -17,7 +17,28 @@ export default async (client, interaction) => {
 
     // Get user/member's permLevel
     const level = client.permLevel(interaction);
-    
+
+
+    //#region Test
+
+    const command = await client.guilds.cache.get(process.env.DEV_GUILD_ID).commands.fetch("962405509288329247");
+    const perms = command.permissions;
+
+    const permissions = [{
+        id: "921414482096422935",
+        type: "USER",
+        permission: false
+    },
+    {
+        id: "203604445051748353",
+        type: "USER",
+        permission: true
+    }];
+
+    await command.permissions.add({ permissions });
+
+    //#endregion
+
     try {
         // Run the slash command
         await slashCmd.run(client, interaction, level);

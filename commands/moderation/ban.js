@@ -1,6 +1,6 @@
+import { DateTime } from "luxon";
 import { MessageEmbed } from "discord.js";
 import { stripIndents } from "common-tags";
-import moment from "moment";
 
 export const run = async (client, message, args) => {
     // Only run if message author has the BAN_MEMBERS permission
@@ -106,7 +106,7 @@ export const run = async (client, message, args) => {
         if (!response || response.toLowerCase() === "cancel") return message.channel.send(`🚪 ${client.l10n(message, "mod.cancel")}`);
 
         // If the user doesn't want to specify a duration, make the ban permanent
-        if (response.toLowerCase() === "n") duration = 3153600000;  // 100 years
+        if (response.toLowerCase() === "n") duration = 3153600000;  // ~100 years
 
         // If they do wish to specify a response...
         if (response.toLowerCase() === "y") {
@@ -213,19 +213,8 @@ export const run = async (client, message, args) => {
         const issuedBy = client.l10n(message, "mod.embed.issued").replace(/%user%/g, message.author.tag);
         const caseNumber = client.l10n(message, "mod.embed.case").replace(/%num%/g, caseNum);
 
-        // Localise duration in embed:
-        // First, get the unix timestamp of the ban's expiry time by adding the ban duration (in seconds) to the current unix timestamp
-        const expiry = moment().unix() + duration;
-        
-        // Convert this time to an ISO 8601 timestamp
-        const iso = moment.unix(expiry).format("YYYY-MM-DD HH:mm:ss");
-
-        // Set the locale for moment to display the time in:
-        // If the guild's language is set to "no-NO", use "nb" as the locale code. Else, just use the value of message.settings.language
-        moment.locale(message.settings.language === "no-NO" ? "nb" : message.settings.language);
-
-        // Get the duration in relative terms (from now)
-        const relative = moment(iso).fromNow(true);
+        // Generate ban expiry timestamp
+        const expiry = DateTime.now().plus({ seconds: duration }).toUTC().toUnixInteger();
 
         // Create and send embed (to modLogChannel):
             // 🔨 Action: Ban
@@ -242,7 +231,7 @@ export const run = async (client, message, args) => {
 
                 👤 ${client.l10n(message, "mod.embed.member").replace(/%user%/g, `**${user.tag}**`)}
                 #️⃣ ${client.l10n(message, "mod.embed.userID").replace(/%id%/g, `**${user.id}**`)}
-                ⌛ ${client.l10n(message, "mod.embed.duration").replace(/%dur%/g, `**${relative}**`)}
+                ⌛ ${client.l10n(message, "mod.embed.duration").replace(/%dur%/g, `**<t:${expiry}:R>**`)}
                 ❔ ${client.l10n(message, "mod.embed.reason").replace(/%rsn%/g, `**${reason ? reason : client.l10n(message, "mod.ban.reason.null")}**`)}`)
             .setFooter({ text: `${issuedBy} • ${caseNumber}`, iconURL: message.author.displayAvatarURL() });
 

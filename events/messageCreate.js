@@ -1,5 +1,5 @@
-import moment from "moment";
 import chalk from "chalk";
+import { DateTime } from "luxon";
 import { stripIndents } from "common-tags";
 
 export default async (client, message) => {
@@ -25,15 +25,17 @@ export default async (client, message) => {
     //    where X is a random integer between 10-20
     if (message.guild && message.settings.pointsEnabled) {
         const userData = await client.getUser(message.guild, message.author);
+        const now = DateTime.now().toUnixInteger();
 
-        const current = userData.points;
-        const updated = userData.pointsUpdatedTimestamp;
-        const cooldown = message.settings.pointsCooldown;
-        const now = moment().unix();
-
+        // Generates a random number between the specified min and max values
         const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-        if (now > updated + (cooldown * 60)) await client.addPoints(message.guild, message.author, "points", current + randInt(10, 20));
+        // If the points cooldown has ended...
+        if (now > userData.pointsUpdatedTimestamp + (message.settings.pointsCooldown * 60)) {
+            // Add points for the message author in the current guild.
+            // A random number between 10 and 20 will be added to their current number of points
+            await client.addPoints(message.guild, message.author, "points", userData.points + randInt(10, 20));
+        }
     }
 
     // Ignore messages that don't start with the bot's prefix

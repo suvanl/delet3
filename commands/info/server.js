@@ -1,4 +1,4 @@
-import moment from "moment";
+import { DateTime } from "luxon";
 import { MessageEmbed } from "discord.js";
 import { stripIndents } from "common-tags";
 
@@ -15,7 +15,7 @@ export const run = async (client, message) => {
     // Number of bots in guild
     const bots = guild.members.cache.filter(m => m.user.bot).size;
 
-    // Verification level names
+    // Localised verification level names
     const vLevels = {
         "NONE": client.l10n(message, "server.verif.none"),
         "LOW": client.l10n(message, "server.verif.low"),
@@ -24,7 +24,7 @@ export const run = async (client, message) => {
         "VERY_HIGH": client.l10n(message, "server.verif.veryHigh")
     };
 
-    // Content filter names
+    // Localised content filter level names
     const cFilter = {
         "DISABLED": client.l10n(message, "server.cFilter.disabled"),
         "MEMBERS_WITHOUT_ROLES": client.l10n(message, "server.cFilter.noRole"),
@@ -36,10 +36,10 @@ export const run = async (client, message) => {
         .setColor("#fed98c")
         .setThumbnail(guild.iconURL({ size: 1024 }))
         .setDescription(stripIndents`
-            **${guild.name}** ${verified} | <:server_boost:703991798015459390> ${client.l10n(message, "server.boost.lvl").replace(/%num%/g, guild.premiumTier === "NONE" ? 0 : guild.premiumTier.split("_")[1])}
+            **${guild.name}** ${verified} <:server_boost:703991798015459390> ${client.l10n(message, "server.boost.lvl").replace(/%num%/g, guild.premiumTier === "NONE" ? 0 : guild.premiumTier.split("_")[1])}
 
             💥 **${client.l10n(message, "server.created")}**
-            ${moment.utc(guild.createdTimestamp).format(`DD/MM/YYYY [${client.l10n(message, "user.time.at")}] HH:mm`)}
+            <t:${DateTime.fromJSDate(guild.createdAt).toUTC().toUnixInteger()}:R>
 
             💬 **${client.l10n(message, "server.channels")}**
             ${client.l10n(message, "server.channels.txt").replace(/%num%/g, tChannels)} • ${client.l10n(message, "server.channels.voice").replace(/%num%/g, vChannels)}
@@ -47,7 +47,7 @@ export const run = async (client, message) => {
             👥 **${client.l10n(message, "server.members")}**
             ${client.l10n(message, "server.users").replace(/%num%/g, guild.memberCount - bots)} • ${client.l10n(message, "server.bots").replace(/%num%/g, bots)}
 
-            🔑 **${client.l10n(message, "server.owner")}**
+            👑 **${client.l10n(message, "server.owner")}**
             ${client.users.cache.get(message.guild.ownerId).tag}
 
             ✅ **${client.l10n(message, "server.verif")}**

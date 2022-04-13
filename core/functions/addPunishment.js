@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default client => {
     // Add a punishment to the activePunishments object within the Guild object
@@ -10,8 +10,8 @@ export default client => {
         const meta = { "Content-Type": "application/json", "Authorization": `jwt ${secret.token}` };
 
         // Define punishment start/end timestamps
-        issuedTimestamp = moment().unix();  // current time
-        endTimestamp = issuedTimestamp + duration;
+        const issuedTimestamp = DateTime.now().toUnixInteger();  // current time
+        const endTimestamp = issuedTimestamp + duration;
 
         // Request body
         const body = {
