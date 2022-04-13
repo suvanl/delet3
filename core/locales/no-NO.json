@@ -47,7 +47,7 @@
     "mod.embed.action": "Type: %act%",
     "mod.embed.member": "Medlem: %user%",
     "mod.embed.userID": "Bruker ID: %id%",
-    "mod.embed.duration": "Varighet: %dur%",
+    "mod.embed.duration": "Expires: %dur%",
     "mod.embed.reason": "Begrunnelse: %rsn%",
     "mod.embed.issued": "Utført av %user%",
     "mod.embed.case": "Saksnummer %num%",
