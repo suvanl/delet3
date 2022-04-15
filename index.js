@@ -1,8 +1,8 @@
-/*-------------------------------------------------
+/*--------------------------------------------------------------------------------
  * delet³ for Discord
  * Copyright (c) 2022 suvanl. All rights reserved.
- * See LICENSE.md in project root for license info.
- *------------------------------------------------*/
+ * Licensed under the MIT license. See LICENSE.md in project root for license info.
+ *-------------------------------------------------------------------------------*/
 
 // Configure enviroment variables
 import "dotenv/config";
