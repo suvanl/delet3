@@ -43,12 +43,14 @@ const init = async () => {
     // Attach custom console logger as a property on the client object
     client.logger = logger;
 
-    // Create Redis client
+    // Create Redis client and connect to server
     const redisClient = createClient();
-    redisClient.on("error", err => client.logger.error(`Redis client error: ${err}`));
-
-    // Connect to Redis server
     await redisClient.connect();
+
+    // Listen for Redis errors
+    redisClient.on("error", err => {
+        throw new Error(err.message);
+    });
 
     // Attach Redis client to [Discord] client object
     client.redis = redisClient;
