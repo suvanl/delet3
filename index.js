@@ -9,6 +9,7 @@ import "dotenv/config";
 
 // Import modules needed for bot initialisation
 import { Client, Collection } from "discord.js";
+import { createClient } from "redis";
 import { sep } from "path";
 import chalk from "chalk";
 import klaw from "klaw";
@@ -36,11 +37,21 @@ const init = async () => {
         partials: ["CHANNEL"]
     });
 
-    // Get permission levels
+    // Attach permission levels to client object
     client.permLevels = permLevels;
 
     // Attach custom console logger as a property on the client object
     client.logger = logger;
+
+    // Create Redis client
+    const redisClient = createClient();
+    redisClient.on("error", err => client.logger.error(`Redis client error: ${err}`));
+
+    // Connect to Redis server
+    await redisClient.connect();
+
+    // Attach Redis client to [Discord] client object
+    client.redis = redisClient;
 
     // Require custom misc functions
     import("./core/functions/misc.js");
@@ -89,7 +100,7 @@ const init = async () => {
             // Load each command that's found
             const res = await client.loadCommand(file.dir, file.name);
             // If the loadCommand function is unsuccessful, log the error
-            if (res !== true) client.logger.err(res);
+            if (res !== true) client.logger.error(res);
         })
         .on("end", () => client.logger.log(`Successfully loaded ${chalk.blue(cmdArr.length)} commands`));
 
