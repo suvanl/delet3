@@ -22,6 +22,6 @@ export default async (client, member) => {
             headers: meta
         });
     } catch (err) {
-        return client.logger.err(`Error deleting a user's data (guildMemberRemove)\n${err.stack}`);
+        return client.logger.error(`Error deleting a user's data (guildMemberRemove)\n${err.stack}`);
     }
 };

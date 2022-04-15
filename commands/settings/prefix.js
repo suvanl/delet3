@@ -13,7 +13,7 @@ export const run = async (client, message, args) => {
         if (update === 200) return message.channel.send(`<:tick:688400118549970984> Prefix successfully changed to \`${newPrefix}\`.`);
     } catch (err) {
         message.channel.send(`<:x_:688400118327672843> ${client.l10n(message, "settings.error")}`);
-        return client.logger.err(`Error changing prefix:\n${err.stack}`);
+        return client.logger.error(`Error changing prefix:\n${err.stack}`);
     }
 };
 

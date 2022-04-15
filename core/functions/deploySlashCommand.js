@@ -41,7 +41,7 @@ export default client => {
 
                 client.logger.info(`Successfully reloaded ApplicationCommands: ${chalk.blue(guildCommands.length)} guild-only; ${chalk.blue(globalCommands.length)} global.`);
             } catch (err) {
-                client.logger.err(err.stack);
+                client.logger.error(err.stack);
             }
         })();
     };

@@ -58,7 +58,7 @@ export const run = async (client, message, args, level) => {
                             ${client.l10n(message, "help.dmErrorInfo")}`);
 
                         // log the error that occurs
-                        return client.logger.err(err);
+                        return client.logger.error(err);
                     });
             } else {
                 // inform the user that the help output will be sent to their DMs
@@ -72,7 +72,7 @@ export const run = async (client, message, args, level) => {
                             ${client.l10n(message, "help.dmErrorInfo")}`);
 
                         // log the error that occurs
-                        return client.logger.err(err);
+                        return client.logger.error(err);
                     });
             }
         } else if (message.channel.type === "DM") {

@@ -14,7 +14,7 @@ export default client => {
             const data = await res.json();
             return data[0].settings;
         } catch (err) {
-            return client.logger.err(`error in getSettings:\n${err.stack}`);
+            return client.logger.error(`error in getSettings:\n${err.stack}`);
         }
     };
 };

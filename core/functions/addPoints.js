@@ -28,7 +28,7 @@ export default client => {
                 headers: meta
             });
         } catch (err) {
-            return client.logger.err(`error in addPoints:\n${err.stack}`);
+            return client.logger.error(`error in addPoints:\n${err.stack}`);
         }
     };
 };

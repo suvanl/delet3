@@ -16,7 +16,7 @@ export default client => {
             const data = await res.json();
             return data;
         } catch (err) {
-            client.logger.err(err.stack);
+            client.logger.error(err.stack);
         }
     };
 };

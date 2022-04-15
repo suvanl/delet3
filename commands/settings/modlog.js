@@ -102,7 +102,7 @@ export const run = async (client, message) => {
         } catch (err) {
             // Inform the user that an error has occurred and log the error
             message.channel.send(`<:x_:688400118327672843> ${client.l10n(message, "settings.error")}`);
-            return client.logger.err(`Error changing a modlog setting:\n${err.stack}`);   
+            return client.logger.error(`Error changing a modlog setting:\n${err.stack}`);   
         }
     }
 };

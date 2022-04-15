@@ -33,7 +33,7 @@ export default client => {
 
             return res.status;
         } catch (err) {
-            return client.logger.err(`error in updateSettings:\n${err.stack}`);
+            return client.logger.error(`error in updateSettings:\n${err.stack}`);
         }
     };
 };

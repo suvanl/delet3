@@ -195,7 +195,7 @@ export const run = async (client, message, args) => {
         message.channel.send(`🔨 ${client.l10n(message, "mod.ban.inform").replace(/%user%/g, `**${ban.user.tag}**`)}`);
     } catch (err) {
         message.channel.send(`<:x_:688400118327672843> ${client.l10n(message, "error")}`);
-        return client.logger.err(`error banning a user:\n${err.stack}`);
+        return client.logger.error(`error banning a user:\n${err.stack}`);
     }
 
     // If modLogEnabled is true and modLogData includes "kickBan"...

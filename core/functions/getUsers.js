@@ -14,7 +14,7 @@ export default client => {
             const data = await res.json();
             return data;
         } catch (err) {
-            return client.logger.err(`error in getUsers:\n${err.stack}`);
+            return client.logger.error(`error in getUsers:\n${err.stack}`);
         }
     };
 };

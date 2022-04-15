@@ -18,7 +18,7 @@ export default async (client, guild) => {
 
         // TODO: find a way to save new guild data if the bot was added to a guild whilst offline (maybe run this same logic on the message/ready event, if guildID does not exist in db)
     } catch (err) {
-        return client.logger.err(`Error saving new guild data:\n${err.stack}`);
+        return client.logger.error(`Error saving new guild data:\n${err.stack}`);
     }
 
     // Store guild's user IDs in database
@@ -34,7 +34,7 @@ export default async (client, guild) => {
                 headers: meta
             });
         } catch (err) {
-            return client.logger.err(`Error saving new user data:\n${err.stack}`);
+            return client.logger.error(`Error saving new user data:\n${err.stack}`);
         }
     });
 

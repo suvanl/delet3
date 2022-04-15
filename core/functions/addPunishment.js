@@ -36,7 +36,7 @@ export default client => {
                 headers: meta
             });
         } catch (err) {
-            return client.logger.err(`error in addPunishment:\n${err.stack}`);
+            return client.logger.error(`error in addPunishment:\n${err.stack}`);
         }
     };
 };
