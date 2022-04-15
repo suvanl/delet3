@@ -3,6 +3,7 @@ import Canvas from "canvas";
 import { DateTime } from "luxon";
 import { MessageAttachment } from "discord.js";
 import { stripIndents } from "common-tags";
+import { commandOptions } from "redis";
 import { sep } from "path";
 
 const { OWM_KEY } = process.env;
@@ -43,7 +44,7 @@ export const run = async (client, message, args) => {
     const { lat, lon } = current.coord;
     const { country } = current.sys;
     const { name } = current;
-
+    
     // Get forecast data
     const data = await getForecast(lat, lon, lang, OWM_KEY);
 
@@ -54,6 +55,11 @@ export const run = async (client, message, args) => {
     // If using an application command, defer the response
     else
         await message.deferReply();
+
+
+    // If an image for the requested location's forecast exissts in the cache, send the image attachment and return
+    const cachedImg = await client.redis.get(commandOptions({ returnBuffers: true }), `forecast_${name.replace(/ /g, "-")}_${country}`);
+    if (cachedImg) return sendImageAttachment(message, cachedImg, true);
 
     // #region IMAGE GENERATION
 
@@ -202,17 +208,29 @@ export const run = async (client, message, args) => {
 
     // #endregion
 
+    // Calculate TTL (time to live) for the image in cache - all cached items expire on the hour (e.g., at 10:00, 11:00, etc)
+    // formula: TTL = 3600 - ((minute * 60) + second)
+    const timeNow = DateTime.now().toObject();
+    const ttl = 3600 - ((timeNow.minute * 60) + timeNow.second);
+
+    // Save image to cache (Redis)
+    const save = await client.redis.set(`forecast_${name.replace(/ /g, "-")}_${country}`, canvas.toBuffer(), { EX: ttl, NX: true });
+    if (save !== "OK") client.logger.warn(`forecast: Redis SET did not return OK, instead returned ${save}`);
+
     // Create and send attachment
-    const attachment = new MessageAttachment(canvas.toBuffer(), "forecast.png");
-    const filesObj = { files: [attachment] };
-    
-    if (message.type !== "APPLICATION_COMMAND")
-        message.reply(filesObj);
-    else
-        message.editReply(filesObj);
+    return sendImageAttachment(message, canvas.toBuffer(), false);
 };
 
 // #region Helper Functions
+
+// Sends the image as an attachment
+const sendImageAttachment = (message, buffer, isFromCache) => {
+    const attachment = new MessageAttachment(buffer, isFromCache ? "forecast_cached.png" : "forecast.png");
+    const filesObj = { files: [attachment] };
+    
+    if (message.type !== "APPLICATION_COMMAND") message.reply(filesObj);
+    else message.editReply(filesObj);
+};
 
 // Obtains current weather data (to get lat/lon values)
 const getCurrent = async (loc, lang, key) => {
@@ -221,7 +239,6 @@ const getCurrent = async (loc, lang, key) => {
     return await res.json();
 };
 
-
 // Fetches forecast data for the specified location
 const getForecast = async (lat, lon, lang, key) => {
     // Send GET request to OWM One Call API for forecast data
@@ -229,7 +246,6 @@ const getForecast = async (lat, lon, lang, key) => {
     const res = await fetch(url);
     return await res.json();
 };
-
 
 // Function returning a boolean stating whether it is night (past sunset) in the requested area
 const isNight = data => {
