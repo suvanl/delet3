@@ -8,17 +8,15 @@ This project is still in **alpha**. New features are still being introduced. del
 
 🌳 **Branches**
 
-- Currently, the main development branch is [localisation](https://github.com/suvanl/delet3/tree/localisation)
+- Currently, the main development branch is [dev](https://github.com/suvanl/delet3/tree/dev)
 
-- The [l10n_localisation2](https://github.com/suvanl/delet3/tree/l10n_localisation2) branch should not be directly worked on - it is reserved for changes made by the Crowdin integration when new translations are added. Pull requests will automatically be created by the integration to merge these changes into the **localisation** branch
+- The [l10n_dev](https://github.com/suvanl/delet3/tree/l10n_dev) branch used by the Crowdin integration to commit changes when translations are updated. Pull requests will automatically be created by the integration to merge these changes into the dev branch
 
-- Changes from the **l10n_localisation2** branch are never directly merged into the [master](https://github.com/suvanl/delet3/tree/master) branch
-
-- The **master** branch is the most stable, whereas the **localisation** branch will have the latest features.
+- The master branch is the most stable, whereas the dev branch will have the latest features.
 
 
 💬 **Message Strings**
-- As delet<sup>3</sup> has been set up to be localised, message strings won't directly be visible in code
+- As delet<sup>3</sup> supports localisation, message strings won't directly be visible in code
 
 - In some cases, comments will show what a localised string says in English
 
@@ -26,13 +24,12 @@ This project is still in **alpha**. New features are still being introduced. del
 
  ⭐️ **Custom Emojis**
 
-Currently, custom emojis are referenced using strings containing the emoji name and ID. However, the ID is server-specific. Therefore, if self-hosting the bot, custom emojis will not be displayed unless their IDs are edited manually. Configuring custom emoji IDs will be made much simpler in a future release.
+Currently, custom emojis are referenced using hardcoded IDs, which are server-specific. Configuring custom emoji IDs will be made much simpler in a future release, to support dynamic emoji IDs.
 
 ## Installing delet<sup>3</sup>
 
 **Prerequisites:**
-- [Node.js](https://nodejs.org/en/) (minimum required version: v16.6)
-
+- [Node.js](https://nodejs.org/en/) (v16.9.0 or above)
 
 **Instructions:**
 1. Clone or download this repository.
@@ -47,5 +44,5 @@ delet<sup>3</sup> has multi-locale support! To start contributing translations, 
 
 delet3's wonderful translators:
 - 🇳🇱 Dutch (Nederlands) - vaelinalsorna
-- 🇩🇪 German (Deutsch) - [@Shinwulf](https://github.com/Shinwulf)
+- 🇩🇪 German (Deutsch) - [@PeachyTree](https://github.com/PeachyTree)
 - 🇳🇴 Norwegian (Norsk) - [@nitramleo](https://github.com/nitramleo)
