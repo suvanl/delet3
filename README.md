@@ -10,9 +10,9 @@ This project is still in **alpha**. New features are still being introduced. del
 
 - Currently, the main development branch is [dev](https://github.com/suvanl/delet3/tree/dev)
 
-- The [l10n_dev](https://github.com/suvanl/delet3/tree/l10n_dev) branch used by the Crowdin integration to commit changes when translations are updated. Pull requests will automatically be created by the integration to merge these changes into the dev branch
+- The [l10n_dev](https://github.com/suvanl/delet3/tree/l10n_dev) branch is used by the Crowdin integration to commit changes when translations are updated. Pull requests will automatically be created by the integration to merge these changes into the dev branch
 
-- The master branch is the most stable, whereas the dev branch will have the latest features.
+- The master branch is the most stable, whereas the dev branch will have the latest features
 
 
 💬 **Message Strings**
