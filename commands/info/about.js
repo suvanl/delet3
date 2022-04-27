@@ -8,8 +8,7 @@ const { version: ver } = pkg;
 export const run = async (client, message) => {
     const app = await message.client.application.fetch();
     const ownerTag = `${app.owner.username}#${app.owner.discriminator}`;
-    const uptime = Duration.fromMillis(client.uptime);
-    const uptimeStr = `${uptime.toFormat("d")} days, ${uptime.toFormat("hh:mm:ss")}`;
+    const uptimeStr = Duration.fromObject({ days: 0, hours: 0, minutes: 0, seconds: (client.uptime / 1000).toFixed() }).normalize().toHuman({ unitDisplay: "short" });
 
     const embed = new MessageEmbed()
         .setColor("#56dcff")
