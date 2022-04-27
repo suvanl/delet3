@@ -52,7 +52,7 @@ const init = async () => {
         throw new Error(err.message);
     });
 
-    // Attach Redis client to [Discord] client object
+    // Attach Redis client to Discord client object
     client.redis = redisClient;
 
     // Require custom misc functions
