@@ -24,9 +24,6 @@ export const run = async (client, message) => {
         - Points Cooldown: \`${message.settings.pointsCooldown} minutes\`
         - Points Enabled: \`${message.settings.pointsEnabled}\`
 
-        🔐 **Verification System**
-        - Verification Enabled: \`${message.settings.verificationEnabled}\`
-
         👋 **Welcome**
         - Welcome Channel: \`${message.settings.welcomeChannel}\`
         - Welcome Message: \`${message.settings.welcomeMessage}\`
