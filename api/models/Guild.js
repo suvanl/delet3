@@ -89,6 +89,15 @@ const GuildSchema = new mongoose.Schema({
             default: "%",
             trim: true
         },
+        verificationEnabled: {
+            type: Boolean,
+            default: false,
+            trim: true
+        },
+        verificationQueue: {
+            type: Array,
+            default: []
+        },
         welcomeChannel: {
             type: String,
             default: "general",
