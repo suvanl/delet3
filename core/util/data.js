@@ -85,6 +85,7 @@ export const friendlySettings = {
     "nickRequestEnabled": "nick request enabled",
     "pointsEnabled": "points system enabled",
     "pointsCooldown": "points cooldown",
+    "verificationEnabled": "verification system enabled",
     "welcomeChannel": "welcome channel",
     "welcomeMessage": "welcome message",
     "welcomeEnabled": "welcome enabled"
