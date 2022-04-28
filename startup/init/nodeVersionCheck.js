@@ -9,7 +9,7 @@ export default () => {
 
     if (!semver.satisfies(nodeVer, required["node"])) {
         throw new Error(chalk.yellowBright("EBADENGINE ") + chalk.red(`Node.js ${required["node"]} required, currently on ${nodeVer}. Please update.`));
-    } else {
-        console.log(`${chalk.green("✔ Node.js version check passed")} (required: ${chalk.underline.yellow(required["node"])}, current: ${chalk.underline.green(nodeVer)})`);
     }
+    
+    return console.log(`${chalk.green("✔ Node.js version check passed")} (required: ${chalk.underline.yellow(required["node"])}, current: ${chalk.underline.green(nodeVer)})`);
 };
