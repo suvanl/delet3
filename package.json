@@ -1,6 +1,6 @@
 {
   "name": "delet3",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.2",
   "description": "delet³ for Discord",
   "main": "index.js",
   "type": "module",
