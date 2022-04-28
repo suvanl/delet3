@@ -15,7 +15,7 @@ export default async (client, member) => {
             headers: meta
         });
     } catch (err) {
-        return client.logger.err(`Error saving new guildMember:\n${err.stack}`);
+        return client.logger.error(`Error saving new guildMember:\n${err.stack}`);
     }
 
     // Get guild settings

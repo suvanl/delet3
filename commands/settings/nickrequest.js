@@ -54,7 +54,7 @@ export const run = async (client, message) => {
             if (update === 200) return message.channel.send(`<:tick:688400118549970984> ${friendly.toTitleCase()} successfully changed to \`${newValue.toLowerCase()}\`.`);
         } catch (err) {
             message.channel.send(`<:x_:688400118327672843> ${client.l10n(message, "settings.error")}`);
-            return client.logger.err(`Error changing a nick request setting:\n${err.stack}`);   
+            return client.logger.error(`Error changing a nick request setting:\n${err.stack}`);   
         }
     }
 };

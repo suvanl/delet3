@@ -28,7 +28,7 @@ export default client => {
         // If the type of message is not an application command (assuming it is of type 'DEFAULT')...
         if (message.type !== "APPLICATION_COMMAND") {
             // If a locale file matching the value of the "locale" parameter can't be found, return an error message
-            if (!lf.includes(locale)) return client.logger.err(`Missing locale file: "${locale}"`);
+            if (!lf.includes(locale)) return client.logger.error(`Missing locale file: "${locale}"`);
 
             // Define the locale file path
             let locFile = locales[locale];

@@ -27,7 +27,7 @@ export default client => {
                 ...punishmentData.slice(0, index),
                 ...punishmentData.slice(index + 1)
             ];
-        } else return client.logger.err(`error in removePunishment: could not find a punishment in "${type}" relating to the specified ID (${userID})`);
+        } else return client.logger.error(`error in removePunishment: could not find a punishment in "${type}" relating to the specified ID (${userID})`);
 
 
         // Request body
@@ -41,7 +41,7 @@ export default client => {
                 headers: meta
             });
         } catch (err) {
-            return client.logger.err(`error in removePunishment:\n${err.stack}`);
+            return client.logger.error(`error in removePunishment:\n${err.stack}`);
         }
     };
 };

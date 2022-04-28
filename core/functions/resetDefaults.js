@@ -13,7 +13,7 @@ export default client => {
                 headers: { "Authorization": `jwt ${secret.token}` }
             });
         } catch (err) {
-            return client.logger.err(`error in resetDefaults:\n${err.stack}`);
+            return client.logger.error(`error in resetDefaults:\n${err.stack}`);
         }
 
         // URL to send POST request to
@@ -29,7 +29,7 @@ export default client => {
             });
             return res.status;
         } catch (err) {
-            return client.logger.err(`error in restDefaults:\n${err.stack}`);
+            return client.logger.error(`error in restDefaults:\n${err.stack}`);
         }
     };
 };

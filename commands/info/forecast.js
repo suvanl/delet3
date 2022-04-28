@@ -1,9 +1,9 @@
 import fetch from "node-fetch";
-import moment from "moment";
 import Canvas from "canvas";
-//import { createCanvas, loadImage, registerFont } from "canvas";
+import { DateTime } from "luxon";
 import { MessageAttachment } from "discord.js";
 import { stripIndents } from "common-tags";
+import { commandOptions } from "redis";
 import { sep } from "path";
 
 const { OWM_KEY } = process.env;
@@ -44,7 +44,7 @@ export const run = async (client, message, args) => {
     const { lat, lon } = current.coord;
     const { country } = current.sys;
     const { name } = current;
-
+    
     // Get forecast data
     const data = await getForecast(lat, lon, lang, OWM_KEY);
 
@@ -55,6 +55,11 @@ export const run = async (client, message, args) => {
     // If using an application command, defer the response
     else
         await message.deferReply();
+
+
+    // If an image for the requested location's forecast exissts in the cache, send the image attachment and return
+    const cachedImg = await client.redis.get(commandOptions({ returnBuffers: true }), `forecast_${name.replace(/ /g, "-")}_${country}`);
+    if (cachedImg) return sendImageAttachment(message, cachedImg, true);
 
     // #region IMAGE GENERATION
 
@@ -89,9 +94,10 @@ export const run = async (client, message, args) => {
     ctx.fillText(`${name}, ${country}`, 73, 102);
 
     // Current day and conditions
+
     ctx.font = "30px Inter Bold";
     ctx.fillStyle = mainFillStyle;
-    ctx.fillText(`${moment.utc(moment.unix(data.current.dt + data.timezone_offset)).format("dddd")}, ${data.current.weather[0].description}`, 73, 200);
+    ctx.fillText(`${DateTime.fromSeconds(data.current.dt + data.timezone_offset).toUTC().toFormat("cccc")}, ${data.current.weather[0].description}`, 73, 200);
 
     // Icon
     const currentIcon = await Canvas.loadImage(`${iconURL}/${data.current.weather[0].icon}@2x.png`);
@@ -121,11 +127,11 @@ export const run = async (client, message, args) => {
     ctx.fillStyle = mainFillStyle;
 
     // Hours
-    ctx.fillText(moment.utc(moment.unix(data.hourly[1].dt + data.timezone_offset)).format("HH:mm"), 528, 228);
-    ctx.fillText(moment.utc(moment.unix(data.hourly[2].dt + data.timezone_offset)).format("HH:mm"), 598, 228);
-    ctx.fillText(moment.utc(moment.unix(data.hourly[3].dt + data.timezone_offset)).format("HH:mm"), 668, 228);
-    ctx.fillText(moment.utc(moment.unix(data.hourly[4].dt + data.timezone_offset)).format("HH:mm"), 738, 228);
-    ctx.fillText(moment.utc(moment.unix(data.hourly[5].dt + data.timezone_offset)).format("HH:mm"), 808, 228);
+    ctx.fillText(DateTime.fromSeconds(data.hourly[1].dt + data.timezone_offset).toUTC().toFormat("HH:mm"), 528, 228);
+    ctx.fillText(DateTime.fromSeconds(data.hourly[2].dt + data.timezone_offset).toUTC().toFormat("HH:mm"), 598, 228);
+    ctx.fillText(DateTime.fromSeconds(data.hourly[3].dt + data.timezone_offset).toUTC().toFormat("HH:mm"), 668, 228);
+    ctx.fillText(DateTime.fromSeconds(data.hourly[4].dt + data.timezone_offset).toUTC().toFormat("HH:mm"), 738, 228);
+    ctx.fillText(DateTime.fromSeconds(data.hourly[5].dt + data.timezone_offset).toUTC().toFormat("HH:mm"), 808, 228);
 
     // Hourly icons
     const hour1 = await Canvas.loadImage(`${iconURL}/${data.hourly[1].weather[0].icon}.png`);
@@ -153,14 +159,14 @@ export const run = async (client, message, args) => {
     // D a i l y    f o r e c a s t
 
     // Day names
-    ctx.font = "30px Inter Bold";
-    ctx.fillText(moment.utc(moment.unix(data.daily[0].dt + data.timezone_offset)).format("ddd"), 73, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[1].dt + data.timezone_offset)).format("ddd"), 203, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[2].dt + data.timezone_offset)).format("ddd"), 330, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[3].dt + data.timezone_offset)).format("ddd"), 450, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[4].dt + data.timezone_offset)).format("ddd"), 578, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[5].dt + data.timezone_offset)).format("ddd"), 700, 370);
-    ctx.fillText(moment.utc(moment.unix(data.daily[6].dt + data.timezone_offset)).format("ddd"), 825, 370);
+    ctx.font = "30px Inter Bold";    
+    ctx.fillText(DateTime.fromSeconds(data.daily[0].dt + data.timezone_offset).toUTC().toFormat("ccc"), 73, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[1].dt + data.timezone_offset).toUTC().toFormat("ccc"), 203, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[2].dt + data.timezone_offset).toUTC().toFormat("ccc"), 330, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[3].dt + data.timezone_offset).toUTC().toFormat("ccc"), 450, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[4].dt + data.timezone_offset).toUTC().toFormat("ccc"), 578, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[5].dt + data.timezone_offset).toUTC().toFormat("ccc"), 700, 370);
+    ctx.fillText(DateTime.fromSeconds(data.daily[6].dt + data.timezone_offset).toUTC().toFormat("ccc"), 825, 370);
 
     // Daily icons
     const day0 = await Canvas.loadImage(`${iconURL}/${data.daily[0].weather[0].icon}@2x.png`);
@@ -202,17 +208,29 @@ export const run = async (client, message, args) => {
 
     // #endregion
 
+    // Calculate TTL (time to live) for the image in cache - all cached items expire on the hour (e.g., at 10:00, 11:00, etc)
+    // formula: TTL = 3600 - ((minute * 60) + second)
+    const timeNow = DateTime.now().toObject();
+    const ttl = 3600 - ((timeNow.minute * 60) + timeNow.second);
+
+    // Save image to cache (Redis)
+    const save = await client.redis.set(`forecast_${name.replace(/ /g, "-")}_${country}`, canvas.toBuffer(), { EX: ttl, NX: true });
+    if (save !== "OK") client.logger.warn(`forecast: Redis SET did not return OK, instead returned ${save}`);
+
     // Create and send attachment
-    const attachment = new MessageAttachment(canvas.toBuffer(), "forecast.png");
-    const filesObj = { files: [attachment] };
-    
-    if (message.type !== "APPLICATION_COMMAND")
-        message.reply(filesObj);
-    else
-        message.editReply(filesObj);
+    return sendImageAttachment(message, canvas.toBuffer(), false);
 };
 
 // #region Helper Functions
+
+// Sends the image as an attachment
+const sendImageAttachment = (message, buffer, isFromCache) => {
+    const attachment = new MessageAttachment(buffer, isFromCache ? "forecast_cached.png" : "forecast.png");
+    const filesObj = { files: [attachment] };
+    
+    if (message.type !== "APPLICATION_COMMAND") message.reply(filesObj);
+    else message.editReply(filesObj);
+};
 
 // Obtains current weather data (to get lat/lon values)
 const getCurrent = async (loc, lang, key) => {
@@ -221,7 +239,6 @@ const getCurrent = async (loc, lang, key) => {
     return await res.json();
 };
 
-
 // Fetches forecast data for the specified location
 const getForecast = async (lat, lon, lang, key) => {
     // Send GET request to OWM One Call API for forecast data
@@ -229,7 +246,6 @@ const getForecast = async (lat, lon, lang, key) => {
     const res = await fetch(url);
     return await res.json();
 };
-
 
 // Function returning a boolean stating whether it is night (past sunset) in the requested area
 const isNight = data => {

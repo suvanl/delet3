@@ -41,7 +41,7 @@ export const run = async (client, message, args) => {
     } catch (err) {
         // Inform the user if an error occurs while updating the guild's language and log the error
         message.channel.send(`<:x_:688400118327672843> ${client.l10n(message, "settings.error")}`);
-        return client.logger.err(`Error changing language:\n${err.stack}`);
+        return client.logger.error(`Error changing language:\n${err.stack}`);
     }
 };
 

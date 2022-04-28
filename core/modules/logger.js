@@ -1,35 +1,34 @@
 import chalk from "chalk";
-import moment from "moment";
+import { DateTime } from "luxon";
 
-export const log = (content, type = "log") => {
-    const z = moment().format("Z");
-    const tz = !z.includes(":30") ? z.replace(/0|:/g, "") : z;
-    const timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")} ${z === "+00:00" ? "UTC" : `UTC${tz}`} |`;
+export const log = (content, category = "log") => {
+    const offset = DateTime.now().toFormat("Z");
+    const timestamp = `${DateTime.now().toFormat("y-MM-dd HH:mm:ss")} ${offset === "0" ? "" : `UTC${offset}`} |`;
 
-    switch (type) {
+    switch (category) {
         case "cmd": {
-            return console.log(`${timestamp} ${chalk.blue(type.toUpperCase())} » ${content}`);
+            return console.log(`${timestamp} ${chalk.blue(category.toUpperCase())} » ${content}`);
         }
         case "app": {
-            return console.log(`${timestamp} ${chalk.magenta(type.toUpperCase())} » ${content}`);
+            return console.log(`${timestamp} ${chalk.magenta(category.toUpperCase())} » ${content}`);
         }
-        case "dbg": {
-            return console.log(`${timestamp} ${chalk.yellow(type.toUpperCase())} » ${content}`);
+        case "debug": {
+            return console.log(`${timestamp} ${chalk.yellow(category.toUpperCase())} » ${content}`);
         }
-        case "err": {
-            return console.log(`${timestamp} ${chalk.bgRed(type.toUpperCase())} » ${content}`);
+        case "error": {
+            return console.log(`${timestamp} ${chalk.bgRed(category.toUpperCase())} » ${content}`);
         }
-        case "inf": {
-            return console.log(`${timestamp} ${chalk.bgBlue(type.toUpperCase())} » ${content}`);
+        case "info": {
+            return console.log(`${timestamp} ${chalk.bgBlue(category.toUpperCase())} » ${content}`);
         }
         case "log": {
-            return console.log(`${timestamp} ${chalk.grey(type.toUpperCase())} » ${content}`);
+            return console.log(`${timestamp} ${chalk.white(category.toUpperCase())} » ${content}`);
         }
-        case "rdy": {
-            return console.log(`${timestamp} ${chalk.green(type.toUpperCase())} » ${content}`);
+        case "ready": {
+            return console.log(`${timestamp} ${chalk.green(category.toUpperCase())} » ${content}`);
         }
-        case "wrn": {
-            return console.log(`${timestamp} ${chalk.bgYellow(type.toUpperCase())} » ${content}`);
+        case "warn": {
+            return console.log(`${timestamp} ${chalk.bgYellow(category.toUpperCase())} » ${content}`);
         }
         default: throw new TypeError("Invalid logger type.");
     }
@@ -37,7 +36,7 @@ export const log = (content, type = "log") => {
 
 export const cmd = (...args) => log(...args, "cmd");
 export const app = (...args) => log(...args, "app");
-export const dbg = (...args) => log(...args, "dbg");
-export const err = (...args) => log(...args, "err");
-export const inf = (...args) => log(...args, "inf");
-export const wrn = (...args) => log(...args, "wrn");
+export const debug = (...args) => log(...args, "debug");
+export const error = (...args) => log(...args, "error");
+export const info = (...args) => log(...args, "info");
+export const warn = (...args) => log(...args, "warn");

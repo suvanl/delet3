@@ -47,7 +47,7 @@
     "mod.embed.action": "Aktion: %act%",
     "mod.embed.member": "Mitglied: %user%",
     "mod.embed.userID": "Benutzer ID: %id%",
-    "mod.embed.duration": "Dauer: %dur%",
+    "mod.embed.duration": "Expires: %dur%",
     "mod.embed.reason": "Grund: %rsn%",
     "mod.embed.issued": "Ausgestellt durch %user%",
     "mod.embed.case": "Fall Nummer %num%",

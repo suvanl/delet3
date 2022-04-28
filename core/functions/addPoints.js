@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default client => {
     // Add points to a user object (can be of type "triviaPoints" or "points")
@@ -15,7 +15,7 @@ export default client => {
 
         // Define params for PUT request
         const url = `${process.env.URL}/users/${u[0]._id}`;
-        const body = { [type]: amount, "pointsUpdatedTimestamp": moment().unix() };
+        const body = { [type]: amount, "pointsUpdatedTimestamp": DateTime.now().toUnixInteger() };
 
         const secret = await client.genSecret();
         const meta = { "Content-Type": "application/json", "Authorization": `jwt ${secret.token}` };
@@ -28,7 +28,7 @@ export default client => {
                 headers: meta
             });
         } catch (err) {
-            return client.logger.err(`error in addPoints:\n${err.stack}`);
+            return client.logger.error(`error in addPoints:\n${err.stack}`);
         }
     };
 };

@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { stripIndents } from "common-tags";
 import { MessageEmbed } from "discord.js";
 
@@ -72,11 +72,11 @@ export const run = async (client, message, args) => {
 
     // Predefine some of the data
     const flag = `:flag_${data.sys.country.toLowerCase()}:`;
-    const updatedTime = moment.utc(moment.unix(data.dt + data.timezone)).format("HH:mm");
+    const updatedTime = DateTime.fromSeconds(data.dt + data.timezone).toUTC().toFormat("HH:mm");
     const temp = Math.round(data.main.temp);
     const wind = `${(Math.round(data.wind.speed) * 3.6).toFixed()}${client.l10n(message, "weather.kmh")} ${windDirection}`;
-    const sunrise = moment.utc(moment.unix(data.sys.sunrise + data.timezone)).format("HH:mm");
-    const sunset = moment.utc(moment.unix(data.sys.sunset + data.timezone)).format("HH:mm");
+    const sunrise = DateTime.fromSeconds(data.sys.sunrise + data.timezone).toUTC().toFormat("HH:mm");
+    const sunset = DateTime.fromSeconds(data.sys.sunset + data.timezone).toUTC().toFormat("HH:mm");
 
     // Construct & send embed
     const embed = new MessageEmbed()

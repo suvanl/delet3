@@ -17,7 +17,7 @@ export default async (client, interaction) => {
 
     // Get user/member's permLevel
     const level = client.permLevel(interaction);
-    
+
     try {
         // Run the slash command
         await slashCmd.run(client, interaction, level);
@@ -27,7 +27,7 @@ export default async (client, interaction) => {
         client.logger.app(log);
     } catch (err) {
         // Log the error
-        client.logger.err(err.stack);
+        client.logger.error(err.stack);
 
         // If the interaction has already been replied to, send a follow-up message informing the user that an error occurred
         if (interaction.replied) interaction.followUp({ content: `${client.l10n(interaction, "error")} ${err.message}`, ephemeral: true });

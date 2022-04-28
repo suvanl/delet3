@@ -1,18 +1,21 @@
 {
   "name": "delet3",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.2",
   "description": "delet³ for Discord",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "lint": "eslint .",
-    "start": "node index.js",
-    "start-deploy": "node index.js --deploy",
-    "dev": "nodemon",
-    "dev-deploy": "nodemon index.js --deploy",
+    "start": "node --experimental-specifier-resolution=node index.js",
+    "start-deploy": "node --experimental-specifier-resolution=node index.js --deploy",
+    "dev": "nodemon --experimental-specifier-resolution=node",
+    "dev-deploy": "nodemon --experimental-specifier-resolution=node index.js --deploy",
     "prod": "pm2 start delet3",
-    "prod-create": "pm2 start index.js --name \"delet3\" -- --color && pm2 monit",
+    "prod-create": "pm2 start --node-args=\"--experimental-specifier-resolution=node\" index.js --name \"delet3\" -- --color && pm2 monit",
     "prod-monit": "pm2 start delet3 && pm2 monit"
+  },
+  "engines": {
+    "node": ">=16.9.0"
   },
   "repository": {
     "type": "git",
@@ -25,21 +28,22 @@
   },
   "homepage": "https://github.com/suvanl/delet3#readme",
   "dependencies": {
-    "@discordjs/rest": "^0.1.0-canary.0",
+    "@discordjs/rest": "^0.3.0",
     "bcryptjs": "^2.4.3",
     "canvas": "^2.9.1",
     "chalk": "^5.0.1",
     "common-tags": "^1.8.2",
-    "discord-api-types": "^0.25.2",
+    "discord-api-types": "^0.31.1",
     "discord.js": "^13.6.0",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.0",
     "html-entities": "^2.3.2",
     "jsonwebtoken": "^8.5.1",
     "klaw": "^4.0.1",
-    "moment": "^2.29.2",
+    "luxon": "^2.3.1",
     "mongoose": "^6.2.10",
     "mongoose-timestamp": "^0.6.0",
     "node-fetch": "^3.1.1",
+    "redis": "^4.0.6",
     "restify": "^8.6.0",
     "restify-errors": "^8.0.2",
     "restify-jwt-community": "^1.1.21",
@@ -47,6 +51,6 @@
   },
   "devDependencies": {
     "chai": "^4.3.4",
-    "eslint": "^7.25.0"
+    "eslint": "^8.13.0"
   }
 }

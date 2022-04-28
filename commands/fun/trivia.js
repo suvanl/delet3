@@ -201,7 +201,7 @@ export const run = async (client, message, args) => {
             <:x_:688400118327672843> **${client.l10n(message, "trivia.ans.wrong")}**
             ${client.l10n(message, "trivia.ans.info").replace(/%ans%/g, decode(quiz.correct_answer)).replace(/%choice%/g, choice)}`);
     } catch (err) {
-        client.logger.err(err.stack);
+        client.logger.error(err.stack);
         return message.channel.send(client.l10n(message, "error"));
     }
 };

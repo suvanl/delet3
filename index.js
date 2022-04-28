@@ -1,68 +1,32 @@
-/*-------------------------------------------------
+/*--------------------------------------------------------------------------------
  * delet³ for Discord
  * Copyright (c) 2022 suvanl. All rights reserved.
- * See LICENSE.md in project root for license info.
- *------------------------------------------------*/
-
-// TODO: refactor
-
+ * Licensed under the MIT license. See LICENSE.md in project root for license info.
+ *-------------------------------------------------------------------------------*/
 
 // Configure enviroment variables
 import "dotenv/config";
-const { JWT_SECRET, MONGO_STRING, PORT, TOKEN } = process.env;
-
-
-// Node.js version check
-import chalk from "chalk";
-import { stripIndents } from "common-tags";
-
-const nodeVer = process.version.slice(1);
-const minVer = "16.6.0";
-const recVer = "16.6";
-
-import semver from "semver";
-    
-if (!semver.satisfies(nodeVer, `>=${minVer}`))
-    throw new Error(chalk.red(`Node.js ${minVer} or higher is required - please update. v${recVer} is recommended.`));
-else
-   console.log(stripIndents`
-        Node.js version check ${chalk.green("passed")} ✔
-        min: ${chalk.red(minVer)} | recommended: ${chalk.green(recVer)} | current: ${chalk.underline.green(nodeVer)}\n`);
 
 // Import modules needed for bot initialisation
 import { Client, Collection } from "discord.js";
+import { createClient } from "redis";
 import { sep } from "path";
-import restify from "restify";
-import mongoose from "mongoose";
-import rjwt from "restify-jwt-community";
+import chalk from "chalk";
 import klaw from "klaw";
 import path from "path";
 import os from "os";
 
+// Import settings, logger and useful functions
 import permLevels from "./core/settings/permLevels.js";
 import * as logger from "./core/modules/logger.js";
 import functions from "./core/functions";
 import startup from "./startup";
-import routes from "./api/routes";
 
+// Run startup methods
+startup.nodeVersionCheck();
+startup.initServer();
 
-// Set up REST API server
-const server = restify.createServer();
-server.use(restify.plugins.bodyParser());
-server.use(rjwt({ secret: JWT_SECRET }).unless({ path: ["/auth"] }));
-server.listen(PORT, async () => {
-    await mongoose.connect(MONGO_STRING);
-});
-
-// Create connection to MongoDB database via REST API
-const db = mongoose.connection;
-db.on("error", err => console.log(err));
-db.once("open", () => {
-    Object.values(routes).forEach(route => route(server));
-    logger.log(`REST API server started on port ${chalk.green(PORT)}`, "rdy");
-});
-
-// Bot initialisation
+// Initialise delet3
 const init = async () => {
     console.log(`Initialising ${chalk.bold("delet³")}...\n`);
 
@@ -73,11 +37,23 @@ const init = async () => {
         partials: ["CHANNEL"]
     });
 
-    // Get permission levels
+    // Attach permission levels to client object
     client.permLevels = permLevels;
 
     // Attach custom console logger as a property on the client object
     client.logger = logger;
+
+    // Create Redis client and connect to server
+    const redisClient = createClient();
+    await redisClient.connect();
+
+    // Listen for Redis errors
+    redisClient.on("error", err => {
+        throw new Error(err.message);
+    });
+
+    // Attach Redis client to Discord client object
+    client.redis = redisClient;
 
     // Require custom misc functions
     import("./core/functions/misc.js");
@@ -91,8 +67,8 @@ const init = async () => {
     client.slashCommands = new Collection();
 
     // Load events
-    startup.bindEvents(client);
-    client.logger.log("Successfully loaded events");
+    const loadedEvents = await startup.bindEvents(client);
+    client.logger.log(`Successfully loaded ${chalk.cyan(loadedEvents)} events`);
 
     // Load ApplicationCommands:
     // Initialise empty array for ApplicationCommand names
@@ -126,7 +102,7 @@ const init = async () => {
             // Load each command that's found
             const res = await client.loadCommand(file.dir, file.name);
             // If the loadCommand function is unsuccessful, log the error
-            if (res !== true) client.logger.err(res);
+            if (res !== true) client.logger.error(res);
         })
         .on("end", () => client.logger.log(`Successfully loaded ${chalk.blue(cmdArr.length)} commands`));
 
@@ -140,7 +116,7 @@ const init = async () => {
     });
 
     // Log into Discord
-    client.login(TOKEN);
+    client.login(process.env.TOKEN);
 };
 
 init();

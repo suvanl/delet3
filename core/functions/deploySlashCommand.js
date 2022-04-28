@@ -31,7 +31,7 @@ export default client => {
 
         (async () => {
             try {
-                client.logger.inf("Refreshing ApplicationCommands...");
+                client.logger.info("Refreshing ApplicationCommands...");
 
                 // Deploy guild-only slash commands
                 await rest.put(Routes.applicationGuildCommands(client.user.id, DEV_GUILD_ID), { body: guildCommands });
@@ -39,9 +39,9 @@ export default client => {
                 // Deploy global slash commands
                 await rest.put(Routes.applicationCommands(client.user.id), { body: globalCommands });
 
-                client.logger.inf(`Successfully reloaded ApplicationCommands: ${chalk.blue(guildCommands.length)} guild-only; ${chalk.blue(globalCommands.length)} global.`);
+                client.logger.info(`Successfully reloaded ApplicationCommands: ${chalk.blue(guildCommands.length)} guild-only; ${chalk.blue(globalCommands.length)} global.`);
             } catch (err) {
-                client.logger.err(err.stack);
+                client.logger.error(err.stack);
             }
         })();
     };

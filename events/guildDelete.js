@@ -14,7 +14,7 @@ export default async (client, guild) => {
             headers: meta
         });
     } catch (err) {
-        return client.logger.err(`Error deleting guild data:\n${err.stack}`);
+        return client.logger.error(`Error deleting guild data:\n${err.stack}`);
     }
 
     // Fetch all users
@@ -33,10 +33,10 @@ export default async (client, guild) => {
                 headers: meta
             });
         } catch (err) {
-            return client.logger.err(`Error deleting guild user data:\n${err.stack}`);
+            return client.logger.error(`Error deleting guild user data:\n${err.stack}`);
         }
     });
     
     // Log name/ID of guild
-    client.logger.inf(`${chalk.blue("guildDelete")}: "${chalk.cyan(guild.name)}" (${guild.id})`);
+    client.logger.info(`${chalk.blue("guildDelete")}: "${chalk.cyan(guild.name)}" (${guild.id})`);
 };

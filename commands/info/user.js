@@ -1,4 +1,4 @@
-import moment from "moment";
+import { DateTime } from "luxon";
 import { MessageEmbed } from "discord.js";
 import { stripIndents } from "common-tags";
 import { badge, statusIcon } from "../../core/util/data";
@@ -101,10 +101,10 @@ export const run = async (client, message, args) => {
             **${user.tag}** ${badges} | ${statusEmoji} ${member.presence?.activities.length === 0 ? status[member.presence.status].toTitleCase() : activity}
 
             💥 **${client.l10n(message, "user.created")}**
-            <t:${moment.utc(user.createdTimestamp).unix()}>
+            <t:${DateTime.fromJSDate(user.createdAt).toUTC().toUnixInteger()}>
 
             🏠 **${client.l10n(message, "user.joined")}**
-            <t:${moment.utc(message.guild.members.cache.get(member.id).joinedTimestamp).unix()}>
+            <t:${DateTime.fromJSDate(message.guild.members.cache.get(member.id).joinedAt).toUTC().toUnixInteger()}>
 
             🧮 **${client.l10n(message, "points").toTitleCase()}**
             Trivia: ${data.triviaPoints} • ${client.l10n(message, "user.points.regular")}: ${data.points}
