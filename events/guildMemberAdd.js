@@ -49,6 +49,9 @@ export default async (client, member) => {
 
     // If verificationEnabled is set to true...
     if (settings.verificationEnabled === true) {
+        // Find the mod log channel (required for error logging)
+        const modLog = client.findChannelByName(member.guild, settings.modLogChannel);
+
         // Find the "_unverified_user" role. The underscore prefix exists to avoid role name clashes.
         let unverifiedRole = client.findRoleByName(member.guild, "_unverified_user");
         if (!unverifiedRole) {
@@ -59,7 +62,7 @@ export default async (client, member) => {
                 // Find the role again, now that it has been created
                 unverifiedRole = client.findRoleByName(member.guild, "_unverified_user");
             } catch (err) {
-                // TODO: inform server staff (via modlog) about error
+                client.sendErrorToModLog(modLog, settings, "guildMemberAdd/Verification Error", err);
                 client.logger.error(`Error creating '_unverified_user' role. Guild info: '${member.guild.name}' (${member.guild.id}).\n${err}`);
             }
         }
@@ -83,7 +86,7 @@ export default async (client, member) => {
                 // Find the channel again, now that it has been created
                 verifChannel = await client.findChannelByName(member.guild, settings.verificationChannel);
             } catch (err) {
-                // TODO: inform server staff (via modlog) about error
+                client.sendErrorToModLog(modLog, settings, "guildMemberAdd/Verification Error", err);
                 client.logger.error(`Error creating verificationChannel. Guild info: '${member.guild.name}' (${member.guild.id}).\n${err}`);
             }
         }
@@ -92,7 +95,7 @@ export default async (client, member) => {
         try {
             await member.roles.add(unverifiedRole);
         } catch (err) {
-            // TODO: inform server staff (via modlog) about error
+            client.sendErrorToModLog(modLog, settings, "guildMemberAdd/Verification Error", err);
             client.logger.error(`Error giving '_unverified_user' role to ${member.user.tag} (${member.user.id}). Guild info: '${member.guild.name}' (${member.guild.id}).\n${err}`);
         }
 

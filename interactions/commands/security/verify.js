@@ -33,6 +33,9 @@ export const run = async (client, interaction) => {
         return interaction.reply({ content: "❌ Only unverified users can use this command.", ephemeral: true });
     }
 
+    // Find mod log (required for error logging)
+    const modLog = client.findChannelByName(interaction.guild, interaction.settings.modLogChannel);
+
     // Create "Verify" and "Cancel" buttons for this interaction
     const verifyButton = new MessageButton()
         .setCustomId("verify")
@@ -65,8 +68,9 @@ export const run = async (client, interaction) => {
                 try {
                     await interaction.member.roles.remove(unverifiedRole);
                 } catch (err) {
+                    client.sendErrorToModLog(modLog, interaction.settings, "Verification System Error", err);
                     await i.deferUpdate();
-                    await i.editReply(`<:x_:688400118327672843> An error occurred: ${err.message}`);
+                    await i.editReply({ content: `<:x_:688400118327672843> An error occurred: ${err.message}`, components: [] });
                     return client.logger.error(err);
                 }
             }
@@ -87,9 +91,9 @@ export const run = async (client, interaction) => {
                     // Find the newly created verifiedRole
                     verifiedRole = client.findRoleByName(interaction.guild, interaction.settings.verifiedRole);
                 } catch (err) {
-                    // TODO: inform server admins (via modlog) that role creation was unsuccessful
+                    client.sendErrorToModLog(modLog, interaction.settings, "Verification System Error", err);
                     await i.deferUpdate();
-                    await i.editReply(`<:x_:688400118327672843> An error occurred: ${err.message}`);
+                    await i.editReply({ content: `<:x_:688400118327672843> An error occurred: ${err.message}`, components: [] });
                     return client.logger.err(err);
                 }
             }
@@ -98,8 +102,9 @@ export const run = async (client, interaction) => {
             try {
                 await interaction.member.roles.add(verifiedRole);
             } catch (err) {
+                client.sendErrorToModLog(modLog, interaction.settings, "Verification System Error", err);
                 await i.deferUpdate();
-                await i.editReply(`<:x_:688400118327672843> An error occurred: ${err.message}`);
+                await i.editReply({ content: `<:x_:688400118327672843> An error occurred: ${err.message}`, components: [] });
                 return client.logger.error(err);
             }
 
