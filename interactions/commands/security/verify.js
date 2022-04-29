@@ -12,7 +12,7 @@ const verifiedRolePerms = [
 export const run = async (client, interaction) => {
     // Make command unavailable if verificationEnabled is false
     if (!interaction.settings.verificationEnabled) return interaction.reply({
-        content: "ℹ This command cannot be used because the verification system has not been enabled.",
+        content: "ℹ This command cannot be used because the verification system has not been enabled on this server.",
         ephemeral: true
     });
 
