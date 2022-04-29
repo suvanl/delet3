@@ -15,6 +15,11 @@ export default async (client, interaction) => {
     // Fetch guild/default settings from REST API
     interaction.settings = await client.getSettings(interaction.guild);
 
+    // Prevent interactions from being used in the verificationChannel (except the /verify command)
+    if (interaction.channel.name === interaction.settings.verificationChannel && interaction.commandName !== "verify") {
+        return interaction.reply({ content: "Only the `/verify` command can be used in the verification channel.", ephemeral: true });
+    }
+
     // Get user/member's permLevel
     const level = client.permLevel(interaction);
 
