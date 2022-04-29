@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import timestamp from "mongoose-timestamp";
 
+// TODO: use cleaner settings structure (e.g., a single nested object per category within the "settings" object)
 const GuildSchema = new mongoose.Schema({
     guildID: {
         type: String,
@@ -19,6 +20,13 @@ const GuildSchema = new mongoose.Schema({
     },
     activePunishments: {
         bans: {
+            type: Array,
+            default: [],
+            trim: true
+        }
+    },
+    verificationQueue: {
+        users: {
             type: Array,
             default: [],
             trim: true
@@ -87,6 +95,21 @@ const GuildSchema = new mongoose.Schema({
         prefix: {
             type: String,
             default: "%",
+            trim: true
+        },
+        verificationEnabled: {
+            type: Boolean,
+            default: false,
+            trim: true
+        },
+        verificationChannel: {
+            type: String,
+            default: "verify-me",
+            trim: true
+        },
+        verifiedRole: {
+            type: String,
+            default: "_verified",
             trim: true
         },
         welcomeChannel: {

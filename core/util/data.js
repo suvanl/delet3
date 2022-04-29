@@ -85,6 +85,8 @@ export const friendlySettings = {
     "nickRequestEnabled": "nick request enabled",
     "pointsEnabled": "points system enabled",
     "pointsCooldown": "points cooldown",
+    "verificationChannel": "verification channel",
+    "verificationEnabled": "verification system enabled",
     "welcomeChannel": "welcome channel",
     "welcomeMessage": "welcome message",
     "welcomeEnabled": "welcome enabled"
@@ -118,6 +120,12 @@ export const nickSettingsKey = {
 export const ptsSettingsKey = {
     1: "pointsCooldown",
     2: "pointsEnabled"
+};
+
+// Verify command
+export const verifSettingsKey = {
+    1: "verificationChannel",
+    2: "verificationEnabled"
 };
 
 // Welcome command

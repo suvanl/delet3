@@ -1,7 +1,10 @@
 import fetch from "node-fetch";
 
 export default async (client, member) => {
-    // Delete guildMember's data from DB
+    // Attempt to remove the user from the verificationQueue if they are in it
+    await client.removeFromVerifQueue(member.guild, member.user.id);
+
+    // Request parameters
     const secret = await client.genSecret();
     const meta = { "Authorization": `jwt ${secret.token}` };
     
@@ -14,7 +17,7 @@ export default async (client, member) => {
     // Find guildMember by user ID
     const user = f.filter(u => u.userID === member.user.id);
 
-    // Delete this guildMember from DB (using their unique ID)
+    // Delete this guildMember from DB (using their unique ObjectId)
     const url = `${process.env.URL}/users/${user[0]._id}`;
     try {
         await fetch(url, {

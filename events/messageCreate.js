@@ -15,6 +15,9 @@ export default async (client, message) => {
     // Fetch guild/default settings from REST API
     const settings = message.settings = await client.getSettings(message.guild);
 
+    // Prevent commands from being used in the verificationChannel
+    if (message.channel.name === message.settings.verificationChannel) return;
+
     // Respond with prefix if mentioned
     const mention = new RegExp(`^<@!?${client.user.id}> `);
     if (message.content.match(mention)) return message.channel.send(`${client.l10n(message, "help.prefix")} \`${settings.prefix}\`.`);
