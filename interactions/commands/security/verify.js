@@ -116,6 +116,9 @@ export const run = async (client, interaction) => {
                 content: "<:tick:688400118549970984> **Verification complete!**\nYou should no longer have access to this channel.",
                 components: []
             });
+
+            // TODO: send embed instead? containing more info such as the verificationQueue joinedTimestamp of the user
+            modLog.send(`ℹ New User Verified: ${interaction.user} (${interaction.user.id})`);
         }
     });
 };
