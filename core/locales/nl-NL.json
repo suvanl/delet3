@@ -137,6 +137,8 @@
     "settings.pointsCooldown": "Points system cooldown",
     "settings.nickRequestChannel": "Nick request channel",
     "settings.nickRequestEnabled": "Nick request system on/off",
+    "settings.verificationChannel": "Verification channel",
+    "settings.verificationEnabled": "Verification system on/off",
     "settings.invalidModLogData": "Invalid mod-log data type(s) provided",
     "settings.invalidModLogData.info": "The valid data types are: %types%.",
     "spotify.notListening": "Not listening to a song",
