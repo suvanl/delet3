@@ -9,10 +9,28 @@ const verifiedRolePerms = [
     Permissions.FLAGS.USE_APPLICATION_COMMANDS
 ];
 
-export const run = async (client, interaction) => {   
+export const run = async (client, interaction) => {
+    // Make command unavailable if verificationEnabled is false
+    if (!interaction.settings.verificationEnabled) return interaction.reply({
+        content: "ℹ This command cannot be used because the verification system has not been enabled.",
+        ephemeral: true
+    });
+
+    // Find verificationChannel
+    const verificationChannel = client.findChannelByName(interaction.guild, interaction.settings.verificationChannel);
+
     // Ensure this command can only be run in the verificationChannel
-    if (interaction.channel.name !== interaction.settings.verificationChannel) {
-        return interaction.reply({ content: "Not in verificationChannel.", ephemeral: true });
+    if (interaction.channel !== verificationChannel) {
+        return interaction.reply({ 
+            content: `ℹ This command can only be used in the verification channel (${verificationChannel ? verificationChannel : `\`#${interaction.settings.verificationChannel}\``})`,
+            ephemeral: true
+        });
+    }
+
+    // Prevent verified users from running this command if they have access to the verificationChannel
+    const guildData = await client.getGuild(interaction.guild);
+    if (!guildData.verificationQueue.users.some(e => e.id === interaction.user.id)) {
+        return interaction.reply({ content: "❌ Only unverified users can use this command.", ephemeral: true });
     }
 
     // Create "Verify" and "Cancel" buttons for this interaction
@@ -35,7 +53,7 @@ export const run = async (client, interaction) => {
     const collector = interaction.channel.createMessageComponentCollector({ filter, time: 30000, idle: 30000, dispose: true });
     collector.on("collect", async i => {
         // If cancel button is clicked
-        if (i.customId === "cancel") await i.update({ content: "Verification cancelled. Use `/verify` to start again.", components: [] });
+        if (i.customId === "cancel") await i.update({ content: "ℹ **Verification cancelled**\nUse `/verify` to start again.", components: [] });
 
         // If verify button is clicked
         if (i.customId === "verify") {
@@ -48,7 +66,7 @@ export const run = async (client, interaction) => {
                     await interaction.member.roles.remove(unverifiedRole);
                 } catch (err) {
                     await i.deferUpdate();
-                    await i.editReply(`An error occurred: ${err.message}`);
+                    await i.editReply(`<:x_:688400118327672843> An error occurred: ${err.message}`);
                     return client.logger.error(err);
                 }
             }
@@ -71,7 +89,7 @@ export const run = async (client, interaction) => {
                 } catch (err) {
                     // TODO: inform server admins (via modlog) that role creation was unsuccessful
                     await i.deferUpdate();
-                    await i.editReply(`An error occurred: ${err.message}`);
+                    await i.editReply(`<:x_:688400118327672843> An error occurred: ${err.message}`);
                     return client.logger.err(err);
                 }
             }
@@ -81,7 +99,7 @@ export const run = async (client, interaction) => {
                 await interaction.member.roles.add(verifiedRole);
             } catch (err) {
                 await i.deferUpdate();
-                await i.editReply(`An error occurred: ${err.message}`);
+                await i.editReply(`<:x_:688400118327672843> An error occurred: ${err.message}`);
                 return client.logger.error(err);
             }
 
@@ -89,7 +107,10 @@ export const run = async (client, interaction) => {
             await client.removeFromVerifQueue(interaction.guild, interaction.user.id);
 
             await i.deferUpdate();
-            await i.editReply({ content: "Verification complete! You should no longer have access to this channel.", components: [] } );
+            await i.editReply({
+                content: "<:tick:688400118549970984> **Verification complete!**\nYou should no longer have access to this channel.",
+                components: []
+            });
         }
     });
 };
