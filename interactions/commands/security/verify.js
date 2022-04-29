@@ -80,7 +80,7 @@ export const run = async (client, interaction) => {
 
             // If the verifiedRole does not exist...
             if (!verifiedRole) {
-                // Create the role
+                // Create the role with the name set in the current guild's settings
                 try {
                     await interaction.guild.roles.create({
                         name: interaction.settings.verifiedRole,
