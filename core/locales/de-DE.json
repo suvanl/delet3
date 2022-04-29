@@ -137,6 +137,8 @@
     "settings.pointsCooldown": "Punkte System abklingzeit",
     "settings.nickRequestChannel": "Nick Anfrage channel",
     "settings.nickRequestEnabled": "Nick Anfrage System an/aus",
+    "settings.verificationChannel": "Verification channel",
+    "settings.verificationEnabled": "Verification system on/off",
     "settings.invalidModLogData": "Invalid mod-log data type(s) provided",
     "settings.invalidModLogData.info": "The valid data types are: %types%.",
     "spotify.notListening": "Du hörst die gerade kein Lied an",
