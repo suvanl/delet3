@@ -11,6 +11,7 @@ import getUsers from "./getUsers";
 import l10n from "./l10n";
 import loadCommand from "./loadCommand";
 import permLevel from "./permLevel";
+import removeFromVerifQueue from "./removeFromVerifQueue";
 import removePunishment from "./removePunishment";
 import resetDefaults from "./resetDefaults";
 import updateCaseNumber from "./updateCaseNumber";
@@ -31,6 +32,7 @@ export default {
     l10n,
     loadCommand,
     permLevel,
+    removeFromVerifQueue,
     removePunishment,
     resetDefaults,
     updateCaseNumber,
