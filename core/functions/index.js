@@ -1,5 +1,6 @@
 import addPoints from "./addPoints";
 import addPunishment from "./addPunishment";
+import addToVerifQueue from "./addToVerifQueue";
 import awaitReply from "./awaitReply";
 import deploySlashCommand from "./deploySlashCommand";
 import genSecret from "./genSecret";
@@ -19,6 +20,7 @@ import updateSettings from "./updateSettings";
 export default {
     addPoints,
     addPunishment,
+    addToVerifQueue,
     awaitReply,
     deploySlashCommand,
     genSecret,
