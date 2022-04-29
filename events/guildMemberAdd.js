@@ -1,4 +1,22 @@
 import fetch from "node-fetch";
+import { Permissions } from "discord.js";
+
+// verificationChannel permissionOverwrites
+const allowedAdminPerms = [
+    Permissions.FLAGS.VIEW_CHANNEL,
+    Permissions.FLAGS.SEND_MESSAGES,
+    Permissions.FLAGS.READ_MESSAGE_HISTORY,
+    Permissions.FLAGS.USE_APPLICATION_COMMANDS
+];
+
+const allowedUnverifiedUserPerms = [
+    Permissions.FLAGS.VIEW_CHANNEL,
+    Permissions.FLAGS.SEND_MESSAGES,
+    Permissions.FLAGS.USE_APPLICATION_COMMANDS
+];
+
+const findRole = (guild, roleName) => guild.roles.cache.find(r => r.name === roleName);
+const findChannel = (guild, channelName) => guild.channels.cache.find(c => c.name === channelName);
 
 export default async (client, member) => {
     // Save new guildMember to DB
@@ -29,6 +47,64 @@ export default async (client, member) => {
 
         // Add the role (by ID) to the guildMember
         member.roles.add(role.id);
+    }
+
+    // TODO: remove logger.debug() calls
+
+    // If verificationEnabled is set to true...
+    if (settings.verificationEnabled === true) {
+        // Find the "_unverified_user" role. The underscore prefix exists to avoid role name clashes.
+        let unverifiedRole = findRole(member.guild, "_unverified_user");
+        if (!unverifiedRole) {
+            // Create the role if it doesn't already exist
+            client.logger.debug("'_unverified_user' role not found. Creating one now...");
+            try {
+                await member.guild.roles.create({ name: "_unverified_user", reason: "Required for delet3's verification system" });
+
+                // Find the role again, now that it has been created
+                unverifiedRole = findRole(member.guild, "_unverified_user");
+            } catch (err) {
+                // TODO: inform server staff (via modlog) about error
+                client.logger.error(`Error creating '_unverified_user' role. Guild info: '${member.guild.name}' (${member.guild.id}).\n${err}`);
+            }
+        }
+
+        // Find the verificationChannel defined in settings
+        let verifChannel = findChannel(member.guild, settings.verificationChannel);
+        if (!verifChannel) {
+            // Create the channel if it doesn't already exist
+            client.logger.debug("verificationChannel not found. Creating one now...");
+            try {
+                await member.guild.channels.create(settings.verificationChannel, {
+                    reason: "delet3 verification system",
+                    permissionOverwrites: [
+                        { id: member.guild.id, deny: [Permissions.FLAGS.VIEW_CHANNEL] },                       // @everyone
+                        { id: client.user.id, allow: allowedAdminPerms },                                      // delet3
+                        { id: findRole(member.guild, settings.adminRole), allow: allowedAdminPerms },          // adminRole
+                        { id: findRole(member.guild, settings.modRole), allow: allowedAdminPerms },            // modRole
+                        { id: findRole(member.guild, "_unverified_user"), allow: allowedUnverifiedUserPerms }  // _unverified_user
+                    ]
+                });
+
+                // Find the channel again, now that it has been created
+                verifChannel = await findChannel(member.guild, settings.verificationChannel);
+            } catch (err) {
+                // TODO: inform server staff (via modlog) about error
+                client.logger.error(`Error creating verificationChannel. Guild info: '${member.guild.name}' (${member.guild.id}).\n${err}`);
+            }
+        }
+
+        // Give the current member the unverifiedRole
+        client.logger.debug(`Giving the '_unverified_user' role to ${member.user.tag}`);
+        try {
+            await member.roles.add(unverifiedRole);
+        } catch (err) {
+            // TODO: inform server staff (via modlog) about error
+            client.logger.error(`Error giving '_unverified_user' role to ${member.user.tag} (${member.user.id}). Guild info: '${member.guild.name}' (${member.guild.id}).\n${err}`);
+        }
+
+        // Add the current member to the verificationQueue
+        await client.addToVerifQueue(member.guild, member.user.id);
     }
 
     // If welcomeEnabled is set to true...
