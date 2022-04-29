@@ -3,6 +3,8 @@ import addPunishment from "./addPunishment";
 import addToVerifQueue from "./addToVerifQueue";
 import awaitReply from "./awaitReply";
 import deploySlashCommand from "./deploySlashCommand";
+import findChannelByName from "./findChannelByName";
+import findRoleByName from "./findRoleByName";
 import genSecret from "./genSecret";
 import getGuild from "./getGuild";
 import getSettings from "./getSettings";
@@ -24,6 +26,8 @@ export default {
     addToVerifQueue,
     awaitReply,
     deploySlashCommand,
+    findChannelByName,
+    findRoleByName,
     genSecret,
     getGuild,
     getSettings,
