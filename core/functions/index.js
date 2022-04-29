@@ -16,6 +16,7 @@ import permLevel from "./permLevel";
 import removeFromVerifQueue from "./removeFromVerifQueue";
 import removePunishment from "./removePunishment";
 import resetDefaults from "./resetDefaults";
+import sendErrorToModLog from "./sendErrorToModLog";
 import updateCaseNumber from "./updateCaseNumber";
 import updateSettings from "./updateSettings";
 
@@ -39,6 +40,7 @@ export default {
     removeFromVerifQueue,
     removePunishment,
     resetDefaults,
+    sendErrorToModLog,
     updateCaseNumber,
     updateSettings
 };
