@@ -127,4 +127,4 @@ export const data = {
     defaultPermission: true
 };
 
-export const global = false;  // TODO: deploy
+export const global = true;
