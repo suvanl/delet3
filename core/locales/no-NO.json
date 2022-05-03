@@ -137,6 +137,8 @@
     "settings.pointsCooldown": "Poengsystem cooldown",
     "settings.nickRequestChannel": "Nick forespørsel kanal",
     "settings.nickRequestEnabled": "Nick forespørsel-systemet er av/på",
+    "settings.verificationChannel": "Verification channel",
+    "settings.verificationEnabled": "Verification system on/off",
     "settings.invalidModLogData": "Ugyldig datatype(r) gitt for mod-log",
     "settings.invalidModLogData.info": "De gyldige datatypene er: %types%.",
     "spotify.notListening": "Hører ikke på en sang",
