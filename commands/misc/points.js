@@ -2,11 +2,12 @@ import { MessageEmbed } from "discord.js";
 
 export const run = async (client, message, args) => {
     // Get user's current amount of points
-    const userData = await client.getUser(message.guild, message.author);
+    // Note that message.user (interaction.user) is required for this command's slash command equivalent
+    const userData = await client.getUser(message.guild, message.author || message.user);
     const points = userData.points;
 
     // Points leaderboard
-    const lbAliases = ["leaderboard", "lb"];
+    const lbAliases = ["leaderboard", "lb", "true"];
     if (args[0] && lbAliases.includes(args[0].toLowerCase())) {
         // Fetch all users
         const all = await client.getUsers();
@@ -34,12 +35,12 @@ export const run = async (client, message, args) => {
                 .setColor(filtered.length === 0 ? "#ff8d6f" : "#77d9cc")
                 .setDescription(lbMsg);
 
-            message.channel.send({ embeds: [embed] });
+            message.reply({ embeds: [embed] });
         });
     }
 
     // Inform user of how many points they currently have
-    return message.reply(client.l10n(message, "points.points").replace(/%num%/g, points));
+    return message.reply({ content: client.l10n(message, "points.points").replace(/%num%/g, points), ephemeral: true });
 };
 
 export const config = {

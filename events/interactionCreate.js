@@ -1,16 +1,12 @@
 import chalk from "chalk";
 
 export default async (client, interaction) => {
-    // Return if the interaction is not a CommandInteraction
-    // More info: https://discord.js.org/#/docs/main/stable/class/CommandInteraction
-    if (!interaction.isCommand()) return;
-
-    // Get data associated with the slash command (name, description, etc)
+    // Get data associated with the application command
     // More info: https://discord.js.org/#/docs/main/stable/typedef/ApplicationCommandData
-    const slashCmd = client.slashCommands.get(interaction.commandName);
+    const appCmd = client.applicationCommands.get(interaction.commandName);
 
-    // Return if no slash command with that name exists
-    if (!slashCmd) return;
+    // Return if no application command with the provided name exists in the collection
+    if (!appCmd) return;
 
     // Fetch guild/default settings from REST API
     interaction.settings = await client.getSettings(interaction.guild);
@@ -25,10 +21,10 @@ export default async (client, interaction) => {
 
     try {
         // Run the slash command
-        await slashCmd.run(client, interaction, level);
+        interaction.isCommand() ? await appCmd.run(client, interaction, level) : await appCmd.run(client, interaction);
 
         // Log use of the slash command
-        const log = `${client.permLevels.levels.find(l => l.level === level).name} ${chalk.magenta(interaction.user.tag)} (${interaction.user.id}) ran ApplicationCommand ${chalk.magenta(slashCmd.data.name)}`;
+        const log = `${client.permLevels.levels.find(l => l.level === level).name} ${chalk.magenta(interaction.user.tag)} (${interaction.user.id}) ran ApplicationCommand ${chalk.magenta(appCmd.data.name)}`;
         client.logger.app(log);
     } catch (err) {
         // Log the error

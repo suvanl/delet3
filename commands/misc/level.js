@@ -1,6 +1,8 @@
 import { stripIndents } from "common-tags";
 
 export const run = async (client, message, args, level) => {
+    client.sendDeprecationWarning(message, "use the `/level` slash command instead.");
+
     const lvlName = client.permLevels.levels.find(l => l.level === level).name;
     message.reply(stripIndents`
         ${client.l10n(message, "level.lvl").replace(/%lvl%/g, `\`${level}\` (**${lvlName}**)`)}

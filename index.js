@@ -64,7 +64,7 @@ const init = async () => {
     // Save commands, command aliases and slash commands to collections
     client.commands = new Collection();
     client.aliases = new Collection();
-    client.slashCommands = new Collection();
+    client.applicationCommands = new Collection();
 
     // Load events
     const loadedEvents = await startup.bindEvents(client);
@@ -73,7 +73,7 @@ const init = async () => {
     // Load ApplicationCommands:
     // Initialise empty array for ApplicationCommand names
     const appCmdArr = [];
-    klaw("./interactions/commands")
+    klaw("./interactions")
         .on("data", async item => {
             const file = path.parse(item.path);
             if (!file.ext || file.ext !== ".js") return;
@@ -82,7 +82,7 @@ const init = async () => {
 
             const props = await import(`${os.platform() === "win32" ? "file://" : ""}${file.dir}${sep}${file.name}`);
             if (props.init) props.init(client);
-            client.slashCommands.set(props.data.name, props);
+            client.applicationCommands.set(props.data.name, props);
             client.logger.log(`✔ "${chalk.magenta(file.name)}"`);
         })
         .on("end", () => client.logger.log(`Successfully loaded ${chalk.magenta(appCmdArr.length)} ApplicationCommands`));

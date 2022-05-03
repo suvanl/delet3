@@ -4,6 +4,8 @@ import { stripIndents } from "common-tags";
 import { badge, statusIcon } from "../../core/util/data";
 
 export const run = async (client, message, args) => {
+    client.sendDeprecationWarning(message, "use the \"User Info\" context menu interaction instead.");
+
     // Set user as message author by default
     let member = message.member;
 
