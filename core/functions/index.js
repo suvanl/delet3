@@ -2,7 +2,7 @@ import addPoints from "./addPoints";
 import addPunishment from "./addPunishment";
 import addToVerifQueue from "./addToVerifQueue";
 import awaitReply from "./awaitReply";
-import deploySlashCommand from "./deploySlashCommand";
+import deployApplicationCommand from "./deployApplicationCommand";
 import findChannelByName from "./findChannelByName";
 import findRoleByName from "./findRoleByName";
 import genSecret from "./genSecret";
@@ -26,7 +26,7 @@ export default {
     addPunishment,
     addToVerifQueue,
     awaitReply,
-    deploySlashCommand,
+    deployApplicationCommand,
     findChannelByName,
     findRoleByName,
     genSecret,

@@ -5,27 +5,25 @@ import chalk from "chalk";
 const { TOKEN, DEV_GUILD_ID } = process.env;
 
 export default client => {
-    client.deploySlashCommand = async client => {
+    client.deployApplicationCommand = async client => {
         // Initialise an empty array for non-global slash command data
         const guildCommands = [];
 
         // Initialise an empty array for global slash command data
         const globalCommands = [];
 
-
         // Push each guild-only slash command's data object to the guildCommands array
-        const guild = client.slashCommands.filter(c => !c.global);
+        const guild = client.applicationCommands.filter(c => !c.global);
         guild.forEach(cmd => {
             guildCommands.push(cmd.data);
         });
 
         // Push each global slash command's data object to the globalCommands array
-        const global = client.slashCommands.filter(c => c.global);
+        const global = client.applicationCommands.filter(c => c.global);
         global.forEach(cmd => {
             globalCommands.push(cmd.data);
         });
         
-
         // Initialise a new REST client
         const rest = new REST({ version: "9" }).setToken(TOKEN);
 
