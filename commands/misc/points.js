@@ -40,7 +40,7 @@ export const run = async (client, message, args) => {
     }
 
     // Inform user of how many points they currently have
-    return message.reply(client.l10n(message, "points.points").replace(/%num%/g, points));
+    return message.reply({ content: client.l10n(message, "points.points").replace(/%num%/g, points), ephemeral: true });
 };
 
 export const config = {
