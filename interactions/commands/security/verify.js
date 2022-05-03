@@ -12,7 +12,7 @@ const verifiedRolePerms = [
 export const run = async (client, interaction) => {
     // Make command unavailable if verificationEnabled is false
     if (!interaction.settings.verificationEnabled) return interaction.reply({
-        content: "ℹ This command cannot be used because the verification system has not been enabled on this server.",
+        content: `ℹ ${client.l10n(interaction, "verif.validation.systemDisabled")}`,
         ephemeral: true
     });
 
@@ -22,7 +22,7 @@ export const run = async (client, interaction) => {
     // Ensure this command can only be run in the verificationChannel
     if (interaction.channel !== verificationChannel) {
         return interaction.reply({ 
-            content: `ℹ This command can only be used in the verification channel (${verificationChannel ? verificationChannel : `\`#${interaction.settings.verificationChannel}\``})`,
+            content: `ℹ ${client.l10n(interaction, "verif.validation.notInVerifChannel").replace(/%channel%/g, verificationChannel ? verificationChannel : `\`#${interaction.settings.verificationChannel}\``)}`,
             ephemeral: true
         });
     }
@@ -30,7 +30,7 @@ export const run = async (client, interaction) => {
     // Prevent verified users from running this command if they have access to the verificationChannel
     const guildData = await client.getGuild(interaction.guild);
     if (!guildData.verificationQueue.users.some(e => e.id === interaction.user.id)) {
-        return interaction.reply({ content: "❌ Only unverified users can use this command.", ephemeral: true });
+        return interaction.reply({ content: `❌ ${client.l10n(interaction, "verif.validation.notUnverified")}`, ephemeral: true });
     }
 
     // Find mod log (required for error logging)
@@ -39,24 +39,24 @@ export const run = async (client, interaction) => {
     // Create "Verify" and "Cancel" buttons for this interaction
     const verifyButton = new MessageButton()
         .setCustomId("verify")
-        .setLabel("Verify")
+        .setLabel(client.l10n(interaction, "verif.btn.verify"))
         .setStyle("PRIMARY");
 
     const cancelButton = new MessageButton()
         .setCustomId("cancel")
-        .setLabel("Cancel")
+        .setLabel(client.l10n(interaction, "verif.btn.cancel"))
         .setStyle("SECONDARY");
 
     const row = new MessageActionRow()
         .addComponents([verifyButton, cancelButton]);
 
-    await interaction.reply({ content: "Click the verify button to gain access to this server:", components: [row], ephemeral: true });
+    await interaction.reply({ content: client.l10n(interaction, "verif.prompt"), components: [row], ephemeral: true });
 
     const filter = i => ["verify", "cancel"].includes(i.customId) && i.user.id === interaction.user.id;
     const collector = interaction.channel.createMessageComponentCollector({ filter, time: 30000, idle: 30000, dispose: true });
     collector.on("collect", async i => {
         // If cancel button is clicked
-        if (i.customId === "cancel") await i.update({ content: "ℹ **Verification cancelled**\nUse `/verify` to start again.", components: [] });
+        if (i.customId === "cancel") await i.update({ content: `ℹ **${client.l10n(interaction, "verif.cancelled")}**\n${client.l10n(interaction, "verif.cancelled.info")}`, components: [] });
 
         // If verify button is clicked
         if (i.customId === "verify") {
@@ -113,7 +113,7 @@ export const run = async (client, interaction) => {
 
             await i.deferUpdate();
             await i.editReply({
-                content: "<:tick:688400118549970984> **Verification complete!**\nYou should no longer have access to this channel.",
+                content: `<:tick:688400118549970984> **${client.l10n(interaction, "verif.success")}**\n${client.l10n(interaction, "verif.success.info")}`,
                 components: []
             });
 
