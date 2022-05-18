@@ -7,7 +7,8 @@ export const data = {
     name: "server",
     description: "Sends info about the current server",
     options: [],
-    defaultPermission: true
+    defaultPermission: true,
+    dm_permission: false
 };
 
 export const global = true;

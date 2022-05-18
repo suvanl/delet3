@@ -13,7 +13,8 @@ export const data = {
     name: "level",
     description: "Shows your permission level on the current server",
     options: [],
-    defaultPermission: true
+    defaultPermission: true,
+    dm_permission: false
 };
 
 export const global = true;

@@ -127,7 +127,8 @@ export const data = {
     name: "verify",
     description: "Verify yourself to gain access to more channels and content on this server",
     options: [],
-    defaultPermission: true
+    defaultPermission: true,
+    dm_permission: false
 };
 
 export const global = true;

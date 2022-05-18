@@ -116,7 +116,8 @@ export const data = {
     name: "User Info",
     type: 2,  // USER
     options: [],
-    defaultPermission: true
+    defaultPermission: true,
+    dm_permission: false
 };
 
 export const global = true;
