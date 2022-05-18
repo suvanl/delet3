@@ -24,7 +24,6 @@ import startup from "./startup";
 
 // Run startup methods
 startup.nodeVersionCheck();
-startup.initServer();
 
 // Initialise delet3
 const init = async () => {
