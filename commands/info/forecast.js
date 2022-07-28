@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import Canvas from "canvas";
 import { DateTime } from "luxon";
-import { MessageAttachment } from "discord.js";
+import { AttachmentBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 import { commandOptions } from "redis";
 import { sep } from "path";
@@ -225,7 +225,7 @@ export const run = async (client, message, args) => {
 
 // Sends the image as an attachment
 const sendImageAttachment = (message, buffer, isFromCache) => {
-    const attachment = new MessageAttachment(buffer, isFromCache ? "forecast_cached.png" : "forecast.png");
+    const attachment = new AttachmentBuilder(buffer, isFromCache ? "forecast_cached.png" : "forecast.png");
     const filesObj = { files: [attachment] };
     
     if (message.type !== "APPLICATION_COMMAND") message.reply(filesObj);
