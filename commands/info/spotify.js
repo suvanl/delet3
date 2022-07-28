@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { DateTime } from "luxon";
-import { MessageEmbed } from "discord.js";
+import { ActivityType, EmbedBuilder, InteractionType } from "discord.js";
 import { stripIndents } from "common-tags";
 import { keys } from "../../core/util/data";
 
@@ -9,7 +9,7 @@ const { SPOTIFY_ID: ID, SPOTIFY_SECRET: SECRET } = process.env;
 export const run = async (client, message, args) => {
     // Define author based on command type
     let author;
-    if (message.type !== "APPLICATION_COMMAND") author = message.author;
+    if (message.type !== InteractionType.ApplicationCommand) author = message.author;
     else author = message.user;
 
     // Define "not listening" message:
@@ -20,11 +20,12 @@ export const run = async (client, message, args) => {
         ${client.l10n(message, "spotify.notListening.info")}`;
 
     // Message author's current activities
-    const activities = message.guild.members.cache.get(author.id).presence.activities;
+    const member = await message.guild.members.fetch(author.id, { withPresences: true });
+    const activities = member.guild.presences.cache.get(author.id).activities;
     if (!activities.length) return message.reply({ content: notListening, ephemeral: true });
 
     // Get "Listening to Spotify" activity
-    const spotifyActivity = activities.filter(a => a.name === "Spotify" && a.type === "LISTENING");
+    const spotifyActivity = activities.filter(a => a.name === "Spotify" && a.type === ActivityType.Listening);
     if (!spotifyActivity.length) return message.reply({ content: notListening, ephemeral: true });
 
     // Define Spotify track ID
@@ -56,7 +57,7 @@ export const run = async (client, message, args) => {
     const artArgs = ["art", "cover", "true"];
 
     if (args[0] && artArgs.includes(args[0])) {
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor("#2bde6a")
             .setImage(albumArt)
             .setDescription(`${emoji} ${trackTitle}`);
@@ -97,7 +98,7 @@ export const run = async (client, message, args) => {
     const acousticness = client.l10n(message, "spotify.acousticness");
 
     // Create and send embed
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor("#2bde6a")
         .setThumbnail(albumArt)
         .setDescription(stripIndents`

@@ -1,12 +1,12 @@
-import { MessageActionRow, MessageButton, Permissions } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } from "discord.js";
 
 // Basic permissions for the verifiedRole.
 // Server admins can change these in Server Settings to meet their requirements.
 const verifiedRolePerms = [
-    Permissions.FLAGS.VIEW_CHANNEL,
-    Permissions.FLAGS.SEND_MESSAGES,
-    Permissions.FLAGS.READ_MESSAGE_HISTORY,
-    Permissions.FLAGS.USE_APPLICATION_COMMANDS
+    PermissionsBitField.Flags.ViewChannel,
+    PermissionsBitField.Flags.SendMessages,
+    PermissionsBitField.Flags.ReadMessageHistory,
+    PermissionsBitField.Flags.UseApplicationCommands
 ];
 
 export const run = async (client, interaction) => {
@@ -37,17 +37,17 @@ export const run = async (client, interaction) => {
     const modLog = client.findChannelByName(interaction.guild, interaction.settings.modLogChannel);
 
     // Create "Verify" and "Cancel" buttons for this interaction
-    const verifyButton = new MessageButton()
+    const verifyButton = new ButtonBuilder()
         .setCustomId("verify")
         .setLabel(client.l10n(interaction, "verif.btn.verify"))
-        .setStyle("PRIMARY");
+        .setStyle(ButtonStyle.Primary);
 
-    const cancelButton = new MessageButton()
+    const cancelButton = new ButtonBuilder()
         .setCustomId("cancel")
         .setLabel(client.l10n(interaction, "verif.btn.cancel"))
-        .setStyle("SECONDARY");
+        .setStyle(ButtonStyle.Secondary);
 
-    const row = new MessageActionRow()
+    const row = new ActionRowBuilder()
         .addComponents([verifyButton, cancelButton]);
 
     await interaction.reply({ content: client.l10n(interaction, "verif.prompt"), components: [row], ephemeral: true });

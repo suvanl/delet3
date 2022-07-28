@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 
 export const run = async (client, message, args) => {
@@ -223,7 +223,7 @@ export const run = async (client, message, args) => {
             // ⌛ Duration: %dur%
             // ❔ Reason: %rsn%
             // Issued by %user% | Case %num%
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor("#f04747")
             .setThumbnail(user.displayAvatarURL())
             .setDescription(stripIndents`

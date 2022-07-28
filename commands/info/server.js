@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { MessageEmbed } from "discord.js";
+import { ChannelType, EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 
 export const run = async (client, message) => {
@@ -9,8 +9,8 @@ export const run = async (client, message) => {
     const verified = guild.verified ? "<:verified:703993007485091871>" : "";
 
     // Text/voice channel numbers
-    const tChannels = guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size;
-    const vChannels = guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size;
+    const tChannels = guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size;
+    const vChannels = guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size;
 
     // Number of bots in guild
     const bots = guild.members.cache.filter(m => m.user.bot).size;
@@ -32,11 +32,11 @@ export const run = async (client, message) => {
     };
 
     // Create and send embed
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor("#fed98c")
         .setThumbnail(guild.iconURL({ size: 1024 }))
         .setDescription(stripIndents`
-            **${guild.name}** ${verified} <:server_boost:703991798015459390> ${client.l10n(message, "server.boost.lvl").replace(/%num%/g, guild.premiumTier === "NONE" ? 0 : guild.premiumTier.split("_")[1])}
+            **${guild.name}** ${verified} <:server_boost:703991798015459390> ${client.l10n(message, "server.boost.lvl").replace(/%num%/g, guild.premiumTier)}
 
             💥 **${client.l10n(message, "server.created")}**
             <t:${DateTime.fromJSDate(guild.createdAt).toUTC().toUnixInteger()}:R>

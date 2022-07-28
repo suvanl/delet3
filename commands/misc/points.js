@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
 export const run = async (client, message, args) => {
     // Get user's current amount of points
@@ -31,7 +31,7 @@ export const run = async (client, message, args) => {
         return Promise.all(lb).then(res => {
             lbMsg += res.join("\n");
             
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor(filtered.length === 0 ? "#ff8d6f" : "#77d9cc")
                 .setDescription(lbMsg);
 

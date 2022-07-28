@@ -1,4 +1,4 @@
-import { MessageEmbed, version } from "discord.js";
+import { EmbedBuilder, version } from "discord.js";
 import { stripIndents } from "common-tags";
 import { Duration } from "luxon";
 import pkg from "../../package.json";
@@ -10,7 +10,7 @@ export const run = async (client, message) => {
     const ownerTag = `${app.owner.username}#${app.owner.discriminator}`;
     const uptimeStr = Duration.fromObject({ days: 0, hours: 0, minutes: 0, seconds: (client.uptime / 1000).toFixed() }).normalize().toHuman({ unitDisplay: "short" });
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor("#56dcff")
         .setAuthor({ name: `delet ${ver} - About`, iconURL: client.user.displayAvatarURL() })
         .setDescription(stripIndents`

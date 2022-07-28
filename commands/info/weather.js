@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { DateTime } from "luxon";
 import { stripIndents } from "common-tags";
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
 const { OWM_KEY } = process.env;
 
@@ -79,7 +79,7 @@ export const run = async (client, message, args) => {
     const sunset = DateTime.fromSeconds(data.sys.sunset + data.timezone).toUTC().toFormat("HH:mm");
 
     // Construct & send embed
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor(tempColour(temp))
         .setThumbnail(img)
         .setDescription(stripIndents`

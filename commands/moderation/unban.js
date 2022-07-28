@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 
 export const run = async (client, message, args) => {
@@ -74,7 +74,7 @@ export const run = async (client, message, args) => {
             //  #️⃣ User ID: %id%
             //  ❔ Reason: %rsn%
             //  Issued by %user% | Case %num%
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor("#5fa9f2")
                 .setThumbnail(unban.displayAvatarURL())
                 .setDescription(stripIndents`

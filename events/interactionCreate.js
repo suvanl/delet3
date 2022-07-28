@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { InteractionType } from "discord.js";
 
 export default async (client, interaction) => {
     // Get data associated with the application command
@@ -21,7 +22,7 @@ export default async (client, interaction) => {
 
     try {
         // Run the slash command
-        interaction.isCommand() ? await appCmd.run(client, interaction, level) : await appCmd.run(client, interaction);
+        interaction.type === InteractionType.ApplicationCommand ? await appCmd.run(client, interaction, level) : await appCmd.run(client, interaction);
 
         // Log use of the slash command
         const log = `${client.permLevels.levels.find(l => l.level === level).name} ${chalk.magenta(interaction.user.tag)} (${interaction.user.id}) ran ApplicationCommand ${chalk.magenta(appCmd.data.name)}`;

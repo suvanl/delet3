@@ -8,7 +8,7 @@
 import "dotenv/config";
 
 // Import modules needed for bot initialisation
-import { Client, Collection } from "discord.js";
+import { Client, Collection, GatewayIntentBits, Partials } from "discord.js";
 import { createClient } from "redis";
 import { sep } from "path";
 import chalk from "chalk";
@@ -32,8 +32,15 @@ const init = async () => {
     // Initialise client with @everyone disabled and with required gateway intents specified
     const client = new Client({
         disableMentions: "everyone",
-        intents: ["DIRECT_MESSAGES", "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_PRESENCES"],
-        partials: ["CHANNEL"]
+        intents: [
+            GatewayIntentBits.DirectMessages,
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMembers,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.GuildPresences,
+            GatewayIntentBits.MessageContent
+        ],
+        partials: [Partials.Channel]
     });
 
     // Attach permission levels to client object

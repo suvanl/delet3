@@ -1,19 +1,19 @@
 import fetch from "node-fetch";
-import { Permissions } from "discord.js";
+import { PermissionsBitField } from "discord.js";
 
 // verificationChannel permissionOverwrites for admins/mods
 const allowedAdminPerms = [
-    Permissions.FLAGS.VIEW_CHANNEL,
-    Permissions.FLAGS.SEND_MESSAGES,
-    Permissions.FLAGS.READ_MESSAGE_HISTORY,
-    Permissions.FLAGS.USE_APPLICATION_COMMANDS
+    PermissionsBitField.Flags.ViewChannel,
+    PermissionsBitField.Flags.SendMessages,
+    PermissionsBitField.Flags.ReadMessageHistory,
+    PermissionsBitField.Flags.UseApplicationCommands
 ];
 
 // verificationChannel permissionOverwrites for unverified users
 const allowedUnverifiedUserPerms = [
-    Permissions.FLAGS.VIEW_CHANNEL,
-    Permissions.FLAGS.SEND_MESSAGES,
-    Permissions.FLAGS.USE_APPLICATION_COMMANDS
+    PermissionsBitField.Flags.ViewChannel,
+    PermissionsBitField.Flags.SendMessages,
+    PermissionsBitField.Flags.UseApplicationCommands
 ];
 
 export default async (client, member) => {
