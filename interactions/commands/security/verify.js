@@ -1,4 +1,4 @@
-import { MessageActionRow, MessageButton, Permissions } from "discord.js";
+import { ActionRowBuilder, MessageButton, Permissions } from "discord.js";
 
 // Basic permissions for the verifiedRole.
 // Server admins can change these in Server Settings to meet their requirements.
@@ -47,7 +47,7 @@ export const run = async (client, interaction) => {
         .setLabel(client.l10n(interaction, "verif.btn.cancel"))
         .setStyle("SECONDARY");
 
-    const row = new MessageActionRow()
+    const row = new ActionRowBuilder()
         .addComponents([verifyButton, cancelButton]);
 
     await interaction.reply({ content: client.l10n(interaction, "verif.prompt"), components: [row], ephemeral: true });
