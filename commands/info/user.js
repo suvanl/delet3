@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 import { badge, statusIcon } from "../../core/util/data";
 
@@ -96,7 +96,7 @@ export const run = async (client, message, args) => {
     if (roles.length === 0) roles = ["None"];
 
     // Create and send embed
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor("#8cfed9")
         .setThumbnail(user.displayAvatarURL({ size: 1024 }))
         .setDescription(stripIndents`

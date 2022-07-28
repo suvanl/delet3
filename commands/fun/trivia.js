@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { decode } from "html-entities";
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 import { categories } from "../../core/util/data";
 
@@ -50,7 +50,7 @@ export const run = async (client, message, args) => {
         return Promise.all(lb).then(res => {
             lbMsg += res.join("\n");
             
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor(filtered.length === 0 ? "#ff8d6f" : "#6fe1ff")
                 .setDescription(lbMsg);
 
@@ -113,7 +113,7 @@ export const run = async (client, message, args) => {
 
         if (quiz.type === "boolean") options = "**TRUE** or **FALSE**?";
 
-        // Create MessageEmbed object:
+        // Create EmbedBuilder object:
             // Question
             // [question text]
             //
@@ -121,7 +121,7 @@ export const run = async (client, message, args) => {
             //
             // Category & Difficulty
             // cat | diff
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setAuthor({ name: "Trivia", iconURL: "https://i.imgur.com/Z20hATC.png" })
             .setColor("#6f99ff")
             .setDescription(stripIndents`

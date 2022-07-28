@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { DateTime } from "luxon";
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 import { keys } from "../../core/util/data";
 
@@ -56,7 +56,7 @@ export const run = async (client, message, args) => {
     const artArgs = ["art", "cover", "true"];
 
     if (args[0] && artArgs.includes(args[0])) {
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor("#2bde6a")
             .setImage(albumArt)
             .setDescription(`${emoji} ${trackTitle}`);
@@ -97,7 +97,7 @@ export const run = async (client, message, args) => {
     const acousticness = client.l10n(message, "spotify.acousticness");
 
     // Create and send embed
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor("#2bde6a")
         .setThumbnail(albumArt)
         .setDescription(stripIndents`

@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 import { emoji, colour } from "../../core/util/data";
 
@@ -93,7 +93,7 @@ export const run = async (client, message, args, level) => {
             if (level < client.levelCache.get(cmd.config.permLevel)) return;
 
             // Create embed containing the command's description, usage and aliases
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor(colour[cmd.help.category])
                 .setDescription(stripIndents`
                     ${emoji[cmd.help.category]} **${cmd.help.name.toTitleCase()} Command**

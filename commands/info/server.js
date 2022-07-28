@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 
 export const run = async (client, message) => {
@@ -32,7 +32,7 @@ export const run = async (client, message) => {
     };
 
     // Create and send embed
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor("#fed98c")
         .setThumbnail(guild.iconURL({ size: 1024 }))
         .setDescription(stripIndents`
