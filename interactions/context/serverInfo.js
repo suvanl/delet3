@@ -6,7 +6,8 @@ export const data = {
     name: "Server Info",
     type: 3,  // MESSAGE
     options: [],
-    defaultPermission: true
+    defaultPermission: true,
+    dm_permission: false
 };
 
 export const global = true;
