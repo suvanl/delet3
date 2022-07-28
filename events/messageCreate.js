@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { DateTime } from "luxon";
 import { stripIndents } from "common-tags";
+import { ChannelType, PermissionsBitField } from "discord.js";
 
 export default async (client, message) => {
     // Return if guild is unavailable (due to server outage)
@@ -10,7 +11,7 @@ export default async (client, message) => {
     if (message.author.bot) return;
 
     // Return if bot has insufficient perms to send messages
-    if (message.channel.type === "GUILD_TEXT" && !message.guild.me.permissions.has("SEND_MESSAGES")) return;
+    if (message.channel.type === ChannelType.GuildText && !message.guild.members.me.permissions.has(PermissionsBitField.Flags.SendMessages)) return;
 
     // Fetch guild/default settings from REST API
     const settings = message.settings = await client.getSettings(message.guild);
