@@ -37,7 +37,8 @@ const init = async () => {
             GatewayIntentBits.Guilds,
             GatewayIntentBits.GuildMembers,
             GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.GuildPresences
+            GatewayIntentBits.GuildPresences,
+            GatewayIntentBits.MessageContent
         ],
         partials: [Partials.Channel]
     });
