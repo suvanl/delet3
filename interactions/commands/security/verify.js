@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, PermissionsBitField } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } from "discord.js";
 
 // Basic permissions for the verifiedRole.
 // Server admins can change these in Server Settings to meet their requirements.
@@ -40,12 +40,12 @@ export const run = async (client, interaction) => {
     const verifyButton = new ButtonBuilder()
         .setCustomId("verify")
         .setLabel(client.l10n(interaction, "verif.btn.verify"))
-        .setStyle("PRIMARY");
+        .setStyle(ButtonStyle.Primary);
 
     const cancelButton = new ButtonBuilder()
         .setCustomId("cancel")
         .setLabel(client.l10n(interaction, "verif.btn.cancel"))
-        .setStyle("SECONDARY");
+        .setStyle(ButtonStyle.Secondary);
 
     const row = new ActionRowBuilder()
         .addComponents([verifyButton, cancelButton]);
