@@ -1,6 +1,7 @@
 import locales from "../locales";
 import { readdirSync } from "fs";
 import { sep } from "path";
+import { InteractionType } from "discord.js";
 
 // Locale file directory
 const localeDir = `${process.cwd()}${sep}core${sep}locales`;
@@ -26,7 +27,7 @@ export default client => {
         const lf = localeFiles.map(file => file.split(".")[0]);
 
         // If the type of message is not an application command (assuming it is of type 'DEFAULT')...
-        if (message.type !== "APPLICATION_COMMAND") {
+        if (message.type !== InteractionType.ApplicationCommand) {
             // If a locale file matching the value of the "locale" parameter can't be found, return an error message
             if (!lf.includes(locale)) return client.logger.error(`Missing locale file: "${locale}"`);
 
