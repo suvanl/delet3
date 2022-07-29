@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { DateTime } from "luxon";
 import { stripIndents } from "common-tags";
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, InteractionType } from "discord.js";
 
 const { OWM_KEY } = process.env;
 
@@ -21,7 +21,7 @@ export const run = async (client, message, args) => {
     const loc = encodeURIComponent(location);
 
     // Get two-letter language code for the "lang" parameter in the API request
-    const lang = message.type !== "APPLICATION_COMMAND" ? message.settings.language.slice(0, 2) || "en" : message.locale.substring(0, 2);
+    const lang = message.type !== InteractionType.ApplicationCommand ? message.settings.language.slice(0, 2) || "en" : message.locale.substring(0, 2);
 
     // Send GET request to OpenWeatherMap API for weather data
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&units=metric&lang=${lang}&appid=${OWM_KEY}`;
