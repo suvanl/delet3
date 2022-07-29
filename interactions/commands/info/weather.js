@@ -1,3 +1,5 @@
+import { ApplicationCommandOptionType } from "discord.js";
+
 export const run = async (client, interaction) => {
     const city = interaction.options.getString("city");
     const args = city.split(" ");
@@ -9,9 +11,7 @@ export const data = {
     description: "Sends weather info for the specified area",
     options: [{ 
         name: "city",
-        // Type STRING is 3
-        // Source: https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type
-        type: 3,
+        type: ApplicationCommandOptionType.String,
         description: "The city to request weather information for",
         required: true
     }],

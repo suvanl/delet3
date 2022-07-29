@@ -1,3 +1,5 @@
+import { ApplicationCommandOptionType } from "discord.js";
+
 export const run = async (client, interaction) => {
     const lb = interaction.options.getBoolean("leaderboard");
     const args = lb ? lb.toString().split(" ") : [];
@@ -9,7 +11,7 @@ export const data = {
     description: "View your current points tally, or the server's points leaderboard",
     options: [{ 
         name: "leaderboard",
-        type: 5,  // Boolean
+        type: ApplicationCommandOptionType.Boolean,
         description: "Whether you'd like to see the server's points leaderboard",
         required: false
     }],

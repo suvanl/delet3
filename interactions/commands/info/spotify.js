@@ -1,3 +1,5 @@
+import { ApplicationCommandOptionType } from "discord.js";
+
 export const run = async (client, interaction) => {
     const cover = interaction.options.getBoolean("cover");
     const args = cover ? cover.toString().split(" ") : [];
@@ -9,7 +11,7 @@ export const data = {
     description: "Sends info about the track you're currently listening to on Spotify",
     options: [{ 
         name: "cover",
-        type: 5,  // Boolean
+        type: ApplicationCommandOptionType.Boolean,
         description: "Whether you'd like to see only the track's cover art, without any other info",
         required: false
     }],
