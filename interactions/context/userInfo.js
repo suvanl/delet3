@@ -24,7 +24,7 @@ export const run = async (client, interaction) => {
     const userFlags = fetchFlags.toArray();
 
     // Convert user flags to emojis corresponding to profile badges. These will be displayed on the profile embed.
-    let badges = userFlags.map(f => `<:${f.toLowerCase()}:${badge[f.toLowerCase()]}>`);
+    let badges = userFlags.map(f => `<:${f}:${badge[f]}>`);
 
     // If the user is a bot, display the appropriate "Bot" badge
     if (badges.length === 0 && user.bot) badges = "<:bot:703336283577122826>";
@@ -47,10 +47,10 @@ export const run = async (client, interaction) => {
     // Convert the current activity type to a user-friendly, localised string
     // (e.g. "Playing [Activity]", "Listening to [Activity]", etc)
     const friendlyActivity = {
-        "PLAYING": client.l10n(interaction, "user.activity.playing"),
-        "STREAMING": client.l10n(interaction, "user.activity.streaming"),
-        "LISTENING": client.l10n(interaction, "user.activity.listening"),
-        "WATCHING": client.l10n(interaction, "user.activity.watching")
+        [ActivityType.Playing]: client.l10n(interaction, "user.activity.playing"),
+        [ActivityType.Streaming]: client.l10n(interaction, "user.activity.streaming"),
+        [ActivityType.Listening]: client.l10n(interaction, "user.activity.listening"),
+        [ActivityType.Watching]: client.l10n(interaction, "user.activity.watching")
     };
 
     // Get the user's current activity
