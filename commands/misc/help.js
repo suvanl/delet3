@@ -1,4 +1,4 @@
-import { EmbedBuilder } from "discord.js";
+import { ChannelType, EmbedBuilder, InteractionType } from "discord.js";
 import { stripIndents } from "common-tags";
 import { emoji, colour } from "../../core/util/data";
 
@@ -45,11 +45,11 @@ export const run = async (client, message, args, level) => {
 
         
         // If in a regular text channel...
-        if (message.channel.type === "GUILD_TEXT") {
+        if (message.channel.type === ChannelType.GuildText) {
             const helpConfirmTxt = `🏃‍♀️💨 ${client.l10n(message, "help.dmConfirm")}`;
 
             // if applicationcommand
-            if (message.type === "APPLICATION_COMMAND") {
+            if (message.type === InteractionType.ApplicationCommand) {
                 await message.reply(helpConfirmTxt);
                 message.user.send(out)
                     .catch(err => {
@@ -75,7 +75,7 @@ export const run = async (client, message, args, level) => {
                         return client.logger.error(err);
                     });
             }
-        } else if (message.channel.type === "DM") {
+        } else if (message.channel.type === ChannelType.DM) {
             // if the command is invoked in a DM channel, send the output 
             return message.reply(out, { split: { char: "\u200b" } });
         }

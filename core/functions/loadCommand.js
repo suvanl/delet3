@@ -15,7 +15,8 @@ export default client => {
             client.logger.log(`✔ "${chalk.blue(name)}"`);
             return true;
         } catch (error) {
-            return `Unable to load command ${chalk.red(name)}: ${error}`;
+            client.logger.error(`Unable to load command ${chalk.red(name)}: ${error}`);
+            return false;
         }
     };
 };

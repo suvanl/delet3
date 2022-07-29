@@ -1,3 +1,5 @@
+import { ChannelType } from "discord.js";
+
 const permLevels = {
     superusers: [],
     
@@ -36,7 +38,7 @@ const permLevels = {
             name: "Server Owner",
             verify: message => {
                 try {
-                    if (message.channel.type === "GUILD_TEXT")
+                    if (message.channel.type === ChannelType.GuildText)
                         if (message.guild.ownerId === (message.author?.id || message.user?.id)) return true;
                 } catch (err) {
                     return false;

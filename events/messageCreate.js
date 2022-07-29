@@ -5,7 +5,7 @@ import { ChannelType, PermissionsBitField } from "discord.js";
 
 export default async (client, message) => {
     // Return if guild is unavailable (due to server outage)
-    if (message.channel.type !== "DM" && !message.guild.available) return;
+    if (message.channel.type !== ChannelType.DM && !message.guild.available) return;
 
     // Ignore messages from other bot accounts
     if (message.author.bot) return;

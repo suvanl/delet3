@@ -106,9 +106,7 @@ const init = async () => {
             // Add command names to the "cmdArr" array so that the total amount of commands can be determined
             cmdArr.push(item.path);
             // Load each command that's found
-            const res = await client.loadCommand(file.dir, file.name);
-            // If the loadCommand function is unsuccessful, log the error
-            if (res !== true) client.logger.error(res);
+            await client.loadCommand(file.dir, file.name);
         })
         .on("end", () => client.logger.log(`Successfully loaded ${chalk.blue(cmdArr.length)} commands`));
 

@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import Canvas from "canvas";
 import { DateTime } from "luxon";
-import { AttachmentBuilder } from "discord.js";
+import { AttachmentBuilder, InteractionType } from "discord.js";
 import { stripIndents } from "common-tags";
 import { commandOptions } from "redis";
 import { sep } from "path";
@@ -50,7 +50,7 @@ export const run = async (client, message, args) => {
 
     // If using a regular command, start typing to indicate image is being generated.
     // Typing stops after 10 seconds, or once the message has been sent.
-    if (message.type !== "APPLICATION_COMMAND")
+    if (message.type !== InteractionType.ApplicationCommand)
         message.channel.sendTyping();
     // If using an application command, defer the response
     else
@@ -228,7 +228,7 @@ const sendImageAttachment = (message, buffer, isFromCache) => {
     const attachment = new AttachmentBuilder(buffer, isFromCache ? "forecast_cached.png" : "forecast.png");
     const filesObj = { files: [attachment] };
     
-    if (message.type !== "APPLICATION_COMMAND") message.reply(filesObj);
+    if (message.type !== InteractionType.ApplicationCommand) message.reply(filesObj);
     else message.editReply(filesObj);
 };
 

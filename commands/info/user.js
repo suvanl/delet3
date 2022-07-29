@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { EmbedBuilder } from "discord.js";
+import { ActivityType, EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 import { badge, statusIcon } from "../../core/util/data";
 
@@ -64,7 +64,7 @@ export const run = async (client, message, args) => {
 
     // If user has a current activity
     if (currentActivity) {
-        if (currentActivity.type === "CUSTOM") {
+        if (currentActivity.type === ActivityType.Custom) {
             // display their activity in the following format: [Emoji (if present)] [Status Message (if present)]
             activity = `${currentActivity.emoji ? currentActivity.emoji : "\u200b"} **${currentActivity.state ? currentActivity.state.truncate(24) : currentActivity.name}**`;
         } else {
