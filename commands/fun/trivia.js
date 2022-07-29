@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { decode } from "html-entities";
-import { EmbedBuilder } from "discord.js";
+import { ChannelType, EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 import { categories } from "../../core/util/data";
 
@@ -13,7 +13,7 @@ export const run = async (client, message, args) => {
     }
 
     // Let user know how many points they have
-    if (message.channel.type === "GUILD_TEXT") {
+    if (message.channel.type === ChannelType.GuildText) {
         const userData = await client.getUser(message.guild, message.author);
         const currentPoints = userData.triviaPoints;
         if (args[0] && args[0].toLowerCase() === "points") return message.reply(client.l10n(message, "trivia.points").replace(/%num%/g, currentPoints));
@@ -23,7 +23,7 @@ export const run = async (client, message, args) => {
     const lbAliases = ["leaderboard", "lb"];
     if (lbAliases.includes(args[0] && args[0].toLowerCase())) {
         // Return if leaderboard/lb arg is used in DMs
-        if (message.channel.type !== "GUILD_TEXT") return message.channel.send(`🚫 ${client.l10n(message, "trivia.dmlb")}`);
+        if (message.channel.type !== ChannelType.GuildText) return message.channel.send(`🚫 ${client.l10n(message, "trivia.dmlb")}`);
 
         // Fetch all users
         const all = await client.getUsers();
@@ -171,7 +171,7 @@ export const run = async (client, message, args) => {
                 ${client.l10n(message, "trivia.ans.gg")}`;
 
             // Add points (if in a guild text channel)
-            if (message.channel.type === "GUILD_TEXT") {
+            if (message.channel.type === ChannelType.GuildText) {
                 const dif = d.toLowerCase();
                 const points = { "easy": 1, "medium": 2, "hard": 3 };
 
