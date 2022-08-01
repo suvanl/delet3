@@ -3,7 +3,8 @@ import { DateTime } from "luxon";
 
 export const log = (content, category = "log") => {
     const offset = DateTime.now().toFormat("Z");
-    const timestamp = `${DateTime.now().toFormat("y-MM-dd HH:mm:ss")} ${offset === "0" ? "" : `UTC${offset}`} |`;
+    const timestampFormat = process.env.NODE_ENV !== "production" ? "HH:mm:ss" : "y-MM-dd HH:mm:ss";
+    const timestamp = `${DateTime.now().toFormat(timestampFormat)} ${offset === "0" ? "" : `UTC${offset}`} |`;
 
     switch (category) {
         case "cmd": {
