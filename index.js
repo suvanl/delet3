@@ -18,7 +18,7 @@ import os from "os";
 
 // Import settings, logger and useful functions
 import permLevels from "./core/settings/permLevels.js";
-import * as logger from "./core/modules/logger.js";
+import * as logger from "./core/util/logger.js";
 import functions from "./core/functions";
 import startup from "./startup";
 
