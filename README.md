@@ -30,6 +30,8 @@ Currently, custom emojis are referenced using hardcoded IDs, which are server-sp
 
 **Prerequisites:**
 - [Node.js](https://nodejs.org/en/) (v16.9.0 or above)
+- [Redis](https://redis.io/) (5.0.7 or above)
+- [delet3-api](https://github.com/suvanl/delet3-api) (must be running in order for delet<sup>3</sup> to function as expected)
 
 **Instructions:**
 1. Clone or download this repository.
