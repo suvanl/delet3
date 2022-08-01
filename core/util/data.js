@@ -60,6 +60,7 @@ export const colour = {
 export const langName = {
     "de-DE": "🇩🇪 Deutsch",
     "en-GB": "🇬🇧 English",
+    "en-US": "🇺🇸 English (US)",
     "nl-NL": "🇳🇱 Nederlands",
     "no-NO": "🇳🇴 Norsk"
 };
@@ -67,6 +68,7 @@ export const langName = {
 export const validLangs = [
     "de-DE",
     "en-GB",
+    "en-US",
     "nl-NL",
     "no-NO"
 ];
@@ -89,10 +91,6 @@ export const friendlySettings = {
     "welcomeChannel": "welcome channel",
     "welcomeMessage": "welcome message",
     "welcomeEnabled": "welcome enabled"
-};
-
-export const langNameText = {
-    "en-GB": "English (UK)"
 };
 
 // Role command
