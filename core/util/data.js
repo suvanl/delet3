@@ -16,19 +16,18 @@ export const keys = {
 
 // User command
 export const badge = {
-    "discord_employee": "703323189891039383",
-    "partnered_server_owner": "703323189815673014",
-    "hypesquad_events": "703323189467545711",
-    "bughunter_level_1": "703326057859645511",
-    "house_bravery": "703281163585716364",
-    "house_brilliance": "703281163564875836",
-    "house_balance": "703281163233394759",
-    "early_supporter": "703326057788342392",
-    // "team_user": "",
-    // "system": "",
-    "bughunter_level_2": "703328093623943268",
-    "verified_bot": "703326057817833479",
-    "early_verified_bot_developer": "703326057683746958"
+    "Staff": "703323189891039383",
+    "Partner": "703323189815673014",
+    "Hypesquad": "703323189467545711",
+    "BugHunterLevel1": "703326057859645511",
+    "BugHunterLevel2": "703328093623943268",
+    "HypeSquadOnlineHouse1": "703281163585716364",
+    "HypeSquadOnlineHouse2": "703281163564875836",
+    "HypeSquadOnlineHouse3": "703281163233394759",
+    "PremiumEarlySupporter": "703326057788342392",
+    // "TeamPseudoUser": "",
+    "VerifiedBot": "703326057817833479",
+    "VerifiedDeveloper": "703326057683746958"
 };
 
 export const statusIcon = {

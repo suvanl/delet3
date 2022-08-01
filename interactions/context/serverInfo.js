@@ -1,10 +1,12 @@
+import { ApplicationCommandType } from "discord.js";
+
 export const run = async (client, interaction) => {
     await client.applicationCommands.get("server").run(client, interaction);
 };
 
 export const data = {
     name: "Server Info",
-    type: 3,  // MESSAGE
+    type: ApplicationCommandType.Message,
     options: [],
     defaultPermission: true,
     dm_permission: false
