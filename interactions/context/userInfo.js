@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { ActivityType, EmbedBuilder } from "discord.js";
+import { ActivityType, ApplicationCommandType, EmbedBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
 import { badge, statusIcon } from "../../core/util/data";
 
@@ -114,7 +114,7 @@ export const run = async (client, interaction) => {
 
 export const data = {
     name: "User Info",
-    type: 2,  // USER
+    type: ApplicationCommandType.User,
     options: [],
     defaultPermission: true,
     dm_permission: false
