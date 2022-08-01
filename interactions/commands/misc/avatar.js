@@ -17,7 +17,7 @@ export const run = async (client, interaction) => {
             🔗 **[${client.l10n(interaction, "avatar.url")}](${url})**`)
         .setImage(url);
     
-    interaction.reply({ embeds: [embed] });
+    interaction.reply({ embeds: [embed], ephemeral: true });
 };
 
 export const data = {
