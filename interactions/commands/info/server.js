@@ -55,7 +55,7 @@ export const run = async (client, interaction) => {
             ${client.l10n(interaction, "server.cFilter.lvl")} ${cFilter[guild.explicitContentFilter]}`)
         .setFooter({ text: `${client.l10n(interaction, "server.id").replace(/%id%/g, guild.id)} | ${client.l10n(interaction, "utc")}` });
 
-        interaction.reply({ embeds: [embed], ephemeral: true });
+    interaction.reply({ embeds: [embed], ephemeral: true });
 };
 
 export const data = {
