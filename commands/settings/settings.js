@@ -1,5 +1,5 @@
 import { stripIndents } from "common-tags";
-import { langNameText } from "../../core/util/data";
+import { langName } from "../../core/util/data";
 
 export const run = async (client, message) => {
     message.channel.send(stripIndents`
@@ -34,7 +34,7 @@ export const run = async (client, message) => {
 
         💬 **Other**
         - Prefix: \`${message.settings.prefix}\`
-        - Language: \`${langNameText[message.settings.language]}\``);
+        - Language: \`${langName[message.settings.language]}\``);
 };
 
 export const config = {
