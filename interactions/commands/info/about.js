@@ -28,4 +28,4 @@ export const data = {
     options: []
 };
 
-export const global = false;
+export const global = true;
