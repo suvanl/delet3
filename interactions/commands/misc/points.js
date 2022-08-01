@@ -53,4 +53,4 @@ export const data = {
     }]
 };
 
-export const global = false;
+export const global = true;
