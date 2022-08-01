@@ -275,8 +275,7 @@ export const data = {
         type: ApplicationCommandOptionType.String,
         description: "The city to request the weather forecast for",
         required: true
-    }],
-    defaultPermission: true
+    }]
 };
 
 export const global = true;
