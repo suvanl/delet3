@@ -29,6 +29,10 @@ const auth = async () => {
 
 export const run = async (client, interaction) => {
     const cover = interaction.options.getBoolean("cover");
+    const share = interaction.options.getBoolean("share");
+    
+    // Make interaction replies ephemeral if the "share" option is not true
+    const ephemeral = share ? false : true;
 
     // Define "not listening" message:
         // ℹ Not listening to a song
@@ -41,11 +45,11 @@ export const run = async (client, interaction) => {
     const member = interaction.isContextMenuCommand() ? interaction.targetMember : interaction.member;
 
     const activities = member.guild.presences.cache.get(member.id).activities;
-    if (!activities.length) return interaction.reply({ content: notListening, ephemeral: true });
+    if (!activities.length) return interaction.reply({ content: notListening, ephemeral });
 
     // Get "Listening to Spotify" activity
     const spotifyActivity = activities.filter(a => a.name === "Spotify" && a.type === ActivityType.Listening);
-    if (!spotifyActivity.length) return interaction.reply({ content: notListening, ephemeral: true });
+    if (!spotifyActivity.length) return interaction.reply({ content: notListening, ephemeral });
 
     // Define Spotify track ID
     const id = spotifyActivity[0].syncId;
@@ -79,7 +83,7 @@ export const run = async (client, interaction) => {
             .setImage(albumArt)
             .setDescription(`${emoji} ${trackTitle}`);
 
-        return interaction.reply({ embeds: [embed], ephemeral: true });
+        return interaction.reply({ embeds: [embed], ephemeral });
     }
 
     // Send GET request to Spotify API for audio features (AF)
@@ -126,7 +130,7 @@ export const run = async (client, interaction) => {
             🔢 ${danceability}: **${Math.round(afData.danceability * 10)}/10** • ${energy}: **${Math.round(afData.energy * 10)}/10** • ${acousticness}: **${Math.round(afData.acousticness * 10)}/10**`)
         .setFooter({ text: `${tData.album.name} • ${client.l10n(interaction, "spotify.releaseDate").replace(/%date%/g, releaseDate)}` });
 
-    return interaction.reply({ embeds: [embed], ephemeral: true });
+    return interaction.reply({ embeds: [embed], ephemeral });
 };
 
 export const data = {
