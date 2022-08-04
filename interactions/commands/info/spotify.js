@@ -13,14 +13,10 @@ const auth = async () => {
     // Parameters for request to Spotify API for access token
     const url = "https://accounts.spotify.com/api/token";
     const body = "grant_type=client_credentials";
-    const meta = { "Authorization": `Basic ${base64(`${ID}:${SECRET}`)}`, "Content-Type": "application/x-www-form-urlencoded" };
+    const headers = { "Authorization": `Basic ${base64(`${ID}:${SECRET}`)}`, "Content-Type": "application/x-www-form-urlencoded" };
 
     // Send POST request
-    const res = await fetch(url, {
-        method: "post",
-        body: body,
-        headers: meta
-    });
+    const res = await fetch(url, { method: "post", body, headers });
 
     // Parse res data as JSON + return access token
     const data = await res.json();
