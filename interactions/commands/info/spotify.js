@@ -38,10 +38,10 @@ export const run = async (client, interaction) => {
         ℹ **${client.l10n(interaction, "spotify.notListening")}**
         ${client.l10n(interaction, "spotify.notListening.info")}`;
 
-    // Get author's current activities
-    const member = interaction.member;
+    // Get target's current activities
+    const member = interaction.isContextMenuCommand() ? interaction.targetMember : interaction.member;
 
-    const activities = member.guild.presences.cache.get(interaction.user.id).activities;
+    const activities = member.guild.presences.cache.get(member.id).activities;
     if (!activities.length) return interaction.reply({ content: notListening, ephemeral: true });
 
     // Get "Listening to Spotify" activity
@@ -82,7 +82,7 @@ export const run = async (client, interaction) => {
             .setImage(albumArt)
             .setDescription(`${emoji} ${trackTitle}`);
 
-        return interaction.reply({ embeds: [embed] });
+        return interaction.reply({ embeds: [embed], ephemeral: true });
     }
 
     // Send GET request to Spotify API for audio features (AF)
@@ -129,7 +129,7 @@ export const run = async (client, interaction) => {
             🔢 ${danceability}: **${Math.round(afData.danceability * 10)}/10** • ${energy}: **${Math.round(afData.energy * 10)}/10** • ${acousticness}: **${Math.round(afData.acousticness * 10)}/10**`)
         .setFooter({ text: `${tData.album.name} • ${client.l10n(interaction, "spotify.releaseDate").replace(/%date%/g, releaseDate)}` });
 
-    return interaction.reply({ embeds: [embed] });
+    return interaction.reply({ embeds: [embed], ephemeral: true });
 };
 
 export const data = {
