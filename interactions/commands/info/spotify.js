@@ -39,7 +39,8 @@ export const run = async (client, interaction) => {
         ${client.l10n(interaction, "spotify.notListening.info")}`;
 
     // Get author's current activities
-    const member = await interaction.guild.members.fetch(interaction.user.id, { withPresences: true });
+    const member = interaction.member;
+
     const activities = member.guild.presences.cache.get(interaction.user.id).activities;
     if (!activities.length) return interaction.reply({ content: notListening, ephemeral: true });
 
