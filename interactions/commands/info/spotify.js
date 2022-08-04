@@ -29,7 +29,6 @@ const auth = async () => {
 
 export const run = async (client, interaction) => {
     const cover = interaction.options.getBoolean("cover");
-    const args = cover ? cover.toString().split(" ") : [];
 
     // Define "not listening" message:
         // ℹ Not listening to a song
@@ -74,9 +73,7 @@ export const run = async (client, interaction) => {
     const emoji = "<:spotify:704771723232542900>";
 
     // If user only requests album art
-    const artArgs = ["art", "cover", "true"];
-
-    if (args[0] && artArgs.includes(args[0])) {
+    if (cover) {
         const embed = new EmbedBuilder()
             .setColor("#2bde6a")
             .setImage(albumArt)
@@ -135,12 +132,18 @@ export const run = async (client, interaction) => {
 export const data = {
     name: "spotify",
     description: "Sends info about the track you're currently listening to on Spotify",
-    options: [{ 
+    options: [{
         name: "cover",
         type: ApplicationCommandOptionType.Boolean,
         description: "Whether you'd like to see only the track's cover art (without any other info)",
         required: false
+    },
+    { 
+        name: "share",
+        type: ApplicationCommandOptionType.Boolean,
+        description: "Whether to make the response publicly visible",
+        required: false
     }]
 };
 
-export const global = true;
+export const global = false;
