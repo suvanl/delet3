@@ -99,10 +99,7 @@ export const run = async (client, interaction) => {
         // Define custom IDs array and create filter function to check whether the ButtonInteraction includes these IDs, and to ensure that
         // only the user who initiated the interaction can use these buttons
         const btnCustomIDs = quiz.type === "boolean" ? ["btnTrue", "btnFalse", "btnCancel"] : ["btnA", "btnB", "btnC", "btnD", "btnCancel"];
-        console.log(btnCustomIDs);
         const filter = i => btnCustomIDs.includes(i.customId) && i.user.id === interaction.user.id;
-
-        console.log(quiz.correct_answer);
 
         // Create a new message component collector in the channel using this filter function
         const collector = interaction.channel.createMessageComponentCollector({ filter, time: 60000, idle: 60000, dispose: true });
@@ -114,50 +111,25 @@ export const run = async (client, interaction) => {
             }
 
             // If quiz type is multiple choice...
-            // todo: refactor/streamline to avoid code duplication
             if (quiz.type !== "boolean") {
-                if (i.customId === "btnA") {
-                    const selectedChoice = randomisedChoices[0];
+                const choices = { "btnA": 0, "btnB": 1, "btnC": 2, "btnD": 3 };
+                const index = choices[i.customId];
+                const selectedChoice = randomisedChoices[index];
 
-                    // If answer is wrong
-                    if (selectedChoice !== quiz.correct_answer) return await handleWrongAns(client, interaction, i, collector, quiz, selectedChoice);
+                // If answer is wrong
+                if (selectedChoice !== quiz.correct_answer) return await handleWrongAns(client, interaction, i, collector, quiz, selectedChoice);
 
-                    // If answer is correct
-                    return await handleCorrectAns(client, interaction, difficulty, i, collector);
-                }
-    
-                if (i.customId === "btnB") {
-                    const selectedChoice = randomisedChoices[1];
-                    if (selectedChoice !== quiz.correct_answer) return await handleWrongAns(client, interaction, i, collector, quiz, selectedChoice);
-                    return await handleCorrectAns(client, interaction, difficulty, i, collector);
-                }
-    
-                if (i.customId === "btnC") {
-                    const selectedChoice = randomisedChoices[2];
-                    if (selectedChoice !== quiz.correct_answer) return await handleWrongAns(client, interaction, i, collector, quiz, selectedChoice);
-                    return await handleCorrectAns(client, interaction, difficulty, i, collector);
-                }
-    
-                if (i.customId === "btnD") {
-                    const selectedChoice = randomisedChoices[3];
-                    if (selectedChoice !== quiz.correct_answer) return await handleWrongAns(client, interaction, i, collector, quiz, selectedChoice);
-                    return await handleCorrectAns(client, interaction, difficulty, i, collector);
-                }
+                // If answer is correct
+                return await handleCorrectAns(client, interaction, difficulty, i, collector);
             }
 
             // If quiz type is boolean...
-            if (i.customId === "btnTrue") {
-                if (quiz.correct_answer === "True") return await handleCorrectAns(client, interaction, difficulty, i, collector);
-                return await handleWrongAns(client, interaction, i, collector, quiz, "True");
-            }
-            
-            if (i.customId === "btnFalse") {
-                if (quiz.correct_answer === "False") return await handleCorrectAns(client, interaction, difficulty, i, collector);
-                return await handleWrongAns(client, interaction, i, collector, quiz, "False");
-            }
+            const selectedChoice = i.customId.slice(3);
+            if (quiz.correct_answer === selectedChoice) return await handleCorrectAns(client, interaction, difficulty, i, collector);
+            return await handleWrongAns(client, interaction, i, collector, quiz, selectedChoice);
         });
 
-        collector.on("end", async (collected, reason) => client.logger.debug(reason));
+        // collector.on("end", async (collected, reason) => client.logger.debug(reason));
     } catch (err) {
         client.logger.error(err.stack);
         return interaction.reply(client.l10n(interaction, "error"));
