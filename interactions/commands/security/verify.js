@@ -56,7 +56,10 @@ export const run = async (client, interaction) => {
     const collector = interaction.channel.createMessageComponentCollector({ filter, time: 30000, idle: 30000, dispose: true });
     collector.on("collect", async i => {
         // If cancel button is clicked
-        if (i.customId === "cancel") await i.update({ content: `ℹ **${client.l10n(interaction, "verif.cancelled")}**\n${client.l10n(interaction, "verif.cancelled.info")}`, components: [] });
+        if (i.customId === "cancel") {
+            await i.update({ content: `ℹ **${client.l10n(interaction, "verif.cancelled")}**\n${client.l10n(interaction, "verif.cancelled.info")}`, components: [] });
+            collector.stop("User cancelled");
+        }
 
         // If verify button is clicked
         if (i.customId === "verify") {
@@ -116,6 +119,8 @@ export const run = async (client, interaction) => {
                 content: `<:tick:688400118549970984> **${client.l10n(interaction, "verif.success")}**\n${client.l10n(interaction, "verif.success.info")}`,
                 components: []
             });
+
+            collector.stop("Verified");
 
             // TODO: send embed instead? containing more info such as the verificationQueue joinedTimestamp of the user
             modLog.send(`ℹ New User Verified: ${interaction.user} (${interaction.user.id})`);
