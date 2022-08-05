@@ -147,7 +147,7 @@
     "verif.btn.verify": "Verify",
     "verif.btn.cancel": "Cancel",
     "verif.prompt": "Click the Verify button to gain access to this server.",
-    "verif.cancelled": "Verification cancelled",
+    "verif.cancelled": "Verification canceled",
     "verif.cancelled.info": "Use `/verify` to start again.",
     "verif.success": "Verification complete!",
     "verif.success.info": "You should no longer have access to this channel.",
