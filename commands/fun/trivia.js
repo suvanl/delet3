@@ -5,6 +5,8 @@ import { stripIndents } from "common-tags";
 import { categories } from "../../core/util/data";
 
 export const run = async (client, message, args) => {
+    client.sendDeprecationWarning(message, "Use the `/trivia` slash command instead.");
+
     // Send list of available categories
     if (args[0] && args[0].toLowerCase() === "categories") {
         const catArr = Array.from(Object.keys(categories));
