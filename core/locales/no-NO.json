@@ -128,6 +128,7 @@
     "settings.missingRole": "En rolle med navnet `%name%` kunne ikke bli funnet på denne serveren.",
     "settings.adminRole": "Admin rolle",
     "settings.modRole": "Mod rolle",
+    "settings.language": "Language",
     "settings.autoRoleName": "Auto-rolle navn",
     "settings.autoRoleEnabled": "Auto-rolle av/på",
     "settings.welcomeChannel": "Velkommen kanal",
