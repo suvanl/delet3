@@ -10,7 +10,7 @@ export const run = async (client, interaction) => {
     const share = interaction.options.getBoolean("share") || false;
 
     // Fetch YouTube results for the specified query
-    const url = `${BASE_URL}?part=snippet&q=${encodeURIComponent(query)}&maxResults=9&key=${YOUTUBE_KEY}`;
+    const url = `${BASE_URL}?part=snippet&q=${encodeURIComponent(query)}&maxResults=25&key=${YOUTUBE_KEY}`;
     const res = await fetch(url);
     const { items: data } = await res.json();
 
