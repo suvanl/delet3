@@ -128,6 +128,7 @@
     "settings.missingRole": "A role with the name `%name%` could not be found on this server.",
     "settings.adminRole": "Admin role",
     "settings.modRole": "Mod role",
+    "settings.language": "Language",
     "settings.autoRoleName": "Auto-role name",
     "settings.autoRoleEnabled": "Auto-role on/off",
     "settings.welcomeChannel": "Welcome channel",

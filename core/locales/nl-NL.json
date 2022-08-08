@@ -128,6 +128,7 @@
     "settings.missingRole": "Een rol met de naam `%name%` is niet gevonden op deze server.",
     "settings.adminRole": "Administratieve rol",
     "settings.modRole": "Moderator rol",
+    "settings.language": "Language",
     "settings.autoRoleName": "Auto-rol naam",
     "settings.autoRoleEnabled": "Auto-rol aan/uit",
     "settings.welcomeChannel": "Welkomstkanaal",
