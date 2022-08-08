@@ -9,6 +9,7 @@ export const run = async (client, interaction) => {
     const query = interaction.options.getString("query");
     const share = interaction.options.getBoolean("share") || false;
 
+    // Fetch YouTube results for the specified query
     const url = `${BASE_URL}?part=snippet&q=${encodeURIComponent(query)}&maxResults=9&key=${YOUTUBE_KEY}`;
     const res = await fetch(url);
     const { items: data } = await res.json();
@@ -22,6 +23,7 @@ export const run = async (client, interaction) => {
 
     const options = [];
     vids.forEach((vid, index) => {
+        // For each video found, create an object containing `label`, `description` and `value`, and push it to the options array
         options.push({
             label: decode(vid.snippet.title),
             description: `Description: ${decode(vid.snippet.description).truncate(50)}`,
@@ -29,26 +31,34 @@ export const run = async (client, interaction) => {
         });
     });
     
+    // Create select menu with options
     const selectMenu = new SelectMenuBuilder()
         .setCustomId("select")
         .setPlaceholder("Select a video to view")
         .addOptions(options);
 
+    // Create cancel button
     const btnCancel = new ButtonBuilder()
         .setCustomId("btnCancel")
         .setLabel("Cancel")
         .setStyle(ButtonStyle.Secondary);
 
+    // Create ActionRows for components
     const row1 = new ActionRowBuilder().addComponents([selectMenu]);
     const row2 = new ActionRowBuilder().addComponents([btnCancel]);
+
+    // Store the response in a variable, allowing us to access InteractionResponse (required for the collector to work properly)
     const response = await interaction.reply({
         content: `<:youtube:704116193421688862> **${client.l10n(interaction, "yt.search.results")}**`,
         components: [row1, row2],
         ephemeral: !share
     });
 
+    // Define the filter function for the collector and create the collector
     const filter = i => ["select", "btnCancel"].includes(i.customId) && i.user.id === interaction.user.id;
     const collector = response.createMessageComponentCollector({ filter, time: 30000, idle: 30000, dispose: true });
+
+    // Listen for the "collect" event
     collector.on("collect", async i => {
         if (i.componentType === ComponentType.SelectMenu) {
             collector.stop();
