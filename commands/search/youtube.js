@@ -5,6 +5,8 @@ import { stripIndents } from "common-tags";
 const { YOUTUBE_KEY } = process.env;
 
 export const run = async (client, message, args) => {
+    client.sendDeprecationWarning(message, "Use the `/youtube` slash command instead.");
+
     // Define query
     const query = args.join(" ");
     if (!query) return message.reply(`ℹ ${client.l10n(message, "yt.noQuery")}`);
