@@ -97,6 +97,8 @@ export const run = async (client, interaction) => {
             }
 
             // Create text input component for modal
+            // TODO: It'd be a much better experience if each value had type restrictions as opposed to everything being a string.
+            // TODO (cont.): Use select menu or text input based on the setting (once Discord adds support for select menus in modals)
             const input = new TextInputBuilder()
                 .setCustomId("inputModal")
                 .setLabel(`New value for ${setting}`)
@@ -172,7 +174,6 @@ export const data = {
         description: "The setting to view or change",
         required: true,
         // TODO: add all settings as choices
-        // ! it'd be a much better experience if each setting had type restrictions as opposed to everything being a string
         choices: [
             { name: "Language", name_localizations: choiceNameL10n.language, value: "language" },
             { name: "Prefix", value: "prefix" }
