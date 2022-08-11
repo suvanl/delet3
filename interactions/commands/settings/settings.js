@@ -165,12 +165,14 @@ const choiceNameL10n = {
 
 export const data = {
     name: "settings",
-    description: "View or change delet3's settings for this server",
+    description: "View/change delet3's settings for this server. For a more intuitive experience, use the dashboard.",
     options: [{
         name: "setting",
         type: ApplicationCommandOptionType.String,
         description: "The setting to view or change",
         required: true,
+        // TODO: add all settings as choices
+        // ! it'd be a much better experience if each setting had type restrictions as opposed to everything being a string
         choices: [
             { name: "Language", name_localizations: choiceNameL10n.language, value: "language" },
             { name: "Prefix", value: "prefix" }
@@ -180,4 +182,4 @@ export const data = {
     dm_permission: false
 };
 
-export const global = false;
+export const global = true;
