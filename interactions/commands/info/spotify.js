@@ -13,14 +13,10 @@ const auth = async () => {
     // Parameters for request to Spotify API for access token
     const url = "https://accounts.spotify.com/api/token";
     const body = "grant_type=client_credentials";
-    const meta = { "Authorization": `Basic ${base64(`${ID}:${SECRET}`)}`, "Content-Type": "application/x-www-form-urlencoded" };
+    const headers = { "Authorization": `Basic ${base64(`${ID}:${SECRET}`)}`, "Content-Type": "application/x-www-form-urlencoded" };
 
     // Send POST request
-    const res = await fetch(url, {
-        method: "post",
-        body: body,
-        headers: meta
-    });
+    const res = await fetch(url, { method: "post", body, headers });
 
     // Parse res data as JSON + return access token
     const data = await res.json();
@@ -29,7 +25,7 @@ const auth = async () => {
 
 export const run = async (client, interaction) => {
     const cover = interaction.options.getBoolean("cover");
-    const args = cover ? cover.toString().split(" ") : [];
+    const share = interaction.options.getBoolean("share") || false;
 
     // Define "not listening" message:
         // ℹ Not listening to a song
@@ -38,14 +34,15 @@ export const run = async (client, interaction) => {
         ℹ **${client.l10n(interaction, "spotify.notListening")}**
         ${client.l10n(interaction, "spotify.notListening.info")}`;
 
-    // Get author's current activities
-    const member = await interaction.guild.members.fetch(interaction.user.id, { withPresences: true });
-    const activities = member.guild.presences.cache.get(interaction.user.id).activities;
-    if (!activities.length) return interaction.reply({ content: notListening, ephemeral: true });
+    // Get target's current activities
+    const member = interaction.isContextMenuCommand() ? interaction.targetMember : interaction.member;
+
+    const activities = member.guild.presences.cache.get(member.id).activities;
+    if (!activities.length) return interaction.reply({ content: notListening, ephemeral: !share });
 
     // Get "Listening to Spotify" activity
     const spotifyActivity = activities.filter(a => a.name === "Spotify" && a.type === ActivityType.Listening);
-    if (!spotifyActivity.length) return interaction.reply({ content: notListening, ephemeral: true });
+    if (!spotifyActivity.length) return interaction.reply({ content: notListening, ephemeral: !share });
 
     // Define Spotify track ID
     const id = spotifyActivity[0].syncId;
@@ -73,15 +70,13 @@ export const run = async (client, interaction) => {
     const emoji = "<:spotify:704771723232542900>";
 
     // If user only requests album art
-    const artArgs = ["art", "cover", "true"];
-
-    if (args[0] && artArgs.includes(args[0])) {
+    if (cover) {
         const embed = new EmbedBuilder()
             .setColor("#2bde6a")
             .setImage(albumArt)
             .setDescription(`${emoji} ${trackTitle}`);
 
-        return interaction.reply({ embeds: [embed] });
+        return interaction.reply({ embeds: [embed], ephemeral: !share });
     }
 
     // Send GET request to Spotify API for audio features (AF)
@@ -128,16 +123,22 @@ export const run = async (client, interaction) => {
             🔢 ${danceability}: **${Math.round(afData.danceability * 10)}/10** • ${energy}: **${Math.round(afData.energy * 10)}/10** • ${acousticness}: **${Math.round(afData.acousticness * 10)}/10**`)
         .setFooter({ text: `${tData.album.name} • ${client.l10n(interaction, "spotify.releaseDate").replace(/%date%/g, releaseDate)}` });
 
-    return interaction.reply({ embeds: [embed] });
+    return interaction.reply({ embeds: [embed], ephemeral: !share });
 };
 
 export const data = {
     name: "spotify",
     description: "Sends info about the track you're currently listening to on Spotify",
-    options: [{ 
+    options: [{
         name: "cover",
         type: ApplicationCommandOptionType.Boolean,
         description: "Whether you'd like to see only the track's cover art (without any other info)",
+        required: false
+    },
+    { 
+        name: "share",
+        type: ApplicationCommandOptionType.Boolean,
+        description: "Whether to make the response publicly visible",
         required: false
     }]
 };
