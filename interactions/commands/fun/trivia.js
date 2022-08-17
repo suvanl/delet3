@@ -120,7 +120,7 @@ export const run = async (client, interaction) => {
                 if (selectedChoice !== quiz.correct_answer) return await handleWrongAns(client, interaction, i, collector, quiz, selectedChoice);
 
                 // If answer is correct
-                return await handleCorrectAns(client, interaction, difficulty, i, collector);
+                return await handleCorrectAns(client, interaction, difficulty, i, quiz, collector);
             }
 
             // If quiz type is boolean...
@@ -139,14 +139,16 @@ export const run = async (client, interaction) => {
 const handleWrongAns = async (client, interaction, collected, collector, quiz, choice) => {
     // Define "wrong answer" message
     const msg = stripIndents`<:x_:688400118327672843> **${client.l10n(interaction, "trivia.ans.wrong")}**
-    ${client.l10n(interaction, "trivia.ans.info").replace(/%ans%/g, decode(quiz.correct_answer)).replace(/%choice%/g, choice)}`;
+    ${client.l10n(interaction, "trivia.ans.info").replace(/%ans%/g, decode(quiz.correct_answer)).replace(/%choice%/g, choice)}
+    
+    Original question: ||${decode(quiz.question)}||`;
 
     // Send the "wrong answer" message and stop the message collector with the reason "Answered - wrong"
     await collected.update({ content: msg, embeds: [], components: [] });
     return collector.stop("Answered - wrong");
 };
 
-const handleCorrectAns = async (client, interaction, difficulty, collected, collector) => {
+const handleCorrectAns = async (client, interaction, difficulty, collected, quiz, collector) => {
     // Define "correct answer" message
     let msg = stripIndents`<:tick:688400118549970984> **${client.l10n(interaction, "trivia.ans.correct")}**
     ${client.l10n(interaction, "trivia.ans.gg")}`;
@@ -164,7 +166,7 @@ const handleCorrectAns = async (client, interaction, difficulty, collected, coll
         const pointsWord = client.l10n(interaction, "points");
 
         // Send "correct answer" message with number of points gained
-        await collected.update({ content: msg += ` [+${points[difficulty]} ${points[difficulty] === 1 ? pointWord : pointsWord}]`, embeds: [], components: [] });
+        await collected.update({ content: msg += ` [+${points[difficulty]} ${points[difficulty] === 1 ? pointWord : pointsWord}]\n\nOriginal question: ||${decode(quiz.question)}||`, embeds: [], components: [] });
         return collector.stop("Answered - correct");
     }
 
