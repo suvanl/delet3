@@ -3,23 +3,35 @@ import { ActionRowBuilder, ApplicationCommandOptionType, BitField, ButtonBuilder
 
 export const run = async (client, interaction) => {
     const amount = interaction.options.getInteger("amount");
-    if (amount < 1) return interaction.reply({ content: "<:x_:688400118327672843> **Error**: amount must be at least 1", ephemeral: true });
+
+    // If amount is too low, reply with error message:
+    //  ❌ Error: amount must be at least 1
+    if (amount < 1) return interaction.reply({
+        content:`<:x_:688400118327672843> **${client.l10n(interaction, "general.error.word")}**: ${mod.purge.amountTooLow}`,
+        ephemeral: true
+    });
 
     const btnDelete = new ButtonBuilder()
         .setCustomId("btnDelete")
-        .setLabel(`Delete ${amount} messages`)
+        .setLabel(client.l10n(interaction, "mod.purge.btn.delete").replace(/%num%/g, amount))
         .setStyle(ButtonStyle.Danger);
 
     const btnCancel = new ButtonBuilder()
         .setCustomId("btnCancel")
-        .setLabel("Cancel")
+        .setLabel(client.l10n(interaction, "general.btn.cancel"))
         .setStyle(ButtonStyle.Secondary);
 
     const row = new ActionRowBuilder().addComponents([btnCancel, btnDelete]);
 
+    // Map object for replacing both %num% and %channel% in warningMsg (specifically the "mod.purge.warning.text" string)
+    const mapObj = { "%num%": amount, "%channel%": interaction.channel };
+
+    // Define warning message:
+    //  ⚠ **Proceed with caution**
+    //  Are you sure you want to delete %num% messages in %channel%? This action is **__irreversible__** and **__cannot__** be undone!
     const warningMsg = stripIndents`
-        ⚠ **Proceed with caution**
-        Are you sure you want to delete ${amount} messages in ${interaction.channel}? This action is **__irreversible__** and **__cannot__** be undone!
+        ⚠ **${client.l10n(interaction, "mod.purge.warning.header")}**
+        ${client.l10n(interaction, "mod.purge.warning.text").replace(/%num%|%channel%/g, matched => mapObj[matched])}
     `;
 
     // Respond with warning message and "Cancel" and "Delete x messages" buttons
@@ -33,20 +45,36 @@ export const run = async (client, interaction) => {
     collector.on("collect", async i => {
         if (i.customId === "btnCancel") {
             collector.stop("User cancelled");
-            return await i.update({ content: "ℹ Operation cancelled", components: [], ephemeral: true });
+
+            // "ℹ Operation cancelled"
+            return await i.update({ content: `ℹ ${client.l10n(interaction, "general.cancelled")}`, components: [], ephemeral: true });
         }
 
         if (i.customId === "btnDelete") {
             collector.stop();
             
             try {
-                await interaction.editReply({ content: `🔄 Deleting **${amount}** messages...`, components: [], ephemeral: true });
-                const del = await interaction.channel.bulkDelete(amount);
-                await i.update({
-                    content: `<:tick:688400118549970984> Successfully deleted **${del.size}** messages in ${interaction.channel}`,
+                // Content: "🔄 Deleting %num% messages..."
+                await interaction.editReply({
+                    content: `🔄 ${client.l10n(interaction, "mod.purge.deleting").replace(/%num%/g, amount)}`,
                     components: [],
                     ephemeral: true
                 });
+
+                // Delete the specified number of messages
+                const del = await interaction.channel.bulkDelete(amount);
+
+                // Map object for replacing both %num% and %channel% in warningMsg (specifically the "mod.purge.warning.text" string)
+                const mapObj = { "%num%": del.size, "%channel%": interaction.channel };
+
+                // Content: "✅ Successfully deleted %num% messages in %channel%"
+                return await i.update({
+                    content: `<:tick:688400118549970984> ${client.l10n(interaction, "mod.purge.success").replace(/%num%|%channel%/g, m => mapObj[m])}`,
+                    components: [],
+                    ephemeral: true
+                });
+
+                // TODO: inform modlog?
             } catch (err) {
                 client.logger.error(err);
                 return await interaction.editReply({
