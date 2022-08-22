@@ -11,7 +11,7 @@
     "ban.noun": "Ban",
     "unban.noun": "Unban",
     "general.error.word": "Error",
-    "general.cancelled": "Operation cancelled",
+    "general.cancelled": "Operation canceled",
     "general.btn.cancel": "Cancel",
     "dm.unavailable": "This command is unavailable in DMs.",
     "prompt.continue": "Reply with `continue` to proceed, or with `cancel` to exit.",
