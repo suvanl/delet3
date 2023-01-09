@@ -38,7 +38,7 @@
     "eslint": "^8.21.0",
     "html-entities": "^2.3.3",
     "klaw": "^4.0.1",
-    "luxon": "^3.0.1",
+    "luxon": "^3.2.1",
     "node-fetch": "^3.2.10",
     "redis": "^4.2.0",
     "semver": "^7.3.7"
